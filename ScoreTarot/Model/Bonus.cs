@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal enum Bonus
+    public enum Bonus
     {
+        PetitAuBout, Poignet
     }
 }
