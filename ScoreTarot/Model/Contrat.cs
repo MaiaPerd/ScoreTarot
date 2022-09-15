@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal enum Contrat
+    public enum Contrat
     {
+        Prise,
+        Garde,
+        GardeSans,
+        GardeContre
     }
 }

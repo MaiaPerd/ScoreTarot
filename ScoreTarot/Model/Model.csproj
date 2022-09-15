@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="UC\Joueur\" />
+    <Folder Include="UC\Autre\" />
+    <Folder Include="UC\Partie\" />
+  </ItemGroup>
+
 </Project>
