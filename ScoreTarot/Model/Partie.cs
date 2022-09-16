@@ -8,19 +8,39 @@ namespace Model
 {
     public class Partie
     {
-        public ArrayList<Joueur> Joueurs { get; set; }
-        public ArrayList<Manche> Manches { get; set; }
-
-        public Partie(ArrayList<Joueur> joueurs,ArrayList<Manche> manches)
+        public List<Joueur> Joueurs
         {
-            this.Joueurs = joueurs;
-            this.Manches = manches;
+            get;
+
+            private set;
+        }
+        public List<Manche> Manches { get; private set; }
+        public int Id { get; private set; }
+
+        public Partie(List<Joueur> joueurs, List<Manche> manches, int id)
+        {
+
+            Joueurs = new List<Joueur>();
+            Joueurs.AddRange(joueurs);
+            
+            Manches= new List<Manche>();
+            Manches.AddRange(manches);
+            Id = id;
         }
 
         public void AjouterManche(Manche manche)
         {
-            Manches.add(manche);
+            Manches.Add(manche);
+            
         }
-        public void 
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Partie partie &&
+                   Id == partie.Id;
+        }
+
+        
+        
     }
 }
