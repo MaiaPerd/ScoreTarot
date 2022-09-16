@@ -1,7 +1,7 @@
 ﻿using Model;
 
 namespace Stub;
-public class Stub
+public class StubJoueur
 {
     public List<Joueur> chargerJoueur()
     {
