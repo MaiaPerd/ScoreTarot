@@ -8,12 +8,26 @@ namespace Model
 {
     public class Calculator
     {
-        
-        public int calculScoreAutreJoueur(int scoreJoueurQuiPrend, int nbJoueur)
+        /// <summary>
+        /// Methode qui calcule le score des joueurs qui non pas pris ou qui n'était pas allié au preneur.
+        /// </summary>
+        /// <param name="scoreJoueurQuiPrend"></param>
+        /// <returns></returns>
+        public int calculScoreAutreJoueur(int scoreJoueurQuiPrend)
         {
                 return (-1)*(scoreJoueurQuiPrend);
         }
 
+        /// <summary>
+        /// Calcule le score du joueur qui a pris en fonction de son contrat et ses bonus. 
+        /// Se score correspond aussi au score du joueur allié.
+        /// Si le score est négatif le joueur a perdu.
+        /// </summary>
+        /// <param name="bonus"></param>
+        /// <param name="contrat"></param>
+        /// <param name="scoreJoueur"></param>
+        /// <param name="nbJoueur"></param>
+        /// <returns></returns>
         public int calculeScoreJoueurQuiPrend(List<Bonus> bonus, Contrat contrat, int scoreJoueur, int nbJoueur)
         {
             int score = 0;
@@ -92,17 +106,45 @@ namespace Model
 
         }
 
+        /// <summary>
+        /// Calcule le score final du joueur qui a pris multiplier par le nombre de joueur restant
+        /// </summary>
+        /// <param name="scoreJoueurQuiPrend"></param>
+        /// <param name="nbJoueur"></param>
+        /// <returns></returns>
         public int scoreFinalJoueurQuiPrend(int scoreJoueurQuiPrend, int nbJoueur)
         {
             return scoreJoueurQuiPrend * (nbJoueur - 1);
         }
 
+        /// <summary>
+        /// Calcule le score final du joueur qui a pris multiplier par le nombre de joueur restant moins l'allier
+        /// </summary>
+        /// <param name="scoreJoueurQuiPrend"></param>
+        /// <param name="nbJoueur"></param>
+        /// <returns></returns>
+        public int scoreFinalJoueurQuiPrendAvecAllier(int scoreJoueurQuiPrend, int nbJoueur)
+        {
+            return scoreJoueurQuiPrend * (nbJoueur - 2);
+        }
 
+        /// <summary>
+        /// Calcule le pourcentage de partie gagné d'un joueur
+        /// </summary>
+        /// <param name="nbPartieRealise"></param>
+        /// <param name="nbPartieGagne"></param>
+        /// <returns></returns>
         public float calculerPourcentageDeReussite(int nbPartieRealise, int nbPartieGagne)
         {
             return (nbPartieGagne * 100) / nbPartieRealise;
         }
 
+        /// <summary>
+        /// Clacule le score total du joueur avec le score de toutes c'est partie joué
+        /// </summary>
+        /// <param name="parties"></param>
+        /// <param name="joueur"></param>
+        /// <returns></returns>
         public int scoreTotalDuJoueur(List<Partie> parties, Joueur joueur)
         {
             int scoreTotal = 0;
