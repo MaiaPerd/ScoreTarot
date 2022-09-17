@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum Contrat
+    class Program
     {
-        Prise,
-        Garde,
-        GardeSans,
-        GardeContre
+        static void Main(string[] args)
+        {
+            
+            
+        }
     }
 }

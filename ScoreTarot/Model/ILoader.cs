@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum Contrat
+    public interface ILoader
     {
-        Prise,
-        Garde,
-        GardeSans,
-        GardeContre
+        public Partie loadPartie();
+        public Joueur loadJoueur();
     }
 }

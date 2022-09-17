@@ -10,7 +10,7 @@
 [![Security Rating](https://codefirst.ddns.net/sonar/api/project_badges/measure?project=ScoreTarot&metric=security_rating)](https://codefirst.ddns.net/sonar/dashboard?id=ScoreTarot)
 [![Technical Debt](https://codefirst.ddns.net/sonar/api/project_badges/measure?project=ScoreTarot&metric=sqale_index)](https://codefirst.ddns.net/sonar/dashboard?id=ScoreTarot)
 [![Vulnerabilities](https://codefirst.ddns.net/sonar/api/project_badges/measure?project=ScoreTarot&metric=vulnerabilities)](https://codefirst.ddns.net/sonar/dashboard?id=ScoreTarot)  
-
+ 
 
 # ScoreTarot
 
