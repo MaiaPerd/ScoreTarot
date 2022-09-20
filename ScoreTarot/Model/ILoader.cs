@@ -8,7 +8,7 @@ namespace Model
 {
     public interface ILoader
     {
-        public Partie loadPartie();
-        public Joueur loadJoueur();
+        public List<Partie> loadPartie(List<Joueur> listJoueur);
+        public List<Joueur> loadJoueur();
     }
 }
