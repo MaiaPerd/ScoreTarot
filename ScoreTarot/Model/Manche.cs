@@ -29,6 +29,17 @@ namespace Model
             Id = id;
         }
 
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus = null)
+        {
+            Contrat = contrat;
+            Bonus = new List<Bonus>();
+            Bonus.AddRange(bonus);
+            JoueurQuiPrend = joueurQuiPrend;
+            Score = score;
+            Date = new DateTime();
+
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Manche manche &&

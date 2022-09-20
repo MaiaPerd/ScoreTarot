@@ -28,6 +28,16 @@ namespace Model
             Id = id;
         }
 
+        public Partie(List<Joueur> joueurs, List<Manche> manches)
+        {
+
+            Joueurs = new List<Joueur>();
+            Joueurs.AddRange(joueurs);
+
+            Manches = new List<Manche>();
+            Manches.AddRange(manches);
+        }
+
         public void AjouterManche(Manche manche)
         {
             Manches.Add(manche);
