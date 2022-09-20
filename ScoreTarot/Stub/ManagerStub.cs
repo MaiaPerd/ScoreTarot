@@ -10,15 +10,14 @@ namespace Stub
 {
     public class ManagerStub : ILoader
     {
-        public Joueur loadJoueur()
+        public List<Joueur> loadJoueur()
         {
-            throw new NotImplementedException();
+            return new StubJoueur().chargerJoueur();
         }
 
-        public Partie loadPartie()
+        public List<Partie> loadPartie(List<Joueur> listJoueur)
         {
-            //return new StubPartie().getDesPartie();
-            throw new NotImplementedException();
+            return new StubPartie().getDesPartie(listJoueur);
         }
     }
 }

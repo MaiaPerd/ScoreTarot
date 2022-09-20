@@ -9,9 +9,10 @@ namespace Stub
 {
     public class StubPartie 
     {
-        public List<Partie> getDesPartie()
+        public List<Partie> getDesPartie(List<Joueur> lesJoueurs)
         {
-            List<Partie> lespartie = new List<Partie>();
+            List<Partie> lespartie = new();
+            lespartie.Add(new Partie(new List<Joueur>(), new List<Manche>(), 1));
             
             return lespartie;
         }
