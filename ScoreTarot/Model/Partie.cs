@@ -49,7 +49,7 @@ namespace Model
             return obj is Partie partie &&
                    Id == partie.Id;
         }
-
+        
         
         
     }

@@ -62,5 +62,9 @@ namespace Model
             URLIMG = "../image/" + nomImage;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is Joueur joueur && Pseudo.Equals(joueur.Pseudo);
+        }
     }
 }

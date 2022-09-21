@@ -11,6 +11,16 @@ namespace Stub
     {
         private StubBonus stubBonus = new StubBonus();
 
+        public Manche chargerUneManche(List<Joueur> lJoueur)
+        {
+            return new Manche(Contrat.GardeContre, lJoueur[0], 1, 50, stubBonus.chargerListeBonusMoyen());
+        }
+
+        public Manche chargerUneManche2(List<Joueur> lJoueur)
+        {
+            return new Manche(Contrat.GardeContre, lJoueur[0], 2, 50, stubBonus.chargerListeBonusMoyen());
+        }
+
         public List<Manche> chargerLesManche3J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
