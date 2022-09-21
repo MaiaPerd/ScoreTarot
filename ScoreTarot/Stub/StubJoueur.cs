@@ -35,6 +35,36 @@ namespace Stub
             joueurs.Add(new Joueur("BlobFish", 10001, "DeLeau", "poisson", "elPouascaille.png"));
             return joueurs;
         }
+
+        public List<Joueur> chargerJoueurPartie3J()
+        {
+            List<Joueur> joueurs = new List<Joueur>();
+            joueurs.Add(new Joueur("albertus", 56, "Patricus"));
+            joueurs.Add(new Joueur("dani", 10, "Duboit", "daniel", "dani_avatar.png"));
+            joueurs.Add(new Joueur("egard", 10, "Duboit", "", "dani_avatar.png"));
+            return joueurs;
+        }
+
+        public List<Joueur> chargerJoueurPartie4J()
+        {
+            List<Joueur> joueurs = new List<Joueur>();
+            joueurs.Add(new Joueur("albertus", 56, "Patricus"));
+            joueurs.Add(new Joueur("dani", 10, "Duboit", "daniel", "dani_avatar.png"));
+            joueurs.Add(new Joueur("egard", 10, "Duboit", "", "dani_avatar.png"));
+            joueurs.Add(new Joueur("chaise", 10, "Duboit", "laTable", "tabouret.png"));
+            return joueurs;
+        }
+
+        public List<Joueur> chargerJoueurPartie5J()
+        {
+            List<Joueur> joueurs = new List<Joueur>();
+            joueurs.Add(new Joueur("albertus", 56, "Patricus"));
+            joueurs.Add(new Joueur("dani", 10, "Duboit", "daniel", "dani_avatar.png"));
+            joueurs.Add(new Joueur("egard", 10, "Duboit", "", "dani_avatar.png"));
+            joueurs.Add(new Joueur("chaise", 10, "Duboit", "laTable", "tabouret.png"));
+            joueurs.Add(new Joueur("Andreal", 58, "Bourdin", "Andrea", "andread.png"));
+            return joueurs;
+        }
     }
 }
 
