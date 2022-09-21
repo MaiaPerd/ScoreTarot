@@ -11,11 +11,10 @@ namespace Stub
     {
         private StubBonus stubBonus = new StubBonus();
 
-        public List<Manche> chargerLesManche3J()
+        public List<Manche> chargerLesManche3J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
 
-            List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie3J();
 
             manches.Add(new Manche(Contrat.GardeContre, lJoueur[0], 50, stubBonus.chargerListeBonusMoyen()));
             manches.Add(new Manche(Contrat.Prise, lJoueur[1], 56, stubBonus.chargerListeBonusBien()));
@@ -33,11 +32,9 @@ namespace Stub
             return manches;
         }
 
-        public List<Manche> chargerLesManche4J()
+        public List<Manche> chargerLesManche4J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
-
-            List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie4J();
 
             manches.Add(new Manche(Contrat.GardeContre, lJoueur[0], 50, stubBonus.chargerListeBonusMoyen()));
             manches.Add(new Manche(Contrat.Prise, lJoueur[1], 56, stubBonus.chargerListeBonusBien()));
@@ -55,11 +52,9 @@ namespace Stub
             return manches;
         }
 
-        public List<Manche> chargerLesManche5J()
+        public List<Manche> chargerLesManche5J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
-
-            List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie5J();
 
             manches.Add(new Manche(Contrat.GardeContre, lJoueur[0], 50, stubBonus.chargerListeBonusMoyen()));
             manches.Add(new Manche(Contrat.Prise, lJoueur[4], 56, stubBonus.chargerListeBonusBien()));
