@@ -40,8 +40,45 @@ namespace Model
 
         public void AjouterManche(Manche manche)
         {
-            Manches.Add(manche);
-            
+            if (!this.Manches.Contains(manche)) {
+                Manches.Add(manche);
+            }
+        }
+        public void AjouterJoueur(Joueur joueur)
+        {
+            if (!this.Joueurs.Contains(joueur))
+            {
+                this.Joueurs.Add(joueur);
+            }
+        }
+        public void SupprimerJoueur(Joueur joueur)
+        {
+            if (this.Joueurs.Contains(joueur))
+            {
+                this.Joueurs.Remove(joueur);
+            }
+        }
+        public void SupprimerManche(Manche manche)
+        {
+            if (this.Manches.Contains(manche))
+            {
+                this.Manches.Remove(manche);
+            }
+        }
+        public void ModifierManche(Manche manche)
+        {
+            if (this.Manches.Contains(manche)) {
+                this.SupprimerManche(manche);
+                this.AjouterManche(manche);
+            }
+        }
+        public void ModifierJoueur(Joueur joueur)
+        {
+            if (this.Joueurs.Contains(joueur))
+            {
+                this.SupprimerJoueur(joueur);
+                this.AjouterJoueur(joueur);
+            }
         }
 
         public override bool Equals(object? obj)
