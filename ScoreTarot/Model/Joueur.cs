@@ -104,9 +104,18 @@ namespace Model
         }
 
 
+        public bool Equals(Joueur autreJoueur)
+        {
+            return autreJoueur.Pseudo.Equals(pseudo) 
+                || autreJoueur.Id.Equals(Id);
+        }
+
         public override bool Equals(object? obj)
         {
-            return obj is Joueur joueur && Pseudo.Equals(joueur.Pseudo);
+            if(ReferenceEquals(null, obj)) { return false; }
+            if(ReferenceEquals(this, obj)) { return true; }
+            if(obj.GetType() != GetType()) { return false; }
+            return Equals(obj as Joueur);
         }
     }
 }
