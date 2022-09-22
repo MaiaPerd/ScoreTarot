@@ -81,13 +81,23 @@ namespace Model
             }
         }
 
+        
+        public bool Equals(Partie partie)
+        {
+            return partie.Id == Id;
+
+        }
+
         public override bool Equals(object? obj)
         {
-            return obj is Partie partie &&
-                   Id == partie.Id;
+            if (ReferenceEquals(obj, null)) return false;
+            if (ReferenceEquals(obj, this)) return true;
+            if (GetType() != obj.GetType()) return false;
+            return Equals(obj as Partie);
+
         }
-        
-        
-        
+
+
+
     }
 }

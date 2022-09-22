@@ -68,10 +68,22 @@ namespace Model
             }
         }
 
+        public bool Equals(Manche manche)
+        {
+            return manche.Id == Id;
+
+        }
+
         public override bool Equals(object? obj)
         {
-            return obj is Manche manche &&
-                   Id == manche.Id;
+            if (ReferenceEquals(obj, null)) return false;
+            if (ReferenceEquals(obj, this)) return true;
+            if (GetType() != obj.GetType()) return false;
+            return Equals(obj as Manche);
+
         }
+
+
+
     }
 }
