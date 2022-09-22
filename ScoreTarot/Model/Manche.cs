@@ -16,28 +16,56 @@ namespace Model
         public int Score{get; private set ; }
         public DateTime Date {get; private set;}
         public int Id { get; private set; }
+        public int NbJoueur { get; private set; }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus = null, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
             Bonus.AddRange(bonus);
             JoueurQuiPrend = joueurQuiPrend;
+            JoueurAllier = joueurAllier;
             Score = score;
             Date = new DateTime();
             
             Id = id;
         }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus = null, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
             Bonus.AddRange(bonus);
             JoueurQuiPrend = joueurQuiPrend;
+            JoueurAllier = joueurAllier;
             Score = score;
             Date = new DateTime();
 
+        }
+
+        public int getScoreJoueurManche(Joueur joueur)
+        {
+            Calculator calcule = new Calculator();
+            if (joueur.Equals(JoueurQuiPrend))
+            {
+                if (!JoueurAllier.Equals(null))
+                {
+                    return calcule.scoreFinalJoueurQuiPrendAvecAllier(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
+                }
+                else
+                {
+                    return calcule.scoreFinalJoueurQuiPrend(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
+                }
+            }
+            else if (joueur.Equals(JoueurAllier))
+            {
+                return calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
+
+            }
+            else
+            {
+                return calcule.calculScoreAutreJoueur(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
+            }
         }
 
         public override bool Equals(object? obj)

@@ -17,7 +17,7 @@ namespace Stub
 
         public List<Partie> loadPartie(List<Joueur> listJoueur)
         {
-            return new StubPartie().getDesPartie(listJoueur);
+            return new StubPartie().chargerPartie();
         }
     }
 }

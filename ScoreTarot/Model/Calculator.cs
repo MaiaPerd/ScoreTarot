@@ -23,12 +23,12 @@ namespace Model
         /// Se score correspond aussi au score du joueur allié.
         /// Si le score est négatif le joueur a perdu.
         /// </summary>
-        /// <param name="bonus"></param>
+        /// <param name="lBonus"></param>
         /// <param name="contrat"></param>
         /// <param name="scoreJoueur"></param>
         /// <param name="nbJoueur"></param>
         /// <returns></returns>
-        public int calculeScoreJoueurQuiPrend(List<Bonus> bonus, Contrat contrat, int scoreJoueur, int nbJoueur)
+        public int calculeScoreJoueurQuiPrend(List<Bonus> lBonus, Contrat contrat, int scoreJoueur)
         {
             int score = 0;
             bool petit = false;
@@ -50,7 +50,7 @@ namespace Model
                     break;
 
             }
-            foreach (Bonus b in bonus)
+            foreach (Bonus b in lBonus)
             {
                 if(b == Bonus.PetitAuBout) {
                     petit = true;
@@ -145,12 +145,28 @@ namespace Model
         /// <param name="parties"></param>
         /// <param name="joueur"></param>
         /// <returns></returns>
-        public int scoreTotalDuJoueur(List<Partie> parties, Joueur joueur)
+        public int scoreTotalDuJoueur(List<Partie> lParties, Joueur joueur)
         {
             int scoreTotal = 0;
-            foreach(Partie partie in parties)
+            foreach(Partie partie in lParties)
             {
-                scoreTotal += partie.getScoreJoueur(joueur);
+                scoreTotal += scoreTotalDuJoueurPartie(partie.Manches, joueur);
+            }
+            return scoreTotal;
+        }
+
+        /// <summary>
+        /// Clacule le score total du joueur dans une partie
+        /// </summary>
+        /// <param name="parties"></param>
+        /// <param name="joueur"></param>
+        /// <returns></returns>
+        public int scoreTotalDuJoueurPartie(List<Manche> lManches, Joueur joueur)
+        {
+            int scoreTotal = 0;
+            foreach (Manche manche in lManches)
+            {
+                scoreTotal += manche.getScoreJoueurManche(joueur);
             }
             return scoreTotal;
         }
