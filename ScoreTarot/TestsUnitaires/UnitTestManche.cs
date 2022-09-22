@@ -3,7 +3,7 @@ using Stub;
 
 namespace TestsUnitaires;
 
-public class UnitTest1
+public class UnitTestManche
 {
     private StubBonus stubBonus = new StubBonus();
     private StubManche stubManche = new StubManche();
