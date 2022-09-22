@@ -10,34 +10,95 @@ namespace Model
     {
         public Contrat Contrat{ get; private set; }
         public List<Bonus> Bonus { get; private set; }
-        public Joueur JoueurQuiPrend { get; private set; }
+        public Joueur JoueurQuiPrend {
+            get => joueurQuiPrend;
+            private set
+            {
+                joueurQuiPrend = value;
+                bool typeJoueur = false;
+                if (joueurQuiPrend != null)
+                {
+                    typeJoueur = joueurQuiPrend.GetType() == typeof(Joueur);
+                }
+                if (!typeJoueur)
+                {
+                    throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                }
+            }
+        }
+        private Joueur joueurQuiPrend;
 
         public Joueur JoueurAllier { get; private set; }
-        public int Score{get; private set ; }
+        public int Score{
+            get => score;
+            private set
+            {
+                score = value;
+                if (value < 0 || value == null)
+                {
+                    score = 0;
+                }
+
+            }
+        }
+        private int score;
         public DateTime Date {get; private set;}
         public int Id { get; private set; }
         public int NbJoueur { get; private set; }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus = null, Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
-            Bonus.AddRange(bonus);
-            JoueurQuiPrend = joueurQuiPrend;
-            JoueurAllier = joueurAllier;
-            Score = score;
-            Date = new DateTime();
+            if (bonus != null)
+            {
+                Bonus.AddRange(bonus);
+            } 
             
+            JoueurAllier = joueurAllier;
+            Date = new DateTime();
+            bool typeJoueur = false;
+            if (joueurQuiPrend != null)
+            {
+                typeJoueur = joueurQuiPrend.GetType() == typeof(Joueur);
+            }
+            if (!typeJoueur)
+            {
+                throw new ArgumentException("Le joueur n'est pas de la classe joueur!");
+            }
+            else if (score < 0 || score == null)
+            {
+                throw new ArgumentException("Le score du joueur ne peut pas être négatif");
+            }
+            JoueurQuiPrend = joueurQuiPrend;
+            Score = score;
             Id = id;
         }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus = null, Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus , Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
-            Bonus.AddRange(bonus);
-            JoueurQuiPrend = joueurQuiPrend;
+            if (bonus != null)
+            {
+                Bonus.AddRange(bonus);
+            }
+            
             JoueurAllier = joueurAllier;
+            bool typeJoueur = false;
+            if (joueurQuiPrend != null)
+            {
+                typeJoueur = joueurQuiPrend.GetType() == typeof(Joueur);
+            }
+            if (!typeJoueur)
+            {
+                throw new ArgumentException("Le joueur n'est pas de la classe joueur!");
+            }
+            else if (score < 0 || score == null)
+            {
+                throw new ArgumentException("Le score du joueur ne peut pas être négatif");
+            }
+            JoueurQuiPrend = joueurQuiPrend;
             Score = score;
             Date = new DateTime();
 

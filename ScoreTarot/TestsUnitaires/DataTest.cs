@@ -11,20 +11,77 @@ namespace TestsUnitaires
     public class DataTest
     {
 
-        public static IEnumerable<object[]> Data_TestEqualsManche()
+        public static IEnumerable<object[]> Data_TestConstructeurManche()
         {
-            StubBonus stubBonus = new StubBonus();
+
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, stubBonus.chargerListeBonusMoyen()),
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, stubBonus.chargerListeBonusMoyen())
+                Contrat.GardeContre,
+                new Joueur("Joueur", 0),
+                50,
+                new StubBonus().chargerListeBonusBien()
+
             };
             yield return new object[]
             {
                 false,
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, stubBonus.chargerListeBonusMoyen()),
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 2, 50, stubBonus.chargerListeBonusMoyen())
+                Contrat.GardeContre,
+                new Joueur("Joueur", 0),
+                -14,
+                new StubBonus().chargerListeBonusBien()
+
+            };
+            yield return new object[]
+            {
+                true,
+                Contrat.GardeContre,
+                new Joueur("Joueur", 0),
+                50,
+                null
+
+            };
+            yield return new object[]
+            {
+                false,
+                Contrat.Garde,
+                null,
+                0,
+                null,
+            };
+            yield return new object[]
+            {
+                false,
+                null,
+                null,
+                null,
+                null
+            };
+            yield return new object[]
+            {
+                true,
+                null,
+                new Joueur("JoueurTest", 0),
+                null,
+                null
+            };
+            
+        }
+
+        public static IEnumerable<object[]> Data_TestEqualsManche()
+        {
+            
+            yield return new object[]
+            {
+                true,
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new StubBonus().chargerListeBonusMoyen()),
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new StubBonus().chargerListeBonusMoyen())
+            };
+            yield return new object[]
+            {
+                false,
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new StubBonus().chargerListeBonusMoyen()),
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 2, 50, new StubBonus().chargerListeBonusMoyen())
             };
         }
 

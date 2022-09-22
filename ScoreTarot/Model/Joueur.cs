@@ -20,7 +20,7 @@ namespace Model
                 pseudo = value;
                 if(String.IsNullOrEmpty(pseudo))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException("Le pseudo ne peut pas être null, n'y vide");
                 }
             }
         }

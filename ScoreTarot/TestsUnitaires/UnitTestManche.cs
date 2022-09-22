@@ -8,19 +8,25 @@ public class UnitTestManche
     
 
     [Theory]
-    [MemberData(nameof(StubManche.chargerLesManche3J))]
-    public void TestConstructeurMancheAvecId(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus, Joueur joueurAllier)
+    [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
+    public void TestConstructeurManche(Boolean estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus)
     {
-        Manche manche = new Manche( contrat, joueurQuiPrend, id, score, bonus, joueurAllier);
+        if (!estValide)
+        {
+            Assert.Throws<ArgumentException>(
+                    () => new Manche(contrat, joueurQuiPrend, score, bonus));
+            return;
+        }
+        Manche manche = new Manche( contrat, joueurQuiPrend, score, bonus);
         Assert.Equal(contrat, manche.Contrat);
         Assert.Equal(joueurQuiPrend, manche.JoueurQuiPrend);
-        Assert.Equal(joueurAllier, manche.JoueurAllier);
-        Assert.Equal(id, manche.Id);
+        if (bonus == null) { bonus = new List<Bonus>();  }
         Assert.Equal(bonus, manche.Bonus);
+        Assert.Equal(score, manche.Score);
     }
 
     [Theory]
-    [MemberData(nameof(DataTest.Data_TestEqualsManche))]
+    [MemberData(nameof(DataTest.Data_TestEqualsManche), MemberType=typeof(DataTest))]
     public void TestEqualsManche(bool equal, Manche manche1, Manche manche2)
     {
         Assert.Equal(equal, manche1.Equals(manche2));
