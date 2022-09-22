@@ -13,16 +13,18 @@ namespace Model
         public string Pseudo { 
             get
             {
-                return Pseudo;
+                return pseudo;
             }
             set
             {
-                if(value == null)
+                pseudo = value;
+                if(String.IsNullOrEmpty(pseudo))
                 {
                     throw new ArgumentNullException("value");
                 }
             }
         }
+        private String pseudo;
 
         public string Nom { get; private set; }
 
@@ -35,7 +37,7 @@ namespace Model
          */
         public string URLIMG { get; private set; }
 
-        public Joueur(int id, string pseudo, int age, string nom = null, string prenom = null, string nomImage = null)
+        public Joueur(int id, string pseudo, int age, string nom, string prenom, string nomImage)
         {
             if (String.IsNullOrEmpty(pseudo))
             {
@@ -49,7 +51,7 @@ namespace Model
             URLIMG = "../image/" + nomImage;
         }
 
-        public Joueur(string pseudo, int age, string nom = null, string prenom = null, string nomImage = null)
+        public Joueur(string pseudo, int age, string nom, string prenom, string nomImage )
         {
             if (String.IsNullOrEmpty(pseudo))
             {
@@ -62,9 +64,58 @@ namespace Model
             URLIMG = "../image/" + nomImage;
         }
 
+        public Joueur(string pseudo, int age, string nom, string prenom)
+        {
+            if (String.IsNullOrEmpty(pseudo))
+            {
+                throw new ArgumentNullException(nameof(pseudo));
+            }
+            Pseudo = pseudo;
+            Nom = nom;
+            Prenom = prenom;
+            Age = age;
+            URLIMG = "../image/imageParDefaut.jpeg";
+        }
+
+        public Joueur(string pseudo, int age)
+        {
+            if (String.IsNullOrEmpty(pseudo))
+            {
+                throw new ArgumentNullException(nameof(pseudo));
+            }
+            Pseudo = pseudo;
+            Nom = "";
+            Prenom = "";
+            Age = age;
+            URLIMG = "../image/imageParDefaut.jpeg";
+        }
+
+        public Joueur( string pseudo, int age, string nomImage)
+        {
+            if (String.IsNullOrEmpty(pseudo))
+            {
+                throw new ArgumentNullException(nameof(pseudo));
+            }
+            Pseudo = pseudo;
+            Nom = "";
+            Prenom = "";
+            Age = age;
+            URLIMG = "../image/" + nomImage;
+        }
+
+
+        public bool Equals(Joueur autreJoueur)
+        {
+            return autreJoueur.Pseudo.Equals(pseudo) 
+                || autreJoueur.Id.Equals(Id);
+        }
+
         public override bool Equals(object? obj)
         {
-            return obj is Joueur joueur && Pseudo.Equals(joueur.Pseudo);
+            if(ReferenceEquals(null, obj)) { return false; }
+            if(ReferenceEquals(this, obj)) { return true; }
+            if(obj.GetType() != GetType()) { return false; }
+            return Equals(obj as Joueur);
         }
     }
 }
