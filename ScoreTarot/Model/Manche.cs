@@ -46,7 +46,7 @@ namespace Model
         public int Id { get; private set; }
         public int NbJoueur { get; private set; }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus, Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
@@ -77,10 +77,11 @@ namespace Model
             }
             JoueurQuiPrend = joueurQuiPrend;
             Score = score;
+            NbJoueur = nbJoueur;
             Id = id;
         }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus , Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
@@ -109,6 +110,7 @@ namespace Model
             }
             JoueurQuiPrend = joueurQuiPrend;
             Score = score;
+            NbJoueur = nbJoueur;
             Date = new DateTime();
 
         }
@@ -118,7 +120,7 @@ namespace Model
             Calculator calcule = new Calculator();
             if (joueur.Equals(JoueurQuiPrend))
             {
-                if (!JoueurAllier.Equals(null))
+                if (JoueurAllier != null)
                 {
                     return calcule.scoreFinalJoueurQuiPrendAvecAllier(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
                 }

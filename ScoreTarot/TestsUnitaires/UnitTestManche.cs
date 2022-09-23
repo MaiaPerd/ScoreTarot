@@ -5,28 +5,28 @@ namespace TestsUnitaires;
 
 public class UnitTestManche
 {
-    
+    /**
 
     [Theory]
     [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
-    public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus)
+    public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur)
     {
         if (!estValide)
         {
             Assert.Throws<ArgumentException>(
-                    () => new Manche(contrat, joueurQuiPrend, score, bonus));
+                    () => new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur));
             return;
         }
-        Manche manche = new Manche( contrat, joueurQuiPrend, score, bonus);
+        Manche manche = new Manche( contrat, joueurQuiPrend, score, bonus, nbJoueur);
         Assert.Equal(contrat, manche.Contrat);
         Assert.Equal(joueurQuiPrend, manche.JoueurQuiPrend);
         if (bonus == null) { bonus = new List<Bonus>();  }
         Assert.Equal(bonus, manche.Bonus);
         Assert.Equal(score, manche.Score);
     }
-
+    */
     [Theory]
-    [MemberData(nameof(DataTest.Data_TestEqualsManche), MemberType = typeof(DataTest))]
+    [MemberData(nameof(DataTest.Data_TestGetScoreJoueurManche), MemberType = typeof(DataTest))]
     public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)
     {
         Assert.Equal(score, manche.getScoreJoueurManche(joueur));
