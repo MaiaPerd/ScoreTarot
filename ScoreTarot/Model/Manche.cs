@@ -83,6 +83,10 @@ namespace Model
             {
                 Bonus.AddRange(bonus);
             }
+            if(contrat == Contrat.Prise && score == 0)
+            {
+                throw new ArgumentException("Le contrat est null et score ne peut pas être zéro");
+            }
             
             JoueurAllier = joueurAllier;
             bool typeJoueur = false;

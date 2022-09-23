@@ -59,7 +59,7 @@ namespace TestsUnitaires
             };
             yield return new object[]
             {
-                true,
+                false,
                 null,
                 new Joueur("JoueurTest", 0),
                 null,
