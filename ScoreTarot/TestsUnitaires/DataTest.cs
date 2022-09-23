@@ -68,6 +68,41 @@ namespace TestsUnitaires
             
         }
 
+        public static IEnumerable<object[]> Data_TestGetScoreJoueurManche()
+        {
+
+            yield return new object[]
+            {
+                -132,
+                new Joueur("JoueurQuiprend", 0),
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen())
+            };
+            yield return new object[]
+            {
+                10,
+                new Joueur("JoueurAllier", 0),
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(),  new Joueur("JoueurAllier", 0))
+            };
+            yield return new object[]
+            {
+                10,
+                new Joueur("JoueurQuiprend", 0),
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(),  new Joueur("JoueurAllier", 0))
+            };
+            yield return new object[]
+            {
+                10,
+                new Joueur("Joueur", 0),
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(),  new Joueur("JoueurAllier", 0))
+            };
+            yield return new object[]
+            {
+                10,
+                new Joueur("Joueur", 0),
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen())
+            };
+        }
+
         public static IEnumerable<object[]> Data_TestEqualsManche()
         {
             

@@ -9,7 +9,7 @@ public class UnitTestManche
 
     [Theory]
     [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
-    public void TestConstructeurManche(Boolean estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus)
+    public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus)
     {
         if (!estValide)
         {
@@ -23,6 +23,13 @@ public class UnitTestManche
         if (bonus == null) { bonus = new List<Bonus>();  }
         Assert.Equal(bonus, manche.Bonus);
         Assert.Equal(score, manche.Score);
+    }
+
+    [Theory]
+    [MemberData(nameof(DataTest.Data_TestEqualsManche), MemberType = typeof(DataTest))]
+    public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)
+    {
+        Assert.Equal(score, manche.getScoreJoueurManche(joueur));
     }
 
     [Theory]

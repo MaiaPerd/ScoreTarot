@@ -34,22 +34,6 @@ namespace Model
             bool petit = false;
             int bout = 0;
             int point = 0;
-            switch (bout)
-            {
-                case 0:
-                    point = scoreJoueur - 56;
-                    break;
-                case 1:
-                    point = scoreJoueur - 51;
-                    break;
-                case 2:
-                    point = scoreJoueur - 41;
-                    break;
-                case 3:
-                    point = scoreJoueur - 36;
-                    break;
-
-            }
             foreach (Bonus b in lBonus)
             {
                 if(b == Bonus.PetitAuBout) {
@@ -67,6 +51,22 @@ namespace Model
                 } else if (b == Bonus.Le21) {
                     bout += 1;
                 }
+            }
+            switch (bout)
+            {
+                case 0:
+                    point = scoreJoueur - 56;
+                    break;
+                case 1:
+                    point = scoreJoueur - 51;
+                    break;
+                case 2:
+                    point = scoreJoueur - 41;
+                    break;
+                case 3:
+                    point = scoreJoueur - 36;
+                    break;
+
             }
             if (point<0)
             {
@@ -101,7 +101,11 @@ namespace Model
                     }
                     break;
             }
-            
+            if (point < 0)
+            {
+                score *= -1;
+            }
+
             return score;
 
         }

@@ -56,6 +56,11 @@ namespace Model
             } 
             
             JoueurAllier = joueurAllier;
+            if (contrat == Contrat.Prise && score == 0)
+            {
+                throw new ArgumentException("Le contrat est null et score ne peut pas être zéro");
+            }
+
             Date = new DateTime();
             bool typeJoueur = false;
             if (joueurQuiPrend != null)
