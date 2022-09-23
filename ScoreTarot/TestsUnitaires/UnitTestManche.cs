@@ -5,7 +5,7 @@ namespace TestsUnitaires;
 
 public class UnitTestManche
 {
-    /**
+
 
     [Theory]
     [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
@@ -24,7 +24,7 @@ public class UnitTestManche
         Assert.Equal(bonus, manche.Bonus);
         Assert.Equal(score, manche.Score);
     }
-    */
+
     [Theory]
     [MemberData(nameof(DataTest.Data_TestGetScoreJoueurManche), MemberType = typeof(DataTest))]
     public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)
