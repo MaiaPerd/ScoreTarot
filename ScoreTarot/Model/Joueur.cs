@@ -106,8 +106,8 @@ namespace Model
 
         public bool Equals(Joueur autreJoueur)
         {
-            return autreJoueur.Pseudo.Equals(pseudo) 
-                || autreJoueur.Id.Equals(Id);
+            return autreJoueur.Pseudo.Equals(pseudo);
+                /**|| autreJoueur.Id.Equals(Id);*/
         }
 
         public override bool Equals(object? obj)

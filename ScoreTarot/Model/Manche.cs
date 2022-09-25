@@ -129,10 +129,16 @@ namespace Model
                     return calcule.scoreFinalJoueurQuiPrend(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
                 }
             }
-            else if (joueur.Equals(JoueurAllier))
+            else if (JoueurAllier != null)
             {
-                return calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
-
+                if (joueur.Equals(JoueurAllier))
+                {
+                    return calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
+                }
+                else
+                {
+                    return calcule.calculScoreAutreJoueur(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
+                }
             }
             else
             {

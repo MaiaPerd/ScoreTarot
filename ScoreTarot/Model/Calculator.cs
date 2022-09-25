@@ -15,7 +15,7 @@ namespace Model
         /// <returns></returns>
         public int calculScoreAutreJoueur(int scoreJoueurQuiPrend)
         {
-                return (-1)*(scoreJoueurQuiPrend);
+            return (-1) * (scoreJoueurQuiPrend);
         }
 
         /// <summary>
@@ -34,21 +34,35 @@ namespace Model
             bool petit = false;
             int bout = 0;
             int point = 0;
+            int poignet = 0;
             foreach (Bonus b in lBonus)
             {
-                if(b == Bonus.PetitAuBout) {
+                if (b == Bonus.PetitAuBout)
+                {
                     petit = true;
-                } else if(b == Bonus.SimplePoignet) {
-                    score += 20;
-                } else if (b == Bonus.DoublePoignet) {
-                    score += 30;
-                } else if (b == Bonus.TriplePoignet) {
-                    score += 40;
-                } else if(b == Bonus.Petit) {
+                }
+                else if (b == Bonus.SimplePoignet)
+                {
+                    poignet += 20;
+                }
+                else if (b == Bonus.DoublePoignet)
+                {
+                    poignet += 30;
+                }
+                else if (b == Bonus.TriplePoignet)
+                {
+                    poignet += 40;
+                }
+                else if (b == Bonus.Petit)
+                {
                     bout += 1;
-                } else if (b == Bonus.Escuse) {
+                }
+                else if (b == Bonus.Escuse)
+                {
                     bout += 1;
-                } else if (b == Bonus.Le21) {
+                }
+                else if (b == Bonus.Le21)
+                {
                     bout += 1;
                 }
             }
@@ -68,43 +82,47 @@ namespace Model
                     break;
 
             }
-            if (point<0)
+            if (point < 0)
             {
                 score *= -1;
             }
-            switch (contrat) {
+            switch (contrat)
+            {
                 case Contrat.Prise:
+                    score += 25;
                     if (petit)
                     {
                         score += 10;
                     }
                     break;
-                case Contrat.Garde: 
-                    score += point*2;
+                case Contrat.Garde:
+                    score += 25 * 2;
                     if (petit)
                     {
                         score += 20;
                     }
                     break;
                 case Contrat.GardeSans:
-                    score += point*4;
+                    score += 25 * 4;
                     if (petit)
                     {
                         score += 30;
                     }
                     break;
                 case Contrat.GardeContre:
-                    score += point*6;
+                    score += 25 * 6;
                     if (petit)
                     {
                         score += 40;
                     }
                     break;
             }
+            score += poignet;
             if (point < 0)
             {
                 score *= -1;
             }
+            score += point;
 
             return score;
 
@@ -152,7 +170,7 @@ namespace Model
         public int scoreTotalDuJoueur(List<Partie> lParties, Joueur joueur)
         {
             int scoreTotal = 0;
-            foreach(Partie partie in lParties)
+            foreach (Partie partie in lParties)
             {
                 scoreTotal += scoreTotalDuJoueurPartie(partie.Manches, joueur);
             }

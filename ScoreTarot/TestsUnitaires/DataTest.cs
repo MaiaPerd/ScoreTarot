@@ -79,33 +79,33 @@ namespace TestsUnitaires
 
             yield return new object[]
             {
-                -8,
+                458,
                 new Joueur("JoueurQuiprend", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 3)
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
             };
             yield return new object[]
             {
-                -12,
+                -51,
                 new Joueur("JoueurAllier", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 5, new Joueur("JoueurAllier", 0))
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0))
             };
             yield return new object[]
             {
-                10,
+                -153,
                 new Joueur("JoueurQuiprend", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(),  5, new Joueur("JoueurAllier", 0))
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusUnSeul(),  5, new Joueur("JoueurAllier", 0))
             };
             yield return new object[]
             {
-                10,
+                221,
                 new Joueur("Joueur", 0),
                 new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 5,  new Joueur("JoueurAllier", 0))
             };
             yield return new object[]
             {
-                10,
+                -229,
                 new Joueur("Joueur", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 4)
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 4)
             };
         }
 
