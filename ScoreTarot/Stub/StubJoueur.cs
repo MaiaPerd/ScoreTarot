@@ -13,15 +13,15 @@ namespace Stub
             joueurs.Add(new Joueur("dani2", 10, "Duboit", "daniel", ""));
             joueurs.Add(new Joueur("dani3", 10, "Duboit", "daniel", "dani_avatar"));
             joueurs.Add(new Joueur("dani4", 0 , "Duboit", "daniel", "dani_avatar.png"));
-            joueurs.Add(new Joueur("", 10, "Duboit", "daniel", "dani_avatar.png"));
-            joueurs.Add(new Joueur(null, 10, "Duboit", "daniel", "dani_avatar.png"));
+            joueurs.Add(new Joueur("Nathan", 10, "Duboit", "daniel", "dani_avatar.png"));
+            joueurs.Add(new Joueur("Andreas", 10, "Duboit", "andré", "dani_avatar.png"));
             joueurs.Add(new Joueur("dani5", 10, null, "daniel", "dani_avatar.png"));
             joueurs.Add(new Joueur("dani6", 10, "Duboit", null, "dani_avatar.png"));
             joueurs.Add(new Joueur("dani7", 10, "Duboit", "daniel", null));
             joueurs.Add(new Joueur("dani8", 10, "qerg468qe6g46qerh", "daniel", "dani_avatar.png"));
             joueurs.Add(new Joueur("dani", 10, "Duboit", "daniel", "dani_avatar.png"));
             joueurs.Add(new Joueur("dani11", 10, "Duboit", "daniel", "dani_avatar.png"));
-            joueurs.Add(new Joueur("      ", 10, "Duboit", "daniel", "dani_avatar.png"));
+            joueurs.Add(new Joueur("Louloul", 10, "Duboit", "Laurant", "dani_avatar.png"));
             joueurs.Add(new Joueur("dani45", 10, "     ", "daniel", "dani_avatar.png"));
             joueurs.Add(new Joueur("darni7897", 10, "Duboit", "     ", "dani_avatar.png"));
             joueurs.Add(new Joueur("dani4654", 11, "Duboit", "daniel", "      "));
