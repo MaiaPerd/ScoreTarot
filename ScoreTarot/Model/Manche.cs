@@ -15,15 +15,14 @@ namespace Model
             private set
             {
                 joueurQuiPrend = value;
-                bool typeJoueur = false;
-                if (joueurQuiPrend != null)
+                bool typeJoueur = joueurQuiPrend is Joueur;
+                if (typeJoueur != null && typeJoueur == false)
                 {
-                    typeJoueur = joueurQuiPrend.GetType() == typeof(Joueur);
-                }
-                if (!typeJoueur)
-                {
-                    throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
-                }
+                    if (!typeJoueur)
+                    {
+                        throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                    }
+                }          
             }
         }
         private Joueur joueurQuiPrend;
@@ -62,16 +61,15 @@ namespace Model
             }
 
             Date = new DateTime();
-            bool typeJoueur = false;
-            if (joueurQuiPrend != null)
+            bool typeJoueur = joueurQuiPrend is Joueur;
+            if (typeJoueur != null && typeJoueur == false)
             {
-                typeJoueur = joueurQuiPrend.GetType() == typeof(Joueur);
+                if (!typeJoueur)
+                {
+                    throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                }
             }
-            if (!typeJoueur)
-            {
-                throw new ArgumentException("Le joueur n'est pas de la classe joueur!");
-            }
-            else if (score < 0 || score == null)
+            if (score < 0 || score == null)
             {
                 throw new ArgumentException("Le score du joueur ne peut pas être négatif");
             }
@@ -95,16 +93,15 @@ namespace Model
             }
             
             JoueurAllier = joueurAllier;
-            bool typeJoueur = false;
-            if (joueurQuiPrend != null)
+            bool typeJoueur = joueurQuiPrend is Joueur;
+            if (typeJoueur != null && typeJoueur == false)
             {
-                typeJoueur = joueurQuiPrend.GetType() == typeof(Joueur);
-            }
-            if (!typeJoueur)
-            {
-                throw new ArgumentException("Le joueur n'est pas de la classe joueur!");
-            }
-            else if (score < 0 || score == null)
+                if (!typeJoueur)
+                {
+                    throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                }
+            } 
+            if (score < 0 || score == null)
             {
                 throw new ArgumentException("Le score du joueur ne peut pas être négatif");
             }
