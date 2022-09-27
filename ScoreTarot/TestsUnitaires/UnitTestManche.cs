@@ -6,14 +6,13 @@ namespace TestsUnitaires;
 public class UnitTestManche
 {
 
-
     [Theory]
     [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
     public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur)
     {
         if (!estValide)
         {
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<ArgumentNullException>(
                     () => new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur));
             return;
         }
