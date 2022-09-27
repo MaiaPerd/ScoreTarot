@@ -20,7 +20,7 @@ namespace Model
                 pseudo = value;
                 if(String.IsNullOrEmpty(pseudo))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException("Le pseudo ne peut pas être null, n'y vide");
                 }
             }
         }
@@ -106,8 +106,8 @@ namespace Model
 
         public bool Equals(Joueur autreJoueur)
         {
-            return autreJoueur.Pseudo.Equals(pseudo) 
-                || autreJoueur.Id.Equals(Id);
+            return autreJoueur.Pseudo.Equals(pseudo);
+                /**|| autreJoueur.Id.Equals(Id);*/
         }
 
         public override bool Equals(object? obj)

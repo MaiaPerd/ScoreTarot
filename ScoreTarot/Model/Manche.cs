@@ -10,35 +10,104 @@ namespace Model
     {
         public Contrat Contrat{ get; private set; }
         public List<Bonus> Bonus { get; private set; }
-        public Joueur JoueurQuiPrend { get; private set; }
+        public Joueur JoueurQuiPrend {
+            get => joueurQuiPrend;
+            private set
+            {
+                joueurQuiPrend = value;
+                bool typeJoueur = joueurQuiPrend is Joueur;
+                if (typeJoueur != null && typeJoueur == false)
+                {
+                    if (!typeJoueur)
+                    {
+                        throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                    }
+                }          
+            }
+        }
+        private Joueur joueurQuiPrend;
 
         public Joueur JoueurAllier { get; private set; }
-        public int Score{get; private set ; }
+        public int Score{
+            get => score;
+            private set
+            {
+                score = value;
+                if (value < 0 || value == null)
+                {
+                    score = 0;
+                }
+
+            }
+        }
+        private int score;
         public DateTime Date {get; private set;}
         public int Id { get; private set; }
         public int NbJoueur { get; private set; }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus = null, Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
-            Bonus.AddRange(bonus);
-            JoueurQuiPrend = joueurQuiPrend;
-            JoueurAllier = joueurAllier;
-            Score = score;
-            Date = new DateTime();
+            if (bonus != null)
+            {
+                Bonus.AddRange(bonus);
+            } 
             
+            JoueurAllier = joueurAllier;
+            if (contrat == Contrat.Prise && score == 0)
+            {
+                throw new ArgumentException("Le contrat est null et score ne peut pas être zéro");
+            }
+
+            Date = new DateTime();
+            bool typeJoueur = joueurQuiPrend is Joueur;
+            if (typeJoueur != null && typeJoueur == false)
+            {
+                if (!typeJoueur)
+                {
+                    throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                }
+            }
+            if (score < 0 || score == null)
+            {
+                throw new ArgumentException("Le score du joueur ne peut pas être négatif");
+            }
+            JoueurQuiPrend = joueurQuiPrend;
+            Score = score;
+            NbJoueur = nbJoueur;
             Id = id;
         }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus = null, Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
-            Bonus.AddRange(bonus);
-            JoueurQuiPrend = joueurQuiPrend;
+            if (bonus != null)
+            {
+                Bonus.AddRange(bonus);
+            }
+            if(contrat == Contrat.Prise && score == 0)
+            {
+                throw new ArgumentException("Le contrat est null et score ne peut pas être zéro");
+            }
+            
             JoueurAllier = joueurAllier;
+            bool typeJoueur = joueurQuiPrend is Joueur;
+            if (typeJoueur != null && typeJoueur == false)
+            {
+                if (!typeJoueur)
+                {
+                    throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
+                }
+            } 
+            if (score < 0 || score == null)
+            {
+                throw new ArgumentException("Le score du joueur ne peut pas être négatif");
+            }
+            JoueurQuiPrend = joueurQuiPrend;
             Score = score;
+            NbJoueur = nbJoueur;
             Date = new DateTime();
 
         }
@@ -48,7 +117,7 @@ namespace Model
             Calculator calcule = new Calculator();
             if (joueur.Equals(JoueurQuiPrend))
             {
-                if (!JoueurAllier.Equals(null))
+                if (JoueurAllier != null)
                 {
                     return calcule.scoreFinalJoueurQuiPrendAvecAllier(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
                 }
@@ -57,10 +126,16 @@ namespace Model
                     return calcule.scoreFinalJoueurQuiPrend(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
                 }
             }
-            else if (joueur.Equals(JoueurAllier))
+            else if (JoueurAllier != null)
             {
-                return calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
-
+                if (joueur.Equals(JoueurAllier))
+                {
+                    return calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
+                }
+                else
+                {
+                    return calcule.calculScoreAutreJoueur(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
+                }
             }
             else
             {
