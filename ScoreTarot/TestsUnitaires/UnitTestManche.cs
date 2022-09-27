@@ -5,50 +5,38 @@ namespace TestsUnitaires;
 
 public class UnitTestManche
 {
-    private StubBonus stubBonus = new StubBonus();
-    private StubManche stubManche = new StubManche();
-    private StubPartie stubPartie = new StubPartie();
-    private StubJoueur stubJoueur = new StubJoueur();
+
 
     [Theory]
-    [InlineData(Contrat.Garde, 1, 10)]
-    [InlineData(Contrat.GardeContre, 1, 10)]
-    [InlineData(Contrat.Prise, 1, 10)]
-    [InlineData(Contrat.GardeSans, 1, 10)]
-    [InlineData(Contrat.Garde, null, 10)]
-    [InlineData(Contrat.Garde, 1, null)]
-    [InlineData(null, 1, 10)]
-    [InlineData(Contrat.Garde, 0, -1.4)]
-    [InlineData(null, null, -1.4)]
-    [InlineData(null, null, null)]
-    [InlineData(Contrat.Garde, null, null)]
-    [InlineData(null, 0, null)]
-    [InlineData(Contrat.Garde, 0939393, 1)]
-    public void TestConstructeurMancheAvecId(Contrat contrat, int id, int score)
+    [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
+    public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur)
     {
-        Joueur joueur = new Joueur("Joueur", 0);
-        Manche manche = new Manche(contrat, joueur, id, score, stubBonus.chargerListeBonusBien(), joueur);
+        if (!estValide)
+        {
+            Assert.Throws<ArgumentException>(
+                    () => new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur));
+            return;
+        }
+        Manche manche = new Manche( contrat, joueurQuiPrend, score, bonus, nbJoueur);
         Assert.Equal(contrat, manche.Contrat);
-        Assert.Equal(joueur, manche.JoueurQuiPrend);
-        Assert.Equal(joueur, manche.JoueurAllier);
-        Assert.Equal(id, manche.Id);
-        Assert.Equal(stubBonus.chargerListeBonusBien(), manche.Bonus);
+        Assert.Equal(joueurQuiPrend, manche.JoueurQuiPrend);
+        if (bonus == null) { bonus = new List<Bonus>();  }
+        Assert.Equal(bonus, manche.Bonus);
+        Assert.Equal(score, manche.Score);
     }
 
-    [Fact]
-    public void TestEqualsManche()
+    [Theory]
+    [MemberData(nameof(DataTest.Data_TestGetScoreJoueurManche), MemberType = typeof(DataTest))]
+    public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)
     {
-        Manche manche = stubManche.chargerUneManche(stubJoueur.chargerJoueurPartie3J());
-        Manche manche2 = stubManche.chargerUneManche(stubJoueur.chargerJoueurPartie3J());
-        Assert.Equal(true, manche.Equals(manche2));
+        Assert.Equal(score, manche.getScoreJoueurManche(joueur));
     }
 
-    [Fact]
-    public void TestNotEqualsManche()
+    [Theory]
+    [MemberData(nameof(DataTest.Data_TestEqualsManche), MemberType=typeof(DataTest))]
+    public void TestEqualsManche(bool equal, Manche manche1, Manche manche2)
     {
-        Manche manche = stubManche.chargerUneManche(stubJoueur.chargerJoueurPartie3J());
-        Manche manche2 = stubManche.chargerUneManche2(stubJoueur.chargerJoueurPartie3J());
-        Assert.Equal(false, manche.Equals(manche2));
+        Assert.Equal(equal, manche1.Equals(manche2));
     }
 
     
