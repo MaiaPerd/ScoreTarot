@@ -10,75 +10,128 @@ namespace Model
     {
         public List<Joueur> Joueurs
         {
-            get;
+            get
+            {
+                return joueur;
+            }
 
-            private set;
+            private set
+            {
+                if (value == null || value.Count < 3 || value.Count > 5)
+                {
+                    throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+                }
+                joueur = value;
+                
+            }
         }
+        private List<Joueur> joueur;
         public List<Manche> Manches { get; private set; }
         public int Id { get; private set; }
 
         public Partie(List<Joueur> joueurs, List<Manche> manches, int id)
         {
-
-            Joueurs = new List<Joueur>();
+            joueur = new List<Joueur>();
+            if (joueurs == null || joueurs.Count < 3 || joueurs.Count > 5)
+            {
+                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+            }
             Joueurs.AddRange(joueurs);
-            
-            Manches= new List<Manche>();
-            Manches.AddRange(manches);
+            Manches = new List<Manche>();
+            if (manches != null)
+            {
+                Manches.AddRange(manches);
+            }
+
             Id = id;
         }
 
         public Partie(List<Joueur> joueurs, List<Manche> manches)
         {
-
-            Joueurs = new List<Joueur>();
-            Joueurs.AddRange(joueurs);
-
-            Manches = new List<Manche>();
-            Manches.AddRange(manches);
-        }
-
-        public void AjouterManche(Manche manche)
-        {
-            if (!this.Manches.Contains(manche)) {
-                Manches.Add(manche);
-            }
-        }
-        public void AjouterJoueur(Joueur joueur)
-        {
-            if (!this.Joueurs.Contains(joueur))
+            joueur = new List<Joueur>();
+            if (joueurs == null || joueurs.Count < 3 || joueurs.Count > 5)
             {
-                this.Joueurs.Add(joueur);
+                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+            }
+            Joueurs.AddRange(joueurs);
+            Manches = new List<Manche>();
+            if (manches != null)
+            {
+                Manches.AddRange(manches);
             }
         }
-        public void SupprimerJoueur(Joueur joueur)
+
+        public Partie(List<Joueur> joueurs)
+        {
+            joueur = new List<Joueur>();
+            if (joueurs == null || joueurs.Count < 3 || joueurs.Count > 5)
+            {
+                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+            }
+            Joueurs.AddRange(joueurs);
+            Manches = new List<Manche>();
+
+        }
+
+        public bool AjouterManche(Manche manche)
+        {
+            if (!this.Manches.Contains(manche) && manche != null) {
+                Manches.Add(manche);
+                return true;
+            }
+            return false;
+        }
+        public bool AjouterJoueur(Joueur joueur)
+        {
+            if(this.Joueurs.Count != 5)
+            {
+                if (!this.Joueurs.Contains(joueur) && joueur != null)
+                {
+                    this.Joueurs.Add(joueur);
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool SupprimerJoueur(Joueur joueur)
         {
             if (this.Joueurs.Contains(joueur))
-            {
-                this.Joueurs.Remove(joueur);
+            {   
+                return this.Joueurs.Remove(joueur);
             }
+            return false;
         }
-        public void SupprimerManche(Manche manche)
+        public bool SupprimerManche(Manche manche)
         {
             if (this.Manches.Contains(manche))
             {
                 this.Manches.Remove(manche);
+                return true;
             }
+            return false;
         }
-        public void ModifierManche(Manche manche)
+        public bool ModifierManche(Manche manche)
         {
             if (this.Manches.Contains(manche)) {
-                this.SupprimerManche(manche);
-                this.AjouterManche(manche);
+                bool modif = this.SupprimerManche(manche);
+                if (modif)
+                {
+                    return this.AjouterManche(manche);
+                }
             }
+            return false;
         }
-        public void ModifierJoueur(Joueur joueur)
+        public bool ModifierJoueur(Joueur joueur)
         {
             if (this.Joueurs.Contains(joueur))
             {
-                this.SupprimerJoueur(joueur);
-                this.AjouterJoueur(joueur);
+                bool modif = this.SupprimerJoueur(joueur);
+                if (modif)
+                {
+                    return this.AjouterJoueur(joueur);
+                }
             }
+            return false;
         }
 
         
