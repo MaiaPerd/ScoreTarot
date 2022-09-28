@@ -8,5 +8,19 @@ namespace Model
 {
     class ManagerData : IDataManager
     {
+        public void addJoueur(Joueur joueur)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void removeJoueur(Joueur joueur)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void updateJoueur(Joueur joueur)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
