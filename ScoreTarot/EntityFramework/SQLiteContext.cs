@@ -11,7 +11,7 @@ namespace EntityFramework
     public class SQLiteContext : DbContext
     {
 
-        public DbSet<JoueurEntity> JoueurSet { get; set; }
+        public DbSet<JoueurEntity> Joueurs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
