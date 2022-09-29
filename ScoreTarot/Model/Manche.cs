@@ -14,15 +14,16 @@ namespace Model
             get => joueurQuiPrend;
             private set
             {
-                joueurQuiPrend = value;
-                bool typeJoueur = joueurQuiPrend is Joueur;
-                if (typeJoueur != null && typeJoueur == false)
+                bool typeJoueur = value is Joueur;
+                if (typeJoueur != null)
                 {
                     if (!typeJoueur)
                     {
                         throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
                     }
-                }          
+                    joueurQuiPrend = value;
+                }
+
             }
         }
         private Joueur joueurQuiPrend;
@@ -52,31 +53,33 @@ namespace Model
             if (bonus != null)
             {
                 Bonus.AddRange(bonus);
-            } 
-            
+            }
+
             JoueurAllier = joueurAllier;
             if (contrat == Contrat.Prise && score == 0)
             {
-                throw new ArgumentException("Le contrat est null et score ne peut pas être zéro");
+                throw new ArgumentNullException("Le contrat est null et score ne peut pas être zéro");
             }
 
             Date = new DateTime();
             bool typeJoueur = joueurQuiPrend is Joueur;
-            if (typeJoueur != null && typeJoueur == false)
+            if (typeJoueur != null)
             {
                 if (!typeJoueur)
                 {
                     throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
                 }
+                JoueurQuiPrend = joueurQuiPrend;
             }
             if (score < 0 || score == null)
             {
-                throw new ArgumentException("Le score du joueur ne peut pas être négatif");
+                throw new ArgumentNullException("Le score du joueur ne peut pas être négatif");
             }
-            JoueurQuiPrend = joueurQuiPrend;
             Score = score;
+            Date = new DateTime();
             NbJoueur = nbJoueur;
             Id = id;
+
         }
 
         public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
@@ -87,28 +90,29 @@ namespace Model
             {
                 Bonus.AddRange(bonus);
             }
-            if(contrat == Contrat.Prise && score == 0)
+            if (contrat == Contrat.Prise && score == 0)
             {
-                throw new ArgumentException("Le contrat est null et score ne peut pas être zéro");
+                throw new ArgumentNullException("Le contrat est null et score ne peut pas être zéro");
             }
-            
+
             JoueurAllier = joueurAllier;
             bool typeJoueur = joueurQuiPrend is Joueur;
-            if (typeJoueur != null && typeJoueur == false)
+            if (typeJoueur != null)
             {
                 if (!typeJoueur)
                 {
                     throw new ArgumentNullException("Le joueur qui prend ne peut pas être null");
                 }
-            } 
+                JoueurQuiPrend = joueurQuiPrend;
+
+            }
             if (score < 0 || score == null)
             {
-                throw new ArgumentException("Le score du joueur ne peut pas être négatif");
+                throw new ArgumentNullException("Le score du joueur ne peut pas être négatif");
             }
-            JoueurQuiPrend = joueurQuiPrend;
             Score = score;
-            NbJoueur = nbJoueur;
             Date = new DateTime();
+            NbJoueur = nbJoueur;
 
         }
 
