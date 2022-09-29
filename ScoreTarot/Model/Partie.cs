@@ -77,7 +77,7 @@ namespace Model
         {
             if (!this.Manches.Contains(manche) && manche != null) {
                 Manches.Add(manche);
-                return true;
+                return this.Manches.Contains(manche);
             }
             return false;
         }
@@ -88,7 +88,7 @@ namespace Model
                 if (!this.Joueurs.Contains(joueur) && joueur != null)
                 {
                     this.Joueurs.Add(joueur);
-                    return true;
+                    return this.Joueurs.Contains(joueur);
                 }
             }
             return false;
@@ -104,9 +104,8 @@ namespace Model
         public bool SupprimerManche(Manche manche)
         {
             if (this.Manches.Contains(manche))
-            {
-                this.Manches.Remove(manche);
-                return true;
+            {   
+                return this.Manches.Remove(manche);
             }
             return false;
         }

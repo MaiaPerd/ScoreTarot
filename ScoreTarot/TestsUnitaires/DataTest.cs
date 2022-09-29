@@ -257,7 +257,7 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 false,
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
                 new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
                 {
                     new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
