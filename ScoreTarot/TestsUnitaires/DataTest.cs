@@ -181,7 +181,7 @@ namespace TestsUnitaires
             };
             yield return new object[]
             {
-                false,
+                true,
                 new StubJoueur().chargerJoueurPartie5J(),
                 null
             };
