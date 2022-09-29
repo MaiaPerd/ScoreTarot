@@ -232,13 +232,13 @@ namespace TestsUnitaires
             {
                 true,
                 new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 4, 50, new StubBonus().chargerListeBonusMoyen(), 5,  new Joueur("JoueurAllier", 0)),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche> {})
+                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>())
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche> {})
+                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>())
             };
         }
 
