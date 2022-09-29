@@ -49,7 +49,7 @@ namespace TestsUnitaires
             Assert.Equal(age, joueur4.Age);
         }
         [Theory]
-        [MemberData(nameof(DataTestPourCalculator.Data_TesEqualJoueur), MemberType = typeof(DataTestPourCalculator))]
+        [MemberData(nameof(DataTest.Data_TesEqualJoueur), MemberType = typeof(DataTest))]
         public void TestEqualsJoueur(bool equal, Joueur joueur1, Joueur joueur2)
         {
             Assert.Equal(equal, joueur1.Equals(joueur2));
