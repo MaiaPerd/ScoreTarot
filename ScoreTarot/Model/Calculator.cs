@@ -53,15 +53,7 @@ namespace Model
                 {
                     poignet += 40;
                 }
-                else if (b == Bonus.Petit)
-                {
-                    bout += 1;
-                }
-                else if (b == Bonus.Escuse)
-                {
-                    bout += 1;
-                }
-                else if (b == Bonus.Le21)
+                else if (b == Bonus.Petit || b == Bonus.Escuse|| b == Bonus.Le21)
                 {
                     bout += 1;
                 }
@@ -81,10 +73,6 @@ namespace Model
                     point = scoreJoueur - 36;
                     break;
 
-            }
-            if (point < 0)
-            {
-                score *= -1;
             }
             switch (contrat)
             {
