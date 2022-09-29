@@ -57,4 +57,12 @@ public class UnitTestPartie
         Assert.Equal(reusite, partie.SupprimerJoueur(joueur));
     }
 
+
+    [Theory]
+    [MemberData(nameof(DataTest.Data_TestEqualsPartie), MemberType = typeof(DataTest))]
+    public void TestEqualsPartie(bool equal, Partie partie1, object partie2)
+    {
+        Assert.Equal(equal, partie1.Equals(partie2));
+    }
+
 }

@@ -26,7 +26,7 @@ namespace Stub
         {
             List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie3J();
             List<Manche> lManche = stubManche.chargerLesManche3J(lJoueur);
-            return new Partie(lJoueur, lManche);
+            return new Partie(lJoueur, lManche, 1);
         }
 
         public Partie chargerPartie4J()
@@ -34,7 +34,7 @@ namespace Stub
             List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie4J();
             List<Manche> lManche = stubManche.chargerLesManche4J(lJoueur);
             List<Partie> lespartie = new();
-            return new Partie(lJoueur, lManche);
+            return new Partie(lJoueur, lManche, 2);
         }
 
         public Partie chargerPartie5J()
@@ -42,7 +42,7 @@ namespace Stub
             List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie5J();
             List<Manche> lManche = stubManche.chargerLesManche5J(lJoueur);
             List<Partie> lespartie = new();
-            return new Partie(lJoueur, lManche);
+            return new Partie(lJoueur, lManche, 3);
         }
     }
 }

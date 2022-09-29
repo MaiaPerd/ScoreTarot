@@ -414,6 +414,32 @@ namespace TestsUnitaires
         }
         #endregion
 
+
+        public static IEnumerable<object[]> Data_TestEqualsPartie()
+        {
+
+            yield return new object[]
+            {
+                true,   
+                new StubPartie().chargerPartie3J(),
+                new StubPartie().chargerPartie3J()
+
+            };
+            yield return new object[]
+            {
+                false,
+                new StubPartie().chargerPartie3J(),
+                new StubPartie().chargerPartie4J(),
+            };
+            yield return new object[]
+            {
+                false,
+                new StubPartie().chargerPartie4J(),
+                null,
+            };
+        }
+
+
         #endregion
     }
 }
