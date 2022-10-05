@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Data\" />
+    <None Remove="Interface\" />
+    <None Remove="InterfaceUtilisateur\" />
+    <None Remove="Gestionnaire\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Interface\" />
+    <Folder Include="InterfaceUtilisateur\" />
+    <Folder Include="Gestionnaire\" />
+  </ItemGroup>
 </Project>
