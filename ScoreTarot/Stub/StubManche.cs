@@ -11,17 +11,17 @@ namespace Stub
     {
         private StubBonus stubBonus = new StubBonus();
 
-        public Manche chargerUneManche(List<Joueur> lJoueur)
+        internal Manche chargerUneManche(List<Joueur> lJoueur)
         {
             return new Manche(Contrat.GardeContre, lJoueur[0], 1, 50, stubBonus.chargerListeBonusMoyen(), 4);
         }
 
-        public Manche chargerUneManche2(List<Joueur> lJoueur)
+        internal Manche chargerUneManche2(List<Joueur> lJoueur)
         {
             return new Manche(Contrat.GardeContre, lJoueur[0], 2, 50, stubBonus.chargerListeBonusMoyen(), 4);
         }
 
-        public List<Manche> chargerLesManche3J(List<Joueur> lJoueur)
+        internal List<Manche> chargerLesManche3J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
 
@@ -42,7 +42,7 @@ namespace Stub
             return manches;
         }
 
-        public List<Manche> chargerLesManche4J(List<Joueur> lJoueur)
+        internal List<Manche> chargerLesManche4J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
 
@@ -62,7 +62,7 @@ namespace Stub
             return manches;
         }
 
-        public List<Manche> chargerLesManche5J(List<Joueur> lJoueur)
+        internal List<Manche> chargerLesManche5J(List<Joueur> lJoueur)
         {
             List<Manche> manches = new List<Manche>();
 
