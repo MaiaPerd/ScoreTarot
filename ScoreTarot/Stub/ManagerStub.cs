@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Stub
 {
-    public class ManagerStub 
+    public class ManagerStub
     {
         public List<Joueur> LoadJoueur()
         {
-            return new StubJoueur().chargerJoueur();
+            return new StubJoueur().ChargerJoueur();
         }
 
         public List<Partie> LoadPartie()
@@ -27,36 +27,36 @@ namespace Stub
             {
                 case 3:
                     {
-                        listJoueur = stub.chargerJoueurPartie3J();
+                        listJoueur = stub.ChargerJoueurPartie3J();
                         break;
                     }
                 case 4:
                     {
-                        listJoueur = stub.chargerJoueurPartie4J();
+                        listJoueur = stub.ChargerJoueurPartie4J();
                         break;
                     }
                 case 5:
                     {
-                        listJoueur = stub.chargerJoueurPartie5J();
+                        listJoueur = stub.ChargerJoueurPartie5J();
                         break;
                     }
 
             }
             return listJoueur;
         }
-        public List<Bonus> ChargerBonuschargerListeBonusMoyen()
+        public List<Bonus> ChargerListeBonusMoyen()
         {
-            return new StubBonus().chargerListeBonusMoyen();
+            return new StubBonus().ChargerListeBonusMoyen();
         }
-        public List<Bonus> chargerListeBonusBien()
+        public List<Bonus> ChargerListeBonusBien()
         {
-            return new StubBonus().chargerListeBonusBien();
+            return new StubBonus().ChargerListeBonusBien();
         }
-        public List<Bonus> chargerListeBonusUnSeul()
+        public List<Bonus> ChargerListeBonusUnSeul()
         {
-            return new StubBonus().chargerListeBonusUnSeul();
+            return new StubBonus().ChargerListeBonusUnSeul();
         }
-        public List<Manche> chargerListManche(int pourCombienDeJoueur,List<Joueur> listJoueur)
+        public List<Manche> ChargerListManche(int pourCombienDeJoueur,List<Joueur> listJoueur)
         {
             List<Manche> listManche = new List<Manche>();
             StubManche stub = new StubManche();
@@ -80,6 +80,29 @@ namespace Stub
             }
             return listManche;
 
+        }
+        public Partie ChargerUnePartie(int combienDeJoueur)
+        {
+            StubPartie stub = new StubPartie();
+            switch (combienDeJoueur)
+            {
+                case 3:
+                    {
+                        return stub.chargerPartie3J();
+                        break;
+                    }
+                case 4:
+                    {
+                        return stub.chargerPartie4J();
+                        break;
+                    }
+                case 5:
+                    {
+                        return stub.chargerPartie5J();
+                        break;
+                    }
+            }
+            return null;
         }
 
     }

@@ -22,7 +22,7 @@ namespace TestsUnitaires
                 Contrat.GardeContre,
                 new Joueur("Joueur", 0),
                 50,
-                new StubBonus().chargerListeBonusBien(),
+                new ManagerStub().ChargerListeBonusBien(),
                 4
 
             };
@@ -32,7 +32,7 @@ namespace TestsUnitaires
                 Contrat.GardeContre,
                 new Joueur("Joueur", 0),
                 -14,
-                new StubBonus().chargerListeBonusBien(),
+                new ManagerStub().ChargerListeBonusBien(),
                 4
 
             };
@@ -83,31 +83,31 @@ namespace TestsUnitaires
             {
                 458,
                 new Joueur("JoueurQuiprend", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
             };
             yield return new object[]
             {
                 -51,
                 new Joueur("JoueurAllier", 0),
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0))
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new ManagerStub().ChargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0))
             };
             yield return new object[]
             {
                 -153,
                 new Joueur("JoueurQuiprend", 0),
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusUnSeul(),  5, new Joueur("JoueurAllier", 0))
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 1, 50, new ManagerStub().ChargerListeBonusUnSeul(),  5, new Joueur("JoueurAllier", 0))
             };
             yield return new object[]
             {
                 221,
                 new Joueur("Joueur", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 5,  new Joueur("JoueurAllier", 0))
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 50, new ManagerStub().ChargerListeBonusMoyen(), 5,  new Joueur("JoueurAllier", 0))
             };
             yield return new object[]
             {
                 -229,
                 new Joueur("Joueur", 0),
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 4)
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 4)
             };
         }
 
@@ -117,14 +117,14 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 4),
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 4)
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new ManagerStub().ChargerListeBonusMoyen(), 4),
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new ManagerStub().ChargerListeBonusMoyen(), 4)
             };
             yield return new object[]
             {
                 false,
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new StubBonus().chargerListeBonusMoyen(), 4),
-                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 2, 50, new StubBonus().chargerListeBonusMoyen(), 4)
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 1, 50, new ManagerStub().ChargerListeBonusMoyen(), 4),
+                new Manche(Contrat.GardeContre, new Joueur("Joueur", 0), 2, 50, new ManagerStub().ChargerListeBonusMoyen(), 4)
             };
         }
 
@@ -138,20 +138,20 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 true,
-                new StubJoueur().chargerJoueurPartie3J(),
-                new StubManche().chargerLesManche3J(new StubJoueur().chargerJoueurPartie3J())
+                new ManagerStub().ChargerDesJoueurPourUnePartie(3),
+                new ManagerStub().ChargerListManche(3,new ManagerStub().ChargerDesJoueurPourUnePartie(3))
             };
             yield return new object[]
             {
                 true,
-                new StubJoueur().chargerJoueurPartie4J(),
-                new StubManche().chargerLesManche4J(new StubJoueur().chargerJoueurPartie4J())
+                new ManagerStub().ChargerDesJoueurPourUnePartie(4),
+                new ManagerStub().ChargerListManche(4,new ManagerStub().ChargerDesJoueurPourUnePartie(4))
             };
             yield return new object[]
             {
                 true,
-                new StubJoueur().chargerJoueurPartie5J(),
-                new StubManche().chargerLesManche5J(new StubJoueur().chargerJoueurPartie5J())
+                new ManagerStub().ChargerDesJoueurPourUnePartie(5),
+                new ManagerStub().ChargerListManche(5,new ManagerStub().ChargerDesJoueurPourUnePartie(5))
             };
             yield return new object[]
             {
@@ -165,13 +165,13 @@ namespace TestsUnitaires
                     new Joueur("Andreal", 58, "Bourdin", "Andrea", "andread.png"),
                     new Joueur("Andreal", 58, "Bourdin", "Andrea", "andread.png")
                 },
-                new StubManche().chargerLesManche5J(new StubJoueur().chargerJoueurPartie5J())
+                new ManagerStub().ChargerListManche(5,new ManagerStub().ChargerDesJoueurPourUnePartie(5))
             };
             yield return new object[]
             {
                false,
                null,
-               new StubManche().chargerLesManche5J(new StubJoueur().chargerJoueurPartie5J())
+               new ManagerStub().ChargerListManche(5,new ManagerStub().ChargerDesJoueurPourUnePartie(5))
             };
             yield return new object[]
             {
@@ -182,7 +182,7 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 true,
-                new StubJoueur().chargerJoueurPartie5J(),
+                new ManagerStub().ChargerDesJoueurPourUnePartie(5),
                 null
             };
             yield return new object[]
@@ -203,42 +203,42 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 false,
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
 
             };
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new ManagerStub().ChargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 3, 10, new StubBonus().chargerListeBonusUnSeul(),  5, new Joueur("JoueurAllier", 0)),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 3, 10, new ManagerStub().ChargerListeBonusUnSeul(),  5, new Joueur("JoueurAllier", 0)),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 4, 50, new StubBonus().chargerListeBonusMoyen(), 5,  new Joueur("JoueurAllier", 0)),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>())
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 4, 50, new ManagerStub().ChargerListeBonusMoyen(), 5,  new Joueur("JoueurAllier", 0)),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>())
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>())
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>())
             };
         }
 
@@ -248,28 +248,28 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new ManagerStub().ChargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
         }
@@ -280,28 +280,28 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 true,
-                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
-                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new StubBonus().chargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Manche(Contrat.Garde, new Joueur("JoueurQuiprend", 0), 2, 50, new ManagerStub().ChargerListeBonusUnSeul(), 5, new Joueur("JoueurAllier", 0)),
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
         }
@@ -317,9 +317,9 @@ namespace TestsUnitaires
             {
                 true,
                 new Joueur("JoueurAjouter", 0),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
 
             };
@@ -327,25 +327,25 @@ namespace TestsUnitaires
             {
                 false,
                 new Joueur("albertus", 56, "Patricus"),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 new Joueur("JoueurAjouter", 0),
-                new Partie(new StubJoueur().chargerJoueurPartie5J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(5), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche> {})
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche> {})
             };
         }
 
@@ -356,27 +356,27 @@ namespace TestsUnitaires
             {
                 false,
                 new Joueur("JoueurSupprimer", 0),
-                new Partie(new StubJoueur().chargerJoueurPartie5J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(5), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 true,
                 new Joueur("albertus", 56, "Patricus"),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
         }
@@ -388,27 +388,27 @@ namespace TestsUnitaires
             {
                 true,
                 new Joueur("albertus", 70, "Patricus"),
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 new Joueur("JoueurAModifier", 0),
-                new Partie(new StubJoueur().chargerJoueurPartie5J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(5), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
             yield return new object[]
             {
                 false,
                 null,
-                new Partie(new StubJoueur().chargerJoueurPartie3J(), new List<Manche>
+                new Partie(new ManagerStub().ChargerDesJoueurPourUnePartie(3), new List<Manche>
                 {
-                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new StubBonus().chargerListeBonusMoyen(), 3)
+                    new Manche(Contrat.GardeContre, new Joueur("JoueurQuiprend", 0), 1, 60, new ManagerStub().ChargerListeBonusMoyen(), 3)
                 })
             };
         }
@@ -421,20 +421,20 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 true,
-                new StubPartie().chargerPartie3J(),
-                new StubPartie().chargerPartie3J()
+                new ManagerStub().ChargerUnePartie(3),
+                new ManagerStub().ChargerUnePartie(3)
 
             };
             yield return new object[]
             {
                 false,
-                new StubPartie().chargerPartie3J(),
-                new StubPartie().chargerPartie4J(),
+                new ManagerStub().ChargerUnePartie(3),
+                new ManagerStub().ChargerUnePartie(4),
             };
             yield return new object[]
             {
                 false,
-                new StubPartie().chargerPartie4J(),
+                new ManagerStub().ChargerUnePartie(4),
                 null,
             };
         }
@@ -563,6 +563,32 @@ namespace TestsUnitaires
                 58
             };
         }
-#endregion
+        #endregion
+
+        #region Data Calculator
+        public static IEnumerable<object[]> Data_TestStub()
+        {
+
+            yield return new object[]
+            {
+                3,
+                new List<Joueur>(){ new Joueur("Daniel", 51) , new Joueur("Francis", 51) , new Joueur("Antoine", 51) },
+                12
+            };
+            yield return new object[]
+            {
+                4,
+                new List<Joueur>(){ new Joueur("Daniel", 51) , new Joueur("Francis", 51) , new Joueur("Antoine", 51), new Joueur("Christophe", 51) },
+                12
+            };
+            yield return new object[]
+            {
+                5,
+                new List<Joueur>(){ new Joueur("Daniel", 51) , new Joueur("Francis", 51) , new Joueur("Antoine", 51), new Joueur("Christophe", 51), new Joueur("Bernadette", 51) },
+                12
+            };
+
+        }
+        #endregion
     }
 }
