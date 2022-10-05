@@ -67,7 +67,7 @@ namespace Model
             {
                 i++;
                 if(p.Manches.Count!=0)
-                    Console.WriteLine(i+" - nombre de joueurs : "+p.Joueurs.Count+" date de la premiere manche : "p.Manches.First().Date);
+                    Console.WriteLine(i+" - nombre de joueurs : "+p.Joueurs.Count+" date de la premiere manche : "+p.Manches.First().Date);
                 else
                     Console.WriteLine(i + " - nombre de joueurs : " + p.Joueurs.Count + "aucune manche");
             }
