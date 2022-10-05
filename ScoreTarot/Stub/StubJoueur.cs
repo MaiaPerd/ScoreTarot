@@ -4,7 +4,7 @@ namespace Stub
 {
     public class StubJoueur
     {
-        public List<Joueur> chargerJoueur()
+        internal List<Joueur> ChargerJoueur()
         {
             List<Joueur> joueurs = new List<Joueur>();
             joueurs.Add(new Joueur("albertus", 56, "Patricus"));
@@ -36,7 +36,7 @@ namespace Stub
             return joueurs;
         }
 
-        public List<Joueur> chargerJoueurPartie3J()
+        internal List<Joueur> ChargerJoueurPartie3J()
         {
             List<Joueur> joueurs = new List<Joueur>();
             joueurs.Add(new Joueur("albertus", 56, "Patricus"));
@@ -45,7 +45,7 @@ namespace Stub
             return joueurs;
         }
 
-        public List<Joueur> chargerJoueurPartie4J()
+        internal List<Joueur> ChargerJoueurPartie4J()
         {
             List<Joueur> joueurs = new List<Joueur>();
             joueurs.Add(new Joueur("albertus", 56, "Patricus"));
@@ -55,7 +55,7 @@ namespace Stub
             return joueurs;
         }
 
-        public List<Joueur> chargerJoueurPartie5J()
+        internal List<Joueur> ChargerJoueurPartie5J()
         {
             List<Joueur> joueurs = new List<Joueur>();
             joueurs.Add(new Joueur("albertus", 56, "Patricus"));

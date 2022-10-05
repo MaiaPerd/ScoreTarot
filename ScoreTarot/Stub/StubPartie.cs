@@ -12,7 +12,7 @@ namespace Stub
 
         private StubManche stubManche = new StubManche();
 
-        public List<Partie> chargerPartie()
+        internal List<Partie> chargerPartie()
         {
             List<Partie> lespartie = new();
             lespartie.Add(chargerPartie3J());
@@ -22,24 +22,24 @@ namespace Stub
             return lespartie;
         }
 
-        public Partie chargerPartie3J()
+        internal Partie chargerPartie3J()
         {
-            List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie3J();
+            List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie3J();
             List<Manche> lManche = stubManche.chargerLesManche3J(lJoueur);
             return new Partie(lJoueur, lManche, 1);
         }
 
-        public Partie chargerPartie4J()
+        internal Partie chargerPartie4J()
         {
-            List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie4J();
+            List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie4J();
             List<Manche> lManche = stubManche.chargerLesManche4J(lJoueur);
             List<Partie> lespartie = new();
             return new Partie(lJoueur, lManche, 2);
         }
 
-        public Partie chargerPartie5J()
+        internal Partie chargerPartie5J()
         {
-            List<Joueur> lJoueur = new StubJoueur().chargerJoueurPartie5J();
+            List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie5J();
             List<Manche> lManche = stubManche.chargerLesManche5J(lJoueur);
             List<Partie> lespartie = new();
             return new Partie(lJoueur, lManche, 3);
