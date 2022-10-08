@@ -84,9 +84,37 @@ namespace Model
         /// le parametre quoi permet de mettre par exemple "le nom du joueur" ou "l'age du joueur"
         /// </summary>
         /// <param name="quoi"></param>
-        public void AfficherDemandeEntreQuelsueChose(String quoi)
+        public void AfficherDemandeEntreQuelqueChose(String quoi)
         {
             Console.WriteLine("Veuillez entrer "+quoi);
+        }
+
+        public void AfficherContrat()
+        {
+            Console.WriteLine("-----    Contrat   ------");
+            Console.WriteLine("1 - Prise");
+            Console.WriteLine("2 - Garde");
+            Console.WriteLine("3 - GardeSans");
+            Console.WriteLine("4 - GardeContre");
+            Console.WriteLine("666- retourner au menu");
+        }
+
+        public void AfficherBonus()
+        {
+            Console.WriteLine("-----    Bonus   ------");
+            Console.WriteLine("1 - Petit");
+            Console.WriteLine("2 - PetitAuBout");
+            Console.WriteLine("3 - Escuse");
+            Console.WriteLine("4 - Le21");
+            Console.WriteLine("5 - SimplePoignet");
+            Console.WriteLine("6 - DoublePoignet");
+            Console.WriteLine("7 - TriplePoignet");
+            Console.WriteLine("666- terminer");
+        }
+
+        public void AfficherErreur(String erreur)
+        {
+            Console.WriteLine(erreur);
         }
 
     }

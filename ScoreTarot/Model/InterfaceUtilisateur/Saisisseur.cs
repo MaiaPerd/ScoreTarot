@@ -1,6 +1,6 @@
 ﻿using System;
-namespace Model.InterfaceUtilisateur
-{
+namespace Model
+{ 
     public class Sasisseur
     {
 
