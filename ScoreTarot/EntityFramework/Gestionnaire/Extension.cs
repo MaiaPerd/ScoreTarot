@@ -121,7 +121,8 @@ namespace EntityFramework
         {
             MancheEntity mancheEntity = new MancheEntity();
             mancheEntity.Id = manche.Id;
-            mancheEntity.JoueurAllier = manche.JoueurAllier.toEntity();
+            if(mancheEntity.JoueurAllier!=null)
+                mancheEntity.JoueurAllier = manche.JoueurAllier.toEntity();
             mancheEntity.JoueurQuiPrend = manche.JoueurQuiPrend.toEntity();
             mancheEntity.NbJoueur = manche.NbJoueur;
             mancheEntity.Score = manche.Score;
