@@ -14,9 +14,12 @@
 
 # ScoreTarot
 
-Welcome on the ScoreTarot project!  
+Bienvenue sur le gitea de ScoreTarot! 
+ 
+ScoreTarot est une application permettant de gérer les scores d'un utilisateur qui joue au tarot
+en effet cette application peut lui permettre de garder une trace de ses précdentes parties.
+Cette application peut aussi lui facilité certains calculs des scores.
 
-application pour gérer le score des utilisateur qui joue au tarot  
 
 _Generated with a_ **Code#0** _template_  
 <img src="Documentation/doc_images/CodeFirst.png" height=40/>   
