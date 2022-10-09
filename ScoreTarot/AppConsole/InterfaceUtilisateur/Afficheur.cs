@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model;
 
-namespace Model
+namespace AppConsole.InterfaceUtilisateur
 {
     public class Afficheur
     {
@@ -59,7 +60,7 @@ namespace Model
             else
                 Console.WriteLine("prenom : null");
         }
-        public void AfficherLesPartie(List<Partie> lesPartie)
+        public void AfficherLesPartie(System.Collections.ObjectModel.ReadOnlyCollection<Partie> lesPartie)
         {
             int i=0;
             Console.WriteLine("affichage des parties:");
