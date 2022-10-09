@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
+using AppConsole.InterfaceUtilisateur;
 using Model;
 
 namespace AppConsole.Gestionnaire

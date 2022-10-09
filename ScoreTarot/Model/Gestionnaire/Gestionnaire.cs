@@ -33,12 +33,6 @@ namespace Model.Gestionnaire
                 lPartie = value;
             }
         }
-
-        /*
-        public void recupererManche(Manche manche, Partie partie)
-        {
-            afficheur.AfficherDetailManche(manche, partie);
-        }*/
        
         public void ajouterUnJoueur(String pseudo, int age, String nom, String prenom)
         {
@@ -48,6 +42,16 @@ namespace Model.Gestionnaire
         public void ajouterUneManche(int partie, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier)
         {
             LPartie.Find(p => p.Id == partie).AjouterManche(new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier));
+        }
+
+        public System.Collections.ObjectModel.ReadOnlyCollection<Joueur> GetJoueurs()
+        {
+            return LJoueur.AsReadOnly();
+        }
+
+        public System.Collections.ObjectModel.ReadOnlyCollection<Partie> GetParties()
+        {
+            return LPartie.AsReadOnly();
         }
 
 

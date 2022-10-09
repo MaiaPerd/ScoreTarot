@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Model
+namespace AppConsole.InterfaceUtilisateur
 { 
     public class Sasisseur
     {
