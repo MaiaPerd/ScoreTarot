@@ -8,7 +8,7 @@ namespace Model.Gestionnaire
     public class Gestionnaire
     {
         private List<Joueur> lJoueur;
-        public List<Joueur> LJoueur
+        private List<Joueur> LJoueur
         {
             get
             {
@@ -22,7 +22,7 @@ namespace Model.Gestionnaire
         }
 
         private List<Partie> lPartie;
-        public List<Partie> LPartie
+        private List<Partie> LPartie
         {
             get
             {

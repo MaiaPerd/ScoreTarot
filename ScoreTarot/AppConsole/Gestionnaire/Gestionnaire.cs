@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using AppConsole.InterfaceUtilisateur;
 using Model;
+using Model.Gestionnaire;
 
 namespace AppConsole.Gestionnaire
 {
@@ -192,7 +193,7 @@ namespace AppConsole.Gestionnaire
 
         private Joueur joueurExistantDansPartie(int partie, string prend)
         {
-            Joueur joueur = gestionnaire.LJoueur[0];
+            Joueur joueur = gestionnaire.GetJoueurs()[0];
             string pseudo = "";
             bool pseudoCorrecte = false;
             while (pseudoCorrecte == false)
@@ -219,7 +220,7 @@ namespace AppConsole.Gestionnaire
 
         private Joueur joueurExistantDansLaListe()
         {
-            Joueur joueur = gestionnaire.LJoueur[0];
+            Joueur joueur = gestionnaire.GetJoueurs()[0];
             string pseudo = "";
             bool pseudoCorrecte = false;
             while (pseudoCorrecte == false)
@@ -302,7 +303,7 @@ namespace AppConsole.Gestionnaire
 
         public void afficherPartie()
         {
-            afficheur.AfficherLesPartie(gestionnaire.LPartie);
+            afficheur.AfficherLesPartie(gestionnaire.GetParties());
         }
 
         public void afficherJoueur(Joueur joueur)
@@ -312,7 +313,10 @@ namespace AppConsole.Gestionnaire
 
         public void afficherJoueurs()
         {
-            gestionnaire.LJoueur.ForEach(joueur => afficheur.AfficherJoueur(joueur));
+            foreach(Joueur joueur in gestionnaire.GetJoueurs())
+            {
+                afficheur.AfficherJoueur(joueur);
+            }
         }
     }
 }

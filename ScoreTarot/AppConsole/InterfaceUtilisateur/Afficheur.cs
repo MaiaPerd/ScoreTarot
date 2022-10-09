@@ -60,7 +60,7 @@ namespace AppConsole.InterfaceUtilisateur
             else
                 Console.WriteLine("prenom : null");
         }
-        public void AfficherLesPartie(List<Partie> lesPartie)
+        public void AfficherLesPartie(System.Collections.ObjectModel.ReadOnlyCollection<Partie> lesPartie)
         {
             int i=0;
             Console.WriteLine("affichage des parties:");
