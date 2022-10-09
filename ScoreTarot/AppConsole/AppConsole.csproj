@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="InterfaceUtilisateur\" />
+    <None Remove="Gestionnaire\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="InterfaceUtilisateur\" />
+    <Folder Include="Gestionnaire\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
 </Project>
