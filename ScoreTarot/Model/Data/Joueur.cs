@@ -15,7 +15,7 @@ namespace Model
             {
                 return pseudo;
             }
-            set
+            private set
             {
                 pseudo = value;
                 if(String.IsNullOrEmpty(pseudo))
