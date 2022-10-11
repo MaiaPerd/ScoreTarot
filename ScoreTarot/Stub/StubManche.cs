@@ -13,12 +13,12 @@ namespace Stub
 
         internal Manche chargerUneManche(List<Joueur> lJoueur)
         {
-            return new Manche(Contrat.GardeContre, lJoueur[0], 1, 50, stubBonus.ChargerListeBonusMoyen(), 4);
+            return new Manche(1, Contrat.GardeContre, lJoueur[0], 50, stubBonus.ChargerListeBonusMoyen(), 4);
         }
 
         internal Manche chargerUneManche2(List<Joueur> lJoueur)
         {
-            return new Manche(Contrat.GardeContre, lJoueur[0], 2, 50, stubBonus.ChargerListeBonusMoyen(), 4);
+            return new Manche(2, Contrat.GardeContre, lJoueur[0], 50, stubBonus.ChargerListeBonusMoyen(), 4);
         }
 
         internal List<Manche> chargerLesManche3J(List<Joueur> lJoueur)

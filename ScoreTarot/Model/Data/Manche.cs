@@ -46,7 +46,7 @@ namespace Model
         public int Id { get; private set; }
         public int NbJoueur { get; private set; }
 
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int id, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
+        public Manche(int id, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
             Bonus = new List<Bonus>();
