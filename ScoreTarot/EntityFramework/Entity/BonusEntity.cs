@@ -10,9 +10,9 @@ namespace EntityFramework.Entity
     {
         
         PetitAuBout = 1,
-        SimplePoignet = 2,
-        DoublePoignet = 4,
-        TriplePoignet = 8,
+        SimplePoignee = 2,
+        DoublePoignee = 4,
+        TriplePoignee = 8,
         Petit = 16,
         Escuse = 32,
         Le21= 64

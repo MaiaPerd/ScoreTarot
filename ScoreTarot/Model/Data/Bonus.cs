@@ -8,6 +8,6 @@ namespace Model
 {
     public enum Bonus
     {
-        PetitAuBout, SimplePoignet, DoublePoignet, TriplePoignet, Petit, Escuse, Le21
+        PetitAuBout, SimplePoignee, DoublePoignee, TriplePoignee, Petit, Escuse, Le21
     }
 }

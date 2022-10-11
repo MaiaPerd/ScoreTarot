@@ -140,28 +140,28 @@ namespace AppliConsole.Gestionnaire
                         }
                         break;
                     case 5:
-                        if (!bonus.Contains(Bonus.SimplePoignet))
+                        if (!bonus.Contains(Bonus.SimplePoignee))
                         {
-                            bonus.Add(Bonus.SimplePoignet);   
+                            bonus.Add(Bonus.SimplePoignee);   
                         }
-                        bonus.Remove(Bonus.TriplePoignet);
-                        bonus.Remove(Bonus.DoublePoignet);                     
+                        bonus.Remove(Bonus.TriplePoignee);
+                        bonus.Remove(Bonus.DoublePoignee);                     
                         break;
                     case 6:
-                        if (!bonus.Contains(Bonus.DoublePoignet))
+                        if (!bonus.Contains(Bonus.DoublePoignee))
                         {
-                            bonus.Add(Bonus.DoublePoignet);
+                            bonus.Add(Bonus.DoublePoignee);
                         }
-                        bonus.Remove(Bonus.TriplePoignet);
-                        bonus.Remove(Bonus.SimplePoignet);
+                        bonus.Remove(Bonus.TriplePoignee);
+                        bonus.Remove(Bonus.SimplePoignee);
                         break;
                     case 7:
-                        if (!bonus.Contains(Bonus.TriplePoignet))
+                        if (!bonus.Contains(Bonus.TriplePoignee))
                         {
-                            bonus.Add(Bonus.TriplePoignet);
+                            bonus.Add(Bonus.TriplePoignee);
                         }
-                        bonus.Remove(Bonus.DoublePoignet);
-                        bonus.Remove(Bonus.SimplePoignet);
+                        bonus.Remove(Bonus.DoublePoignee);
+                        bonus.Remove(Bonus.SimplePoignee);
                         break;
                     case 666:
                         fin = true;
