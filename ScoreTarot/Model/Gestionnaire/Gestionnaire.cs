@@ -106,6 +106,16 @@ namespace Model.Gestionnaire
         {
             LJoueur.AddRange(lesJoueurs);
         }
+        public void supprimerJoueur(Joueur joueur)
+        {
+            if(lJoueur.Contains(joueur))
+                lJoueur.Remove(joueur);
+        }
+        public void supprimerPartie(Partie partie)
+        {
+            if(lPartie.Contains(partie))
+                lPartie.Remove(partie);
+        }
 
     }
 }

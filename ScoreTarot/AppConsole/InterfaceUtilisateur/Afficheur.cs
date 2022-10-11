@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -116,6 +117,18 @@ namespace AppConsole.InterfaceUtilisateur
         public void AfficherErreur(String erreur)
         {
             Console.WriteLine(erreur);
+        }
+
+        public void afficherlisteJoueur(System.Collections.ObjectModel.ReadOnlyCollection<Joueur> lJoueur)
+        {
+            for(int i = 0; i < lJoueur.Count; i++)
+            {
+                Console.WriteLine(i +" - "+ lJoueur[i].Pseudo);
+            }
+        }
+        public void afficherdemandemodif(String quoi)
+        {
+            Console.WriteLine("voulez vous modifier " + quoi + " ?");
         }
 
     }

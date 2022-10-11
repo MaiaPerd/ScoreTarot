@@ -318,6 +318,112 @@ namespace AppConsole.Gestionnaire
                 afficheur.AfficherJoueur(joueur);
             }
         }
+        public void supprimerJoueur()
+        {
+            afficheur.afficherlisteJoueur(gestionnaire.GetJoueurs());
+            afficheur.AfficherDemandeChoixObject("du joueur");
+            int choix = (int)saisisseur.saisirInt();
+            while (choix <0 && choix > gestionnaire.GetJoueurs().Count)
+            {
+                afficheur.AfficherErreurChoix();
+                choix = (int)saisisseur.saisirInt();
+            }
+            Joueur jouerAsupprimer = gestionnaire.GetJoueurs()[choix];
+            gestionnaire.supprimerJoueur(jouerAsupprimer);
+        }
+        public void supprimerPartie()
+        {
+            afficheur.AfficherLesPartie(gestionnaire.GetParties());
+            afficheur.AfficherDemandeChoixObject("de la partie");
+            int choix = (int)saisisseur.saisirInt();
+            while (choix < 0 && choix > gestionnaire.GetParties().Count)
+            {
+                afficheur.AfficherErreurChoix();
+                choix = (int)saisisseur.saisirInt();
+            }
+            Partie partieASupprimer = gestionnaire.GetParties()[choix];
+            gestionnaire.supprimerPartie(partieASupprimer);
+        }
+
+        public void modifierUnJoueur()
+        {
+            afficheur.afficherlisteJoueur(gestionnaire.GetJoueurs());
+            afficheur.AfficherDemandeChoixObject("du joueur");
+            int choix = (int)saisisseur.saisirInt();
+            while (choix < 0 && choix > gestionnaire.GetJoueurs().Count)
+            {
+                afficheur.AfficherErreur(" choix du joueur incorrect");
+                choix = (int)saisisseur.saisirInt();
+            }
+            Joueur joueurAModifier = gestionnaire.GetJoueurs()[choix];
+            Joueur joueurModifier = ModifierUnJoueur(joueurAModifier);
+
+        }
+        private Joueur ModifierUnJoueur(Joueur joueurAModifier)
+        {
+            afficheur.AfficherJoueur(joueurAModifier);
+            string pseudo = joueurAModifier.Pseudo;
+            int age = joueurAModifier.Age;
+            string img = joueurAModifier.URLIMG;
+            string prenom = joueurAModifier.Prenom;
+            string nom = joueurAModifier.Nom;
+            int choix=DemandeModif("le pseudo");
+            if (choix == 1)
+            {
+                string pseudochoisis = "";
+                bool pseudoCorrecte = false;
+                while (pseudoCorrecte == false)
+                {
+                    pseudo = saisisseur.saisirString();
+                    if (String.IsNullOrEmpty(pseudo))
+                    {
+                        afficheur.AfficherErreur("Le pseudo ne peut pas être vide !");
+                        afficheur.AfficherDemandeEntreQuelqueChose("votre pseudo: ");
+                    }
+                    else
+                    {
+                        pseudoCorrecte = true;
+                    }
+                }
+                pseudo = pseudochoisis;
+            }
+            choix = DemandeModif("l'age");
+            if (choix == 1)
+            {
+                age = (int)saisisseur.saisirInt();
+            }
+            choix = DemandeModif("le nom");
+            if(choix == 1)
+            {
+                nom = saisisseur.saisirString();
+            }
+            choix = DemandeModif("le prenom");
+            if (choix == 1)
+            {
+                prenom = saisisseur.saisirString();
+            }
+            choix = DemandeModif("l image");
+            if (choix == 1)
+            {
+                img = saisisseur.saisirString();
+            }
+
+
+            return new Joueur(pseudo, age, nom, prenom, img);
+        }
+        private int DemandeModif(String quoi)
+        {
+            afficheur.afficherdemandemodif(quoi);
+            int choix;
+            afficheur.AfficherDemandeEntreQuelqueChose(" 1 pour oui et 0 pour non");
+            choix = (int)saisisseur.saisirInt();
+            while (choix != 0 || choix != 1)
+            {
+                afficheur.AfficherErreur("choix incorrect");
+                choix = (int)saisisseur.saisirInt();
+            }
+            return choix;
+        }
     }
 }
 

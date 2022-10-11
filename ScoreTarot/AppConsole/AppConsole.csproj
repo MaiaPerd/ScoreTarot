@@ -11,8 +11,8 @@
     <None Remove="Gestionnaire\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="InterfaceUtilisateur\" />
-    <Folder Include="Gestionnaire\" />
+    <Folder Include="interfaceUtilisateur\" />
+    <Folder Include="gestionnaire\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj" />
