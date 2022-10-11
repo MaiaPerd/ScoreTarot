@@ -8,8 +8,6 @@ namespace Model
 {
     public class Joueur
     {
-        public int Id { get; private set; }
-
         public string Pseudo { 
             get
             {
@@ -36,20 +34,6 @@ namespace Model
          *  Url qui permet de retrouver l'image de l'avatar dans le dossier correspondant
          */
         public string URLIMG { get; private set; }
-
-        public Joueur(int id, string pseudo, int age, string nom, string prenom, string nomImage)
-        {
-            if (String.IsNullOrEmpty(pseudo))
-            {
-                throw new ArgumentNullException(nameof(pseudo));
-            }
-            Id = id;
-            Pseudo = pseudo;
-            Nom = nom;
-            Prenom = prenom;
-            Age = age;
-            URLIMG = "../image/" + nomImage;
-        }
 
         public Joueur(string pseudo, int age, string nom, string prenom, string nomImage )
         {
@@ -107,7 +91,6 @@ namespace Model
         public bool Equals(Joueur autreJoueur)
         {
             return autreJoueur.Pseudo.Equals(pseudo);
-                /**|| autreJoueur.Id.Equals(Id);*/
         }
 
         public override bool Equals(object? obj)

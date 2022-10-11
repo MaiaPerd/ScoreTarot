@@ -8,9 +8,9 @@ namespace EntityFramework.Entity
 {
     public enum ContratEntity
     {
-        Prise,
-        Garde,
-        GardeSans,
-        GardeContre
+        Prise = 1,
+        Garde = 2,
+        GardeSans = 4,
+        GardeContre = 8
     }
 }

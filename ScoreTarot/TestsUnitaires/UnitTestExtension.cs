@@ -30,7 +30,7 @@ namespace TestsUnitaires
         public void TestExtentionPartie(Partie partie)
         {
             PartieEntity party = partie.toEntity();
-            Assert.Equal(party.Joueurs.Count, partie.Joueurs.Count);
+            Assert.Equal(party.Joueurs.Count(), partie.Joueurs.Count);
             Assert.Equal(party.Manches.Count,partie.Manches.Count);
             for(int i=0;i<party.Manches.Count;i++)
             {
@@ -50,8 +50,8 @@ namespace TestsUnitaires
                     Assert.Equal(party.Manches.GetItemByIndex(i).JoueurQuiPrend.Nom, partie.Manches.GetItemByIndex(i).JoueurQuiPrend.Nom);
                 
             }
-            Assert.Equal(party.Joueurs.Count, partie.Joueurs.Count);
-            for (int i=0; i<party.Joueurs.Count; i++)
+            Assert.Equal(party.Joueurs.Count(), partie.Joueurs.Count);
+            for (int i=0; i<party.Joueurs.Count(); i++)
             {
                 Assert.Equal(party.Joueurs.GetItemByIndex(i).Nom, partie.Joueurs.GetItemByIndex(i).Nom);
                 Assert.Equal(party.Joueurs.GetItemByIndex(i).URLIMG, partie.Joueurs.GetItemByIndex(i).URLIMG);
@@ -83,8 +83,8 @@ namespace TestsUnitaires
             }
         }
         [Theory]
-        [InlineData("Dani_45","Dani",50,"img","DEBOIS",45)]
-        public void testerNewJoueurEntity(String pseudo,String prenom,int age,String image,String nom,int ID)
+        [InlineData("Dani_45","Dani",50,"img","DEBOIS")]
+        public void testerNewJoueurEntity(String pseudo,String prenom,int age,String image,String nom)
         {
             JoueurEntity jentity =new JoueurEntity();
             jentity.Prenom = prenom;
@@ -92,13 +92,11 @@ namespace TestsUnitaires
             jentity.URLIMG = image;
             jentity.Pseudo = pseudo;
             jentity.Age = age;
-            jentity.Id = ID;
             Assert.Equal(prenom, jentity.Prenom);
             Assert.Equal(pseudo, jentity.Pseudo);
             Assert.Equal(nom, jentity.Nom);
             Assert.Equal(image, jentity.URLIMG);
             Assert.Equal(age, jentity.Age);
-            Assert.Equal(ID, jentity.Id);
         }
         [Theory]
         [MemberData(nameof(DataTest.Data_TestExtentionContrat),MemberType = typeof(DataTest))]

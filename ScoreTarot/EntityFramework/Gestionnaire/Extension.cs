@@ -9,7 +9,6 @@ namespace EntityFramework
         public static JoueurEntity toEntity(this Joueur joueur)
         {
             JoueurEntity joueurEntity = new JoueurEntity();
-            joueurEntity.Id = joueur.Id;
             joueurEntity.Age = joueur.Age;
             joueurEntity.URLIMG = joueur.URLIMG;
             joueurEntity.Pseudo = joueur.Pseudo;
@@ -25,10 +24,10 @@ namespace EntityFramework
 
         public static Joueur toModel(this JoueurEntity joueurEntity)
         {
-            return new Joueur(joueurEntity.Id, joueurEntity.Pseudo, joueurEntity.Age, joueurEntity.Nom, joueurEntity.Prenom, joueurEntity.URLIMG);
+            return new Joueur(joueurEntity.Pseudo, joueurEntity.Age, joueurEntity.Nom, joueurEntity.Prenom, joueurEntity.URLIMG);
         }
 
-        public static IEnumerable<Joueur> toModels(this List<JoueurEntity> joueursEntities)
+        public static IEnumerable<Joueur> toModels(this IEnumerable<JoueurEntity> joueursEntities)
         {
             return joueursEntities.Select(joueur => joueur.toModel());
         }
@@ -142,7 +141,7 @@ namespace EntityFramework
             return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModels().ToList(), mancheEntity.NbJoueur, mancheEntity.JoueurAllier.toModel());
         }
 
-        public static IEnumerable<Manche> toModels(this List<MancheEntity> manchesEntities)
+        public static IEnumerable<Manche> toModels(this ICollection<MancheEntity> manchesEntities)
         {
             return manchesEntities.Select(manche => manche.toModel());
         }
@@ -151,7 +150,7 @@ namespace EntityFramework
         {
             PartieEntity partieEntity = new PartieEntity();
             partieEntity.Id = partie.Id;
-            partieEntity.Joueurs = partie.Joueurs.toEntities().ToList();
+            partie.Joueurs.toEntities().ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur));
             partieEntity.Manches = partie.Manches.toEntities().ToList();
             return partieEntity;
         }
