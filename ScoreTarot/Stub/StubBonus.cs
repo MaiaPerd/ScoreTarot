@@ -15,7 +15,7 @@ namespace Stub
             List<Bonus> lBonus =  new List<Bonus>();
             lBonus.Add(Bonus.PetitAuBout);
             lBonus.Add(Bonus.Petit);
-            lBonus.Add(Bonus.DoublePoignet);
+            lBonus.Add(Bonus.DoublePoignee);
             return lBonus;
         }
 
@@ -25,7 +25,7 @@ namespace Stub
             lBonus.Add(Bonus.Escuse);
             lBonus.Add(Bonus.Petit);
             lBonus.Add(Bonus.Le21);
-            lBonus.Add(Bonus.SimplePoignet);
+            lBonus.Add(Bonus.SimplePoignee);
             return lBonus;
         }
 

@@ -78,12 +78,12 @@ namespace EntityFramework
                     return BonusEntity.Petit;
                 case Bonus.PetitAuBout:
                     return BonusEntity.PetitAuBout;
-                case Bonus.SimplePoignet:
-                    return BonusEntity.SimplePoignet;
-                case Bonus.DoublePoignet:
-                    return BonusEntity.DoublePoignet;
+                case Bonus.SimplePoignee:
+                    return BonusEntity.SimplePoignee;
+                case Bonus.DoublePoignee:
+                    return BonusEntity.DoublePoignee;
             }
-            return BonusEntity.TriplePoignet;
+            return BonusEntity.TriplePoignee;
         }
 
         public static IEnumerable<BonusEntity> toEntities(this List<Bonus> bonus)
@@ -103,12 +103,12 @@ namespace EntityFramework
                     return Bonus.Petit;
                 case BonusEntity.PetitAuBout:
                     return Bonus.PetitAuBout;
-                case BonusEntity.SimplePoignet:
-                    return Bonus.SimplePoignet;
-                case BonusEntity.DoublePoignet:
-                    return Bonus.DoublePoignet;
+                case BonusEntity.SimplePoignee:
+                    return Bonus.SimplePoignee;
+                case BonusEntity.DoublePoignee:
+                    return Bonus.DoublePoignee;
             }
-            return Bonus.TriplePoignet;
+            return Bonus.TriplePoignee;
         }
 
         public static IEnumerable<Bonus> toModels(this List<BonusEntity> bonusEntities)

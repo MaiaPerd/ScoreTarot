@@ -41,15 +41,15 @@ namespace Model
                 {
                     petit = true;
                 }
-                else if (b == Bonus.SimplePoignet)
+                else if (b == Bonus.SimplePoignee)
                 {
                     poignet += 20;
                 }
-                else if (b == Bonus.DoublePoignet)
+                else if (b == Bonus.DoublePoignee)
                 {
                     poignet += 30;
                 }
-                else if (b == Bonus.TriplePoignet)
+                else if (b == Bonus.TriplePoignee)
                 {
                     poignet += 40;
                 }

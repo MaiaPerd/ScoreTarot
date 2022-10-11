@@ -137,17 +137,17 @@ namespace TestsUnitaires
             {
                 Assert.Equal(BonusEntity.Le21, bonusEntity);
             }
-            if (Bonus.DoublePoignet == bonus)
+            if (Bonus.DoublePoignee == bonus)
             {
-                Assert.Equal(BonusEntity.DoublePoignet, bonusEntity);
+                Assert.Equal(BonusEntity.DoublePoignee, bonusEntity);
             }
-            if (Bonus.SimplePoignet == bonus)
+            if (Bonus.SimplePoignee == bonus)
             {
-                Assert.Equal(BonusEntity.SimplePoignet, bonusEntity);
+                Assert.Equal(BonusEntity.SimplePoignee, bonusEntity);
             }
-            if (Bonus.TriplePoignet == bonus)
+            if (Bonus.TriplePoignee == bonus)
             {
-                Assert.Equal(BonusEntity.TriplePoignet, bonusEntity);
+                Assert.Equal(BonusEntity.TriplePoignee, bonusEntity);
             }
         }
     }

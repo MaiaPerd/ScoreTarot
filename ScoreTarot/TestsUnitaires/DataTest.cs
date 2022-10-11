@@ -489,7 +489,7 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 -191,
-                new List<Bonus>(){Bonus.Escuse,Bonus.DoublePoignet},
+                new List<Bonus>(){Bonus.Escuse,Bonus.DoublePoignee},
                 Contrat.GardeContre,
                 40
             };
@@ -503,21 +503,21 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 -181,
-                new List<Bonus>(){Bonus.Escuse,Bonus.SimplePoignet},
+                new List<Bonus>(){Bonus.Escuse,Bonus.SimplePoignee},
                 Contrat.GardeContre,
                 40
             };
             yield return new object[]
             {
                 -191,
-                new List<Bonus>(){Bonus.TriplePoignet},
+                new List<Bonus>(){Bonus.TriplePoignee},
                 Contrat.GardeContre,
                 55
             };
             yield return new object[]
             {
                 194,
-                new List<Bonus>(){Bonus.SimplePoignet},
+                new List<Bonus>(){Bonus.SimplePoignee},
                 Contrat.GardeContre,
                 80
             };
@@ -638,27 +638,27 @@ namespace TestsUnitaires
                 new Partie(
                     new List<Joueur>(){new Joueur("Patrick",50),new Joueur("Francis",15),new Joueur("Marta",77)},new List<Manche>()
                     {
-                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,new List<Bonus>(){Bonus.Escuse,Bonus.TriplePoignet},3)
+                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,new List<Bonus>(){Bonus.Escuse,Bonus.TriplePoignee},3)
                     })
             };
             yield return new object[]{
                 new Partie(
                     new List<Joueur>(){new Joueur("Patrick",50),new Joueur("Francis",15),new Joueur("Marta",77)},new List<Manche>()
                     {
-                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,new List<Bonus>(){Bonus.Escuse,Bonus.TriplePoignet},3)
+                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,new List<Bonus>(){Bonus.Escuse,Bonus.TriplePoignee},3)
                     })
             };
         }
         public static IEnumerable<object[]> Data_TestExtentionManche()
         {
             yield return new object[]{
-                new Manche(Contrat.Garde,new Joueur("Patoch",50),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.SimplePoignet},5)
+                new Manche(Contrat.Garde,new Joueur("Patoch",50),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.SimplePoignee},5)
             };
             yield return new object[]{
-                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.TriplePoignet,Bonus.Escuse},4)
+                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.TriplePoignee,Bonus.Escuse},4)
             };
             yield return new object[]{
-                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.TriplePoignet,Bonus.Escuse},4,new Joueur("arheuh",4))
+                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.TriplePoignee,Bonus.Escuse},4,new Joueur("arheuh",4))
             };
         }
         public static IEnumerable<Object[]> Data_TestExtentionContrat()
@@ -685,11 +685,11 @@ namespace TestsUnitaires
         {
             yield return new object[]
             {
-                Bonus.TriplePoignet
+                Bonus.TriplePoignee
             };
             yield return new object[]
             {
-                Bonus.DoublePoignet
+                Bonus.DoublePoignee
             };
             yield return new object[]
             {
@@ -698,7 +698,7 @@ namespace TestsUnitaires
             
             yield return new object[]
             {
-                Bonus.SimplePoignet
+                Bonus.SimplePoignee
             };
             yield return new object[]
             {
