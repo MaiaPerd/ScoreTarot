@@ -33,6 +33,11 @@ namespace Model.Gestionnaire
                 lPartie = value;
             }
         }
+        public Gestionnaire()
+        {
+            lJoueur = new List<Joueur>();
+            lPartie=new List<Partie>();
+        }
        
         public void ajouterUnJoueur(String pseudo, int age, String nom, String prenom)
         {
