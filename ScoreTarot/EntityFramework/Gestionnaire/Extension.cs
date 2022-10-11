@@ -141,7 +141,7 @@ namespace EntityFramework
             return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModels().ToList(), mancheEntity.NbJoueur, mancheEntity.JoueurAllier.toModel());
         }
 
-        public static IEnumerable<Manche> toModels(this List<MancheEntity> manchesEntities)
+        public static IEnumerable<Manche> toModels(this ICollection<MancheEntity> manchesEntities)
         {
             return manchesEntities.Select(manche => manche.toModel());
         }

@@ -18,12 +18,16 @@ namespace EntityFramework.Entity
         [Required]
         public int NbJoueur { get; set; }
         [Required]
-        public ContratEntity Contrat { get;  set; }
-        public List<BonusEntity> Bonus { get;  set; }
+        public ContratEntity Contrat { get; set; }
+        public List<BonusEntity> Bonus { get; set; }
         [Required]
         public JoueurEntity JoueurQuiPrend { get; set; }
-        public JoueurEntity JoueurAllier { get;  set; }
-        public DateTime Date { get;  set; }
+        public JoueurEntity JoueurAllier { get; set; }
+        public DateTime Date { get; set; }
+
+        [ForeignKey("PartieForeignKey")]
+        public PartieEntity Partie { get; set; }
+
         public int PartieForeignKey { get; set; }
        
     }

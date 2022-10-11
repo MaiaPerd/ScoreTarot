@@ -30,9 +30,7 @@ namespace EntityFramework.Entity
 
         public virtual ICollection<PartieJoueur> PartieJoueurs { get; set; } = new List<PartieJoueur>();
 
-
-        [ForeignKey("PartieForeignKey")]
-        public List<MancheEntity> Manches { get;  set; }
+        public ICollection<MancheEntity> Manches { get; set; } = new List<MancheEntity>();
      
 
     }
