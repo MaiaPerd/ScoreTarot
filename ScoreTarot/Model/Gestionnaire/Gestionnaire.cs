@@ -7,7 +7,7 @@ namespace Model.Gestionnaire
 {
     public class Gestionnaire
     {
-        private List<Joueur> lJoueur;
+        private readonly List<Joueur> lJoueur  = new List<Joueur>();
         private List<Joueur> LJoueur
         {
             get
@@ -16,12 +16,12 @@ namespace Model.Gestionnaire
             }
             set
             {
-                lJoueur = value;
+                lJoueur.AddRange(value);
             }
             
         }
 
-        private List<Partie> lPartie;
+        private readonly List<Partie> lPartie = new List<Partie>();
         private List<Partie> LPartie
         {
             get
@@ -30,13 +30,8 @@ namespace Model.Gestionnaire
             }
             set
             {
-                lPartie = value;
+                lPartie.AddRange(value);
             }
-        }
-        public Gestionnaire()
-        {
-            lJoueur = new List<Joueur>();
-            lPartie=new List<Partie>();
         }
        
         public void ajouterUnJoueur(String pseudo, int age, String nom, String prenom)
