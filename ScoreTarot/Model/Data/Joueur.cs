@@ -103,7 +103,7 @@ namespace Model
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(pseudo.GetHashCode());
+            return pseudo.GetHashCode();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Model
 {
     public enum Contrat
     {
+        none,
         Prise,
         Garde,
         GardeSans,

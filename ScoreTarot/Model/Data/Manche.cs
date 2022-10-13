@@ -90,7 +90,7 @@ namespace Model
             {
                 Bonus.AddRange(bonus);
             }
-            if (contrat == Contrat.Prise && score == 0)
+            if (contrat == Contrat.none && score == 0)
             {
                 throw new ArgumentNullException("Le contrat est null et score ne peut pas être zéro");
             }
@@ -163,7 +163,7 @@ namespace Model
         }
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id.GetHashCode());
+            return Id.GetHashCode();
         }
 
 
