@@ -146,7 +146,7 @@ namespace Model
         /// <returns></returns>
         public float CalculerPourcentageDeReussite(int nbPartieRealise, int nbPartieGagne)
         {
-            return (nbPartieGagne * 100) / nbPartieRealise;
+            return (float)(nbPartieGagne * 100) / nbPartieRealise;
         }
 
         /// <summary>

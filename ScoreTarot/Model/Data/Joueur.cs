@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Joueur
+    public class Joueur :IEquatable<Joueur>
     {
         public string Pseudo { 
             get
@@ -99,6 +99,11 @@ namespace Model
             if(ReferenceEquals(this, obj)) { return true; }
             if(obj.GetType() != GetType()) { return false; }
             return Equals(obj as Joueur);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
