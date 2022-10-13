@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Partie
+    public class Partie :IEquatable<Partie>
     {
         public List<Joueur> Joueurs
         {
@@ -150,6 +150,10 @@ namespace Model
             if (GetType() != obj.GetType()) return false;
             return Equals(obj as Partie);
 
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
 

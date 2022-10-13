@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Manche
+    public class Manche :IEquatable<Manche>
     {
         public Contrat Contrat{ get; private set; }
         public List<Bonus> Bonus { get; private set; }
@@ -161,7 +161,10 @@ namespace Model
             return Equals(obj as Manche);
 
         }
-
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
 
     }
