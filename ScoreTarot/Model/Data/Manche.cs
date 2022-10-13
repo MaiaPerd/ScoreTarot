@@ -163,7 +163,7 @@ namespace Model
         }
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(Id.GetHashCode());
         }
 
 
