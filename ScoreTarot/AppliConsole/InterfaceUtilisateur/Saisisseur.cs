@@ -4,12 +4,12 @@ namespace AppliConsole.InterfaceUtilisateur
     public class Sasisseur
     {
 
-        public String saisirString()
+        public String SaisirString()
         {
             return Console.ReadLine();
         }
 
-        public int? saisirInt()
+        public int? SaisirInt()
         {
             String saisie = Console.ReadLine();
             try

@@ -13,7 +13,7 @@ namespace Model
         /// </summary>
         /// <param name="scoreJoueurQuiPrend"></param>
         /// <returns></returns>
-        public int calculScoreAutreJoueur(int scoreJoueurQuiPrend)
+        public int CalculScoreAutreJoueur(int scoreJoueurQuiPrend)
         {
             return (-1) * (scoreJoueurQuiPrend);
         }
@@ -28,7 +28,7 @@ namespace Model
         /// <param name="scoreJoueur"></param>
         /// <param name="nbJoueur"></param>
         /// <returns></returns>
-        public int calculeScoreJoueurQuiPrend(List<Bonus> lBonus, Contrat contrat, int scoreJoueur)
+        public int CalculeScoreJoueurQuiPrend(List<Bonus> lBonus, Contrat contrat, int scoreJoueur)
         {
             int score = 0;
             bool petit = false;
@@ -122,7 +122,7 @@ namespace Model
         /// <param name="scoreJoueurQuiPrend"></param>
         /// <param name="nbJoueur"></param>
         /// <returns></returns>
-        public int scoreFinalJoueurQuiPrend(int scoreJoueurQuiPrend, int nbJoueur)
+        public int ScoreFinalJoueurQuiPrend(int scoreJoueurQuiPrend, int nbJoueur)
         {
             return scoreJoueurQuiPrend * (nbJoueur - 1);
         }
@@ -133,7 +133,7 @@ namespace Model
         /// <param name="scoreJoueurQuiPrend"></param>
         /// <param name="nbJoueur"></param>
         /// <returns></returns>
-        public int scoreFinalJoueurQuiPrendAvecAllier(int scoreJoueurQuiPrend, int nbJoueur)
+        public int ScoreFinalJoueurQuiPrendAvecAllier(int scoreJoueurQuiPrend, int nbJoueur)
         {
             return scoreJoueurQuiPrend * (nbJoueur - 2);
         }
@@ -144,7 +144,7 @@ namespace Model
         /// <param name="nbPartieRealise"></param>
         /// <param name="nbPartieGagne"></param>
         /// <returns></returns>
-        public float calculerPourcentageDeReussite(int nbPartieRealise, int nbPartieGagne)
+        public float CalculerPourcentageDeReussite(int nbPartieRealise, int nbPartieGagne)
         {
             return (nbPartieGagne * 100) / nbPartieRealise;
         }
@@ -155,12 +155,12 @@ namespace Model
         /// <param name="parties"></param>
         /// <param name="joueur"></param>
         /// <returns></returns>
-        public int scoreTotalDuJoueur(List<Partie> lParties, Joueur joueur)
+        public int ScoreTotalDuJoueur(List<Partie> lParties, Joueur joueur)
         {
             int scoreTotal = 0;
             foreach (Partie partie in lParties)
             {
-                scoreTotal += scoreTotalDuJoueurPartie(partie.Manches, joueur);
+                scoreTotal += ScoreTotalDuJoueurPartie(partie.Manches, joueur);
             }
             return scoreTotal;
         }
@@ -171,12 +171,12 @@ namespace Model
         /// <param name="parties"></param>
         /// <param name="joueur"></param>
         /// <returns></returns>
-        public int scoreTotalDuJoueurPartie(List<Manche> lManches, Joueur joueur)
+        public int ScoreTotalDuJoueurPartie(List<Manche> lManches, Joueur joueur)
         {
             int scoreTotal = 0;
             foreach (Manche manche in lManches)
             {
-                scoreTotal += manche.getScoreJoueurManche(joueur);
+                scoreTotal += manche.GetScoreJoueurManche(joueur);
             }
             return scoreTotal;
         }

@@ -28,7 +28,7 @@ public class UnitTestManche
     [MemberData(nameof(DataTest.Data_TestGetScoreJoueurManche), MemberType = typeof(DataTest))]
     public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)
     {
-        Assert.Equal(score, manche.getScoreJoueurManche(joueur));
+        Assert.Equal(score, manche.GetScoreJoueurManche(joueur));
     }
 
     [Theory]

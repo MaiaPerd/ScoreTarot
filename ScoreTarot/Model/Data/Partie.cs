@@ -26,6 +26,9 @@ namespace Model
             }
         }
         private List<Joueur> joueur;
+        /// <summary>
+        /// Une partie possède plusieurs manche, il est ainsi plus pratique d'ajouter des manches a tout moments
+        /// </summary>
         public List<Manche> Manches { get; private set; }
         public int Id { get; private set; }
 

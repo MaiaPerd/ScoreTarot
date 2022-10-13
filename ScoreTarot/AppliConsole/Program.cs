@@ -12,24 +12,24 @@ namespace AppliConsole
             Sasisseur saisisseur = new Sasisseur();
             afficheur.AfficherMenu();
             afficheur.AfficherDemandeChoix();
-            choix = (int)saisisseur.saisirInt();
+            choix = (int)saisisseur.SaisirInt();
             while (choix != 666)
             {
                 switch (choix)
                 {
                     case 1:
                         {
-                            gestionnaire.afficherPartie();
+                            gestionnaire.AfficherPartie();
                             break;
                         }
                     case 2:
                         {
-                            gestionnaire.afficherJoueurs();
+                            gestionnaire.AfficherJoueurs();
                             break;
                         }
                     case 3:
                         {
-                            gestionnaire.supprimerJoueur();
+                            gestionnaire.SupprimerJoueur();
                             break;
                         }
                     case 4:
@@ -45,17 +45,17 @@ namespace AppliConsole
 
                     case 6:
                         {
-                            gestionnaire.supprimerPartie();
+                            gestionnaire.SupprimerPartie();
                             break;
                         }
                     case 7:
                         {
-                            gestionnaire.ajouterUnePartie();
+                            gestionnaire.AjouterUnePartie();
                             break;
                         }
                     case 8:
                         {
-                            gestionnaire.ajouterUnJoueur();
+                            gestionnaire.AjouterUnJoueur();
                             break;
                         }
                     default:
@@ -68,7 +68,7 @@ namespace AppliConsole
                 }
                 afficheur.AfficherMenu();
                 afficheur.AfficherDemandeChoix();
-                choix=(int)saisisseur.saisirInt();
+                choix=(int)saisisseur.SaisirInt();
             }
 
 
