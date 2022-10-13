@@ -17,7 +17,7 @@ namespace Stub
 
         public List<Partie> LoadPartie()
         {
-            return new StubPartie().chargerPartie();
+            return new StubPartie().ChargerPartie();
         }
         public List<Joueur> ChargerDesJoueurPourUnePartie(int combienDeJoueur)
         {
@@ -64,17 +64,17 @@ namespace Stub
             {
                 case 3:
                     {
-                        listManche = stub.chargerLesManche3J(listJoueur);
+                        listManche = stub.ChargerLesManche3J(listJoueur);
                         break;
                     }
                 case 4:
                     {
-                        listManche = stub.chargerLesManche4J(listJoueur);
+                        listManche = stub.ChargerLesManche4J(listJoueur);
                         break;
                     }
                 case 5:
                     {
-                        listManche = stub.chargerLesManche5J(listJoueur);
+                        listManche = stub.ChargerLesManche5J(listJoueur);
                         break;
                     }
             }
@@ -88,17 +88,17 @@ namespace Stub
             {
                 case 3:
                     {
-                        return stub.chargerPartie3J();
+                        return stub.ChargerPartie3J();
                         break;
                     }
                 case 4:
                     {
-                        return stub.chargerPartie4J();
+                        return stub.ChargerPartie4J();
                         break;
                     }
                 case 5:
                     {
-                        return stub.chargerPartie5J();
+                        return stub.ChargerPartie5J();
                         break;
                     }
             }

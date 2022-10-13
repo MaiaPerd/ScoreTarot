@@ -84,7 +84,7 @@ namespace TestsUnitaires
         }
         [Theory]
         [InlineData("Dani_45","Dani",50,"img","DEBOIS")]
-        public void testerNewJoueurEntity(String pseudo,String prenom,int age,String image,String nom)
+        public void TesterNewJoueurEntity(String pseudo,String prenom,int age,String image,String nom)
         {
             JoueurEntity jentity =new JoueurEntity();
             jentity.Prenom = prenom;
@@ -100,7 +100,7 @@ namespace TestsUnitaires
         }
         [Theory]
         [MemberData(nameof(DataTest.Data_TestExtentionContrat),MemberType = typeof(DataTest))]
-        public void testerContratEntity(Contrat contrat)
+        public void TesterContratEntity(Contrat contrat)
         {
             ContratEntity contratEntity = contrat.toEntity();
             if (contrat == Contrat.GardeContre)
@@ -122,7 +122,7 @@ namespace TestsUnitaires
         }
         [Theory]
         [MemberData(nameof(DataTest.Data_TestExtensionBonus), MemberType=typeof(DataTest))]
-        public void testExtentionBonus(Bonus bonus)
+        public void TestExtentionBonus(Bonus bonus)
         {
             BonusEntity bonusEntity = bonus.toEntity();
             if (Bonus.PetitAuBout == bonus)

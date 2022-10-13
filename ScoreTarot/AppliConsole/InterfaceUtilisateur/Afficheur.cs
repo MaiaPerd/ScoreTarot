@@ -39,7 +39,7 @@ namespace AppliConsole.InterfaceUtilisateur
             Console.WriteLine("Les joueurs et leur score :");
             foreach (Joueur j in partie.Joueurs){
                 i++;
-                Console.WriteLine(i+" - "+j.Pseudo+" score : "+manche.getScoreJoueurManche(j));
+                Console.WriteLine(i+" - "+j.Pseudo+" score : "+manche.GetScoreJoueurManche(j));
                 
             }
             if(manche.JoueurAllier==null)
@@ -119,14 +119,14 @@ namespace AppliConsole.InterfaceUtilisateur
             Console.WriteLine(erreur);
         }
 
-        public void afficherlisteJoueur(System.Collections.ObjectModel.ReadOnlyCollection<Joueur> lJoueur)
+        public void AfficherlisteJoueur(System.Collections.ObjectModel.ReadOnlyCollection<Joueur> lJoueur)
         {
             for(int i = 0; i < lJoueur.Count; i++)
             {
                 Console.WriteLine(i +" - "+ lJoueur[i].Pseudo);
             }
         }
-        public void afficherdemandemodif(String quoi)
+        public void Afficherdemandemodif(String quoi)
         {
             Console.WriteLine("voulez vous modifier " + quoi + " ?");
         }

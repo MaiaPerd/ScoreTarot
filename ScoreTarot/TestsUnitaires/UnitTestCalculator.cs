@@ -18,7 +18,7 @@ namespace TestsUnitaires
         public void TestMethodeCalculator_calculerPourcentageDeReussite(float result, int nbPartieRealise, int nbPartieGagne)
         {
             Calculator calculator = new Calculator();
-            Assert.Equal(calculator.calculerPourcentageDeReussite(nbPartieRealise, nbPartieGagne) , result);
+            Assert.Equal(calculator.CalculerPourcentageDeReussite(nbPartieRealise, nbPartieGagne) , result);
         }
 
         [Theory]
@@ -29,7 +29,7 @@ namespace TestsUnitaires
         public void TestMethodeCalculator_scoreFinalJoueurQuiPrendAvecAllier(float result, int scoreJoueurQuiPrend, int nbJoueur)
         {
             Calculator calculator = new Calculator();
-            Assert.Equal(calculator.scoreFinalJoueurQuiPrendAvecAllier(scoreJoueurQuiPrend, nbJoueur), result);
+            Assert.Equal(calculator.ScoreFinalJoueurQuiPrendAvecAllier(scoreJoueurQuiPrend, nbJoueur), result);
         }
 
 
@@ -41,7 +41,7 @@ namespace TestsUnitaires
         public void TestMethodeCalculator_scoreFinalJoueurQuiPrend(float result, int scoreJoueurQuiPrend, int nbJoueur)
         {
             Calculator calculator = new Calculator();
-            Assert.Equal(calculator.scoreFinalJoueurQuiPrend(scoreJoueurQuiPrend, nbJoueur), result);
+            Assert.Equal(calculator.ScoreFinalJoueurQuiPrend(scoreJoueurQuiPrend, nbJoueur), result);
         }
 
 
@@ -50,7 +50,7 @@ namespace TestsUnitaires
         public void TestMethodeCalculator_calculeScoreJoueurQuiPrend(int result,List<Bonus> lBonus, Contrat contrat, int scoreJoueur)
         {
             Calculator calculator = new Calculator();
-            Assert.Equal(calculator.calculeScoreJoueurQuiPrend(lBonus, contrat, scoreJoueur),result);
+            Assert.Equal(calculator.CalculeScoreJoueurQuiPrend(lBonus, contrat, scoreJoueur),result);
         }
 
         [Theory]
@@ -60,7 +60,7 @@ namespace TestsUnitaires
         public void TestMethodeCalculator_calculScoreAutreJoueur(int result, int scoreJoueurQuiPrend)
         {
             Calculator calculator = new Calculator();
-            Assert.Equal(calculator.calculScoreAutreJoueur(scoreJoueurQuiPrend), result);
+            Assert.Equal(calculator.CalculScoreAutreJoueur(scoreJoueurQuiPrend), result);
         }
 
 

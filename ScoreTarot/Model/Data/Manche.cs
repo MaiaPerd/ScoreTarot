@@ -116,34 +116,34 @@ namespace Model
 
         }
 
-        public int getScoreJoueurManche(Joueur joueur)
+        public int GetScoreJoueurManche(Joueur joueur)
         {
             Calculator calcule = new Calculator();
             if (joueur.Equals(JoueurQuiPrend))
             {
                 if (JoueurAllier != null)
                 {
-                    return calcule.scoreFinalJoueurQuiPrendAvecAllier(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
+                    return calcule.ScoreFinalJoueurQuiPrendAvecAllier(calcule.CalculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
                 }
                 else
                 {
-                    return calcule.scoreFinalJoueurQuiPrend(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
+                    return calcule.ScoreFinalJoueurQuiPrend(calcule.CalculeScoreJoueurQuiPrend(Bonus, Contrat, Score), NbJoueur);
                 }
             }
             else if (JoueurAllier != null)
             {
                 if (joueur.Equals(JoueurAllier))
                 {
-                    return calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
+                    return calcule.CalculeScoreJoueurQuiPrend(Bonus, Contrat, Score);
                 }
                 else
                 {
-                    return calcule.calculScoreAutreJoueur(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
+                    return calcule.CalculScoreAutreJoueur(calcule.CalculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
                 }
             }
             else
             {
-                return calcule.calculScoreAutreJoueur(calcule.calculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
+                return calcule.CalculScoreAutreJoueur(calcule.CalculeScoreJoueurQuiPrend(Bonus, Contrat, Score));
             }
         }
 
