@@ -46,6 +46,17 @@ namespace Model
         public int Id { get; private set; }
         public int NbJoueur { get; private set; }
 
+        /// <summary>
+        /// Constructeur de manche avec un id de la base de donnée, le jourAllier n'est pas obligatoire pour une partie.
+        /// </summary>
+        /// <param name="id"></param> identifiant unique de la manche pour la base de donnée
+        /// <param name="contrat"></param> contrat du joueur qui prend
+        /// <param name="joueurQuiPrend"></param> joueur qui a pris
+        /// <param name="score"></param> total des point des carte du joueur qui prend
+        /// <param name="bonus"></param> liste des bonus du joueur qui prend
+        /// <param name="nbJoueur"></param> nombre total des joueurs de la partie
+        /// <param name="joueurAllier"></param> joueur dessigner par le joueur qui prend au début de la manche, que pour les partie a 5 joueurs
+        /// <exception cref="ArgumentNullException"></exception>
         public Manche(int id, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
@@ -82,6 +93,16 @@ namespace Model
 
         }
 
+        /// <summary>
+        /// Constructeur de manche, le jourAllier n'est pas obligatoire pour une partie.
+        /// </summary>
+        /// <param name="contrat"></param> contrat du joueur qui prend
+        /// <param name="joueurQuiPrend"></param> joueur qui a pris
+        /// <param name="score"></param> total des point des carte du joueur qui prend
+        /// <param name="bonus"></param> liste des bonus du joueur qui prend
+        /// <param name="nbJoueur"></param> nombre total des joueurs de la partie
+        /// <param name="joueurAllier"></param> joueur dessigner par le joueur qui prend au début de la manche, que pour les partie a 5 joueurs
+        /// <exception cref="ArgumentNullException"></exception>
         public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
@@ -116,6 +137,11 @@ namespace Model
 
         }
 
+        /// <summary>
+        /// Retourne le score du joueur de la partie mis en paramètre, en fonction de son status (joueurQuiPrend, joueurAllier, autre joueur).
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <returns></returns>
         public int GetScoreJoueurManche(Joueur joueur)
         {
             Calculator calcule = new Calculator();

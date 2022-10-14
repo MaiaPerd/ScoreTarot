@@ -35,6 +35,15 @@ namespace Model
          */
         public string URLIMG { get; private set; }
 
+        /// <summary>
+        /// Constructeur du joueur avec toutes les données possible.
+        /// </summary>
+        /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique
+        /// <param name="age"></param> age du joueur
+        /// <param name="nom"></param> nom du joueur
+        /// <param name="prenom"></param> prenom du joueur 
+        /// <param name="nomImage"></param> lien pour accedé a l'image
+        /// <exception cref="ArgumentNullException"></exception>
         public Joueur(string pseudo, int age, string nom, string prenom, string nomImage )
         {
             if (String.IsNullOrEmpty(pseudo))
@@ -48,6 +57,14 @@ namespace Model
             URLIMG = "../image/" + nomImage;
         }
 
+        /// <summary>
+        /// Constructeur du joueur sans l'avatar qui n'est pas obligatoire.
+        /// </summary>
+        /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique
+        /// <param name="age"></param> age du joueur
+        /// <param name="nom"></param> nom du joueur
+        /// <param name="prenom"></param> prenom du joueur 
+        /// <exception cref="ArgumentNullException"></exception>
         public Joueur(string pseudo, int age, string nom, string prenom)
         {
             if (String.IsNullOrEmpty(pseudo))
@@ -61,6 +78,12 @@ namespace Model
             URLIMG = "../image/imageParDefaut.jpeg";
         }
 
+        /// <summary>
+        /// Constructeur du joueur avec seulement les paramètres neccesaires, pseudo et age.
+        /// </summary>
+        /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique
+        /// <param name="age"></param> age du joueur
+        /// <exception cref="ArgumentNullException"></exception>
         public Joueur(string pseudo, int age)
         {
             if (String.IsNullOrEmpty(pseudo))
@@ -74,6 +97,13 @@ namespace Model
             URLIMG = "../image/imageParDefaut.jpeg";
         }
 
+        /// <summary>
+        /// Constructeur du joueur avec seulement les paramètres neccesaires et un avatar.
+        /// </summary>
+        /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique
+        /// <param name="age"></param> age du joueur
+        /// <param name="nomImage"></param> lien pour accedé a l'image
+        /// <exception cref="ArgumentNullException"></exception>
         public Joueur( string pseudo, int age, string nomImage)
         {
             if (String.IsNullOrEmpty(pseudo))

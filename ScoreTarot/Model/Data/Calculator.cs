@@ -8,6 +8,22 @@ namespace Model
 {
     public class Calculator
     {
+        private int OBJECTIF = 56;
+        private int OBJECTIF2 = 51;
+        private int OBJECTIF3 = 41;
+        private int OBJECTIF4 = 36;
+
+        private int SCOREBASE = 25;
+
+        private int GARDE = 2;
+        private int GARDESANS = 4;
+        private int GARDECONTRE = 6;
+
+        private int PETITPRISE = 10;
+        private int PETITGARDE = 20;
+        private int PETITGARDESANS = 30;
+        private int PETITGARDECONTRE = 40;
+
         /// <summary>
         /// Methode qui calcule le score des joueurs qui non pas pris ou qui n'était pas allié au preneur.
         /// </summary>
@@ -61,47 +77,47 @@ namespace Model
             switch (bout)
             {
                 case 0:
-                    point = scoreJoueur - 56;
+                    point = scoreJoueur - OBJECTIF;
                     break;
                 case 1:
-                    point = scoreJoueur - 51;
+                    point = scoreJoueur - OBJECTIF2;
                     break;
                 case 2:
-                    point = scoreJoueur - 41;
+                    point = scoreJoueur - OBJECTIF3;
                     break;
                 case 3:
-                    point = scoreJoueur - 36;
+                    point = scoreJoueur - OBJECTIF4;
                     break;
 
             }
             switch (contrat)
             {
                 case Contrat.Prise:
-                    score += 25;
+                    score += SCOREBASE;
                     if (petit)
                     {
-                        score += 10;
+                        score += PETITPRISE;
                     }
                     break;
                 case Contrat.Garde:
-                    score += 25 * 2;
+                    score += SCOREBASE * GARDE;
                     if (petit)
                     {
-                        score += 20;
+                        score += PETITGARDE;
                     }
                     break;
                 case Contrat.GardeSans:
-                    score += 25 * 4;
+                    score += SCOREBASE * GARDESANS;
                     if (petit)
                     {
-                        score += 30;
+                        score += PETITGARDESANS;
                     }
                     break;
                 case Contrat.GardeContre:
-                    score += 25 * 6;
+                    score += SCOREBASE * GARDECONTRE;
                     if (petit)
                     {
-                        score += 40;
+                        score += PETITGARDECONTRE;
                     }
                     break;
             }
