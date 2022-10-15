@@ -55,7 +55,7 @@ namespace AppliConsole.Gestionnaire
             Contrat contrat = this.ChoisirContrat();
             Joueur joueurQuiPrend = this.JoueurExistantDansPartie(partie, "qui prend");
             int score = this.AjouterEntier("score");
-            List<Bonus> bonus = this.ChoisirBonus();
+            Bonus bonus = this.ChoisirBonus();
             int nbJoueur = TrouverPartieAvecID(partie).Joueurs.Count;
             Joueur joueurAllier = this.JoueurExistantDansPartie(partie, "allier");
             gestionnaire.ajouterUneManche(partie, contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier);
@@ -95,11 +95,11 @@ namespace AppliConsole.Gestionnaire
             return contrat;
         }
 
-        private List<Bonus> ChoisirBonus()
+        private Bonus ChoisirBonus()
         {
             int? valBonus = null;
             bool fin = true;
-            List<Bonus> bonus = new List<Bonus>();
+            Bonus bonus = Bonus.Inconu;
             while (fin)
             {
                 afficheur.AfficherBonus();
@@ -111,57 +111,57 @@ namespace AppliConsole.Gestionnaire
                         afficheur.AfficherErreurChoix();
                         break;
                     case 1:
-                        if (!bonus.Contains(Bonus.Petit))
+                        if (!(bonus == Bonus.Petit))
                         {
-                            bonus.Add(Bonus.Petit);
+                            bonus |= Bonus.Petit;
                         }
                         break;
                     case 2:
-                        if (!bonus.Contains(Bonus.Petit) && !bonus.Contains(Bonus.PetitAuBout))
+                        if (!(bonus == Bonus.Petit) && !(bonus == Bonus.PetitAuBout))
                         {
-                            bonus.Add(Bonus.Petit);
-                            bonus.Add(Bonus.PetitAuBout);
+                            bonus |= Bonus.Petit;
+                            bonus |= Bonus.PetitAuBout;
                         }
-                        else if (!bonus.Contains(Bonus.PetitAuBout))
+                        else if (!(bonus == Bonus.PetitAuBout))
                         {
-                            bonus.Add(Bonus.PetitAuBout);
+                            bonus |= Bonus.PetitAuBout;
                         }
                         break;
                     case 3:
-                        if (!bonus.Contains(Bonus.Escuse))
+                        if (!(bonus == Bonus.Excuse))
                         {
-                            bonus.Add(Bonus.Escuse);
+                            bonus |= Bonus.Excuse;
                         }
                         break;
                     case 4:
-                        if (!bonus.Contains(Bonus.Le21))
+                        if (!(bonus == Bonus.Le21))
                         {
-                            bonus.Add(Bonus.Le21);
+                            bonus |= Bonus.Le21;
                         }
                         break;
                     case 5:
-                        if (!bonus.Contains(Bonus.SimplePoignee))
+                        if (!(bonus == Bonus.SimplePoignee))
                         {
-                            bonus.Add(Bonus.SimplePoignee);   
+                            bonus |= Bonus.SimplePoignee;
                         }
-                        bonus.Remove(Bonus.TriplePoignee);
-                        bonus.Remove(Bonus.DoublePoignee);                     
+                        bonus ^= Bonus.DoublePoignee;
+                        bonus ^= Bonus.TriplePoignee;
                         break;
                     case 6:
-                        if (!bonus.Contains(Bonus.DoublePoignee))
+                        if (!(bonus == Bonus.DoublePoignee))
                         {
-                            bonus.Add(Bonus.DoublePoignee);
+                            bonus |= Bonus.DoublePoignee;
                         }
-                        bonus.Remove(Bonus.TriplePoignee);
-                        bonus.Remove(Bonus.SimplePoignee);
+                        bonus ^= Bonus.SimplePoignee;
+                        bonus ^= Bonus.TriplePoignee;
                         break;
                     case 7:
-                        if (!bonus.Contains(Bonus.TriplePoignee))
+                        if (!(bonus == Bonus.TriplePoignee))
                         {
-                            bonus.Add(Bonus.TriplePoignee);
+                            bonus |= Bonus.TriplePoignee;
                         }
-                        bonus.Remove(Bonus.DoublePoignee);
-                        bonus.Remove(Bonus.SimplePoignee);
+                        bonus ^= Bonus.SimplePoignee;
+                        bonus ^= Bonus.DoublePoignee;
                         break;
                     case 666:
                         fin = false;

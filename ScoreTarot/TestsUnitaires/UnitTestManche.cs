@@ -5,10 +5,10 @@ namespace TestsUnitaires;
 
 public class UnitTestManche
 {
-
+    
     [Theory]
     [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
-    public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur)
+    public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur)
     {
         if (!estValide)
         {
@@ -19,11 +19,11 @@ public class UnitTestManche
         Manche manche = new Manche( contrat, joueurQuiPrend, score, bonus, nbJoueur);
         Assert.Equal(contrat, manche.Contrat);
         Assert.Equal(joueurQuiPrend, manche.JoueurQuiPrend);
-        if (bonus == null) { bonus = new List<Bonus>();  }
+        if (bonus == null) { bonus = Bonus.Inconu;  }
         Assert.Equal(bonus, manche.Bonus);
         Assert.Equal(score, manche.Score);
     }
-
+    
     [Theory]
     [MemberData(nameof(DataTest.Data_TestGetScoreJoueurManche), MemberType = typeof(DataTest))]
     public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)

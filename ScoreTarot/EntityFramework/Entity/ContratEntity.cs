@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace EntityFramework.Entity
 {
-    public enum ContratEntity
+    public enum ContratEntity : Byte
     {
+        Inconu = 0,
         Prise = 1,
         Garde = 2,
         GardeSans = 4,

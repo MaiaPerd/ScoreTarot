@@ -39,7 +39,7 @@ namespace Model.Gestionnaire
             LJoueur.Add(new Joueur(pseudo, age, nom, prenom));
         }
 
-        public void ajouterUneManche(int partie, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier)
+        public void ajouterUneManche(int partie, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier)
         {
             LPartie.Find(p => p.Id == partie).AjouterManche(new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier));
         }

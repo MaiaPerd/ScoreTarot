@@ -9,7 +9,7 @@ namespace Model
     public class Manche :IEquatable<Manche>
     {
         public Contrat Contrat{ get; private set; }
-        public List<Bonus> Bonus { get; private set; }
+        public Bonus Bonus { get; private set; }
         public Joueur JoueurQuiPrend {
             get => joueurQuiPrend;
             private set
@@ -57,14 +57,10 @@ namespace Model
         /// <param name="nbJoueur"></param> nombre total des joueurs de la partie
         /// <param name="joueurAllier"></param> joueur dessigner par le joueur qui prend au début de la manche, que pour les partie a 5 joueurs
         /// <exception cref="ArgumentNullException"></exception>
-        public Manche(int id, Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
+        public Manche(int id, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
-            Bonus = new List<Bonus>();
-            if (bonus != null)
-            {
-                Bonus.AddRange(bonus);
-            }
+            Bonus = bonus;
 
             JoueurAllier = joueurAllier;
             if (contrat == Contrat.Prise && score == 0)
@@ -103,15 +99,11 @@ namespace Model
         /// <param name="nbJoueur"></param> nombre total des joueurs de la partie
         /// <param name="joueurAllier"></param> joueur dessigner par le joueur qui prend au début de la manche, que pour les partie a 5 joueurs
         /// <exception cref="ArgumentNullException"></exception>
-        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, List<Bonus> bonus, int nbJoueur, Joueur joueurAllier = null)
+        public Manche(Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier = null)
         {
             Contrat = contrat;
-            Bonus = new List<Bonus>();
-            if (bonus != null)
-            {
-                Bonus.AddRange(bonus);
-            }
-            if (contrat == Contrat.none && score == 0)
+            Bonus = bonus;
+            if (contrat == Contrat.Inconu && score == 0)
             {
                 throw new ArgumentNullException("Le contrat est null et score ne peut pas être zéro");
             }

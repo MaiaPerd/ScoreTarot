@@ -47,7 +47,7 @@ namespace TestsUnitaires
 
         [Theory]
         [MemberData(nameof(DataTest.Data_TestCalculator), MemberType = typeof(DataTest))]
-        public void TestMethodeCalculator_calculeScoreJoueurQuiPrend(int result,List<Bonus> lBonus, Contrat contrat, int scoreJoueur)
+        public void TestMethodeCalculator_calculeScoreJoueurQuiPrend(int result,Bonus lBonus, Contrat contrat, int scoreJoueur)
         {
             Calculator calculator = new Calculator();
             Assert.Equal(calculator.CalculeScoreJoueurQuiPrend(lBonus, contrat, scoreJoueur),result);

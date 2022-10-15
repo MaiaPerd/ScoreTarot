@@ -24,6 +24,10 @@ namespace Model
         private int PETITGARDESANS = 30;
         private int PETITGARDECONTRE = 40;
 
+        private int POIGNEE = 20;
+        private int DOUBLEPOIGNEE = 30;
+        private int TRIPLEPOIGNEE = 40;
+
         /// <summary>
         /// Methode qui calcule le score des joueurs qui non pas pris ou qui n'était pas allié au preneur.
         /// </summary>
@@ -44,36 +48,49 @@ namespace Model
         /// <param name="scoreJoueur"></param>
         /// <param name="nbJoueur"></param>
         /// <returns></returns>
-        public int CalculeScoreJoueurQuiPrend(List<Bonus> lBonus, Contrat contrat, int scoreJoueur)
+        public int CalculeScoreJoueurQuiPrend(Bonus bonus, Contrat contrat, int scoreJoueur)
         {
             int score = 0;
             bool petit = false;
             int bout = 0;
             int point = 0;
             int poignet = 0;
-            foreach (Bonus b in lBonus)
+
+            if (Bonus.PetitAuBout == (Bonus.PetitAuBout & bonus))
             {
-                if (b == Bonus.PetitAuBout)
-                {
-                    petit = true;
-                }
-                else if (b == Bonus.SimplePoignee)
-                {
-                    poignet += 20;
-                }
-                else if (b == Bonus.DoublePoignee)
-                {
-                    poignet += 30;
-                }
-                else if (b == Bonus.TriplePoignee)
-                {
-                    poignet += 40;
-                }
-                else if (b == Bonus.Petit || b == Bonus.Escuse|| b == Bonus.Le21)
-                {
-                    bout += 1;
-                }
+                petit = true;
             }
+
+            if (Bonus.SimplePoignee == (Bonus.SimplePoignee & bonus))
+            {
+                poignet += POIGNEE;
+            }
+            else if (Bonus.DoublePoignee == (Bonus.DoublePoignee & bonus))
+            {
+                poignet += DOUBLEPOIGNEE;
+            }
+            else if (Bonus.TriplePoignee == (Bonus.TriplePoignee & bonus))
+            {
+                poignet += TRIPLEPOIGNEE;
+            }
+
+            if (Bonus.Petit == (Bonus.Petit & bonus) && Bonus.Excuse == (Bonus.Excuse & bonus) && Bonus.Le21 == (Bonus.Le21 & bonus))
+            {
+                bout = 3;
+            }
+            else if ((Bonus.Petit == (Bonus.Petit & bonus) && Bonus.Excuse == (Bonus.Excuse & bonus)) ||
+                (Bonus.Petit == (Bonus.Petit & bonus) && Bonus.Le21 == (Bonus.Le21 & bonus)) ||
+                (Bonus.Excuse == (Bonus.Excuse & bonus) && Bonus.Le21 == (Bonus.Le21 & bonus)))
+            {
+                bout = 2;
+            }
+            else if (Bonus.Petit == (Bonus.Petit & bonus) || Bonus.Excuse == (Bonus.Excuse & bonus) || Bonus.Le21 == (Bonus.Le21 & bonus))
+            {
+                bout = 1;
+            }
+            
+            
+
             switch (bout)
             {
                 case 0:
