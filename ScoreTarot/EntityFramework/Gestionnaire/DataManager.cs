@@ -43,7 +43,7 @@ namespace EntityFramework
             throw new NotImplementedException();
         }
 
-        public async Task<List<Joueur>> getJoueurs()
+        public async Task<IEnumerable<Joueur>> getJoueurs()
         {
             throw new NotImplementedException();
         }
@@ -53,7 +53,7 @@ namespace EntityFramework
             throw new NotImplementedException();
         }
 
-        public async Task<List<Manche>> getManche()
+        public async Task<IEnumerable<Manche>> getManche()
         {
             throw new NotImplementedException();
         }
@@ -63,7 +63,7 @@ namespace EntityFramework
             throw new NotImplementedException();
         }
 
-        public async Task<List<Partie>> getParties()
+        public async Task<IEnumerable<Partie>> getParties()
         {
             throw new NotImplementedException();
         }

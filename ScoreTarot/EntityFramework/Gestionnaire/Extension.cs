@@ -70,8 +70,8 @@ namespace EntityFramework
         {
             switch (bonus)
             {
-                case Bonus.Escuse:
-                    return BonusEntity.Escuse;
+                case Bonus.Excuse:
+                    return BonusEntity.Excuse;
                 case Bonus.Le21:
                     return BonusEntity.Le21;
                 case Bonus.Petit:
@@ -86,17 +86,12 @@ namespace EntityFramework
             return BonusEntity.TriplePoignee;
         }
 
-        public static IEnumerable<BonusEntity> toEntities(this List<Bonus> bonus)
-        {
-            return bonus.Select(b => b.toEntity());
-        }
-
         public static Bonus toModel(this BonusEntity bonusEntity)
         {
             switch (bonusEntity)
             {
-                case BonusEntity.Escuse:
-                    return Bonus.Escuse;
+                case BonusEntity.Excuse:
+                    return Bonus.Excuse;
                 case BonusEntity.Le21:
                     return Bonus.Le21;
                 case BonusEntity.Petit:
@@ -111,11 +106,6 @@ namespace EntityFramework
             return Bonus.TriplePoignee;
         }
 
-        public static IEnumerable<Bonus> toModels(this List<BonusEntity> bonusEntities)
-        {
-            return bonusEntities.Select(bonus => bonus.toModel());
-        }
-
         public static MancheEntity toEntity(this Manche manche)
         {
             MancheEntity mancheEntity = new MancheEntity();
@@ -125,7 +115,7 @@ namespace EntityFramework
             mancheEntity.JoueurQuiPrend = manche.JoueurQuiPrend.toEntity();
             mancheEntity.NbJoueur = manche.NbJoueur;
             mancheEntity.Score = manche.Score;
-            mancheEntity.Bonus = manche.Bonus.toEntities().ToList();
+            mancheEntity.Bonus = manche.Bonus.toEntity();
             mancheEntity.Contrat = manche.Contrat.toEntity();
             mancheEntity.Date = manche.Date;
             return mancheEntity;
@@ -138,7 +128,7 @@ namespace EntityFramework
 
         public static Manche toModel(this MancheEntity mancheEntity)
         {
-            return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModels().ToList(), mancheEntity.NbJoueur, mancheEntity.JoueurAllier.toModel());
+            return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModel(), mancheEntity.NbJoueur, mancheEntity.JoueurAllier.toModel());
         }
 
         public static IEnumerable<Manche> toModels(this ICollection<MancheEntity> manchesEntities)

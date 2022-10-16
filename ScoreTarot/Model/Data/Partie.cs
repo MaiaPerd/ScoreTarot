@@ -8,6 +8,9 @@ namespace Model
 {
     public class Partie :IEquatable<Partie>
     {
+        private const int NBJOUEURMIN = 3;
+        private const int NBJOUEURMAX = 5;
+
         public List<Joueur> Joueurs
         {
             get
@@ -17,15 +20,16 @@ namespace Model
 
             private set
             {
-                if (value == null || value.Count < 3 || value.Count > 5)
+                if (value == null || value.Count < NBJOUEURMIN || value.Count > NBJOUEURMAX)
                 {
-                    throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+                    throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
                 }
                 joueur = value;
                 
             }
         }
         private List<Joueur> joueur;
+
         /// <summary>
         /// Une partie possède plusieurs manche, il est ainsi plus pratique d'ajouter des manches a tout moments
         /// </summary>
@@ -35,9 +39,9 @@ namespace Model
         public Partie(List<Joueur> joueurs, List<Manche> manches, int id)
         {
             joueur = new List<Joueur>();
-            if (joueurs == null || joueurs.Count < 3 || joueurs.Count > 5)
+            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
             {
-                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
             Joueurs.AddRange(joueurs);
             Manches = new List<Manche>();
@@ -52,9 +56,9 @@ namespace Model
         public Partie(List<Joueur> joueurs, List<Manche> manches)
         {
             joueur = new List<Joueur>();
-            if (joueurs == null || joueurs.Count < 3 || joueurs.Count > 5)
+            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
             {
-                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
             Joueurs.AddRange(joueurs);
             Manches = new List<Manche>();
@@ -67,9 +71,9 @@ namespace Model
         public Partie(List<Joueur> joueurs)
         {
             joueur = new List<Joueur>();
-            if (joueurs == null || joueurs.Count < 3 || joueurs.Count > 5)
+            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
             {
-                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre 3 et 5");
+                throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
             Joueurs.AddRange(joueurs);
             Manches = new List<Manche>();
@@ -86,7 +90,7 @@ namespace Model
         }
         public bool AjouterJoueur(Joueur joueur)
         {
-            if(this.Joueurs.Count != 5)
+            if(this.Joueurs.Count != NBJOUEURMAX)
             {
                 if (!this.Joueurs.Contains(joueur) && joueur != null)
                 {

@@ -10,30 +10,19 @@ namespace Stub
     public class StubBonus
     {
 
-        internal List<Bonus> ChargerListeBonusMoyen()
+        internal Bonus ChargerListeBonusMoyen()
         {
-            List<Bonus> lBonus =  new List<Bonus>();
-            lBonus.Add(Bonus.PetitAuBout);
-            lBonus.Add(Bonus.Petit);
-            lBonus.Add(Bonus.DoublePoignee);
-            return lBonus;
+            return Bonus.PetitAuBoutDoublePoignee;
         }
 
-        internal List<Bonus> ChargerListeBonusBien()
+        internal Bonus ChargerListeBonusBien()
         {
-            List<Bonus> lBonus = new List<Bonus>();
-            lBonus.Add(Bonus.Escuse);
-            lBonus.Add(Bonus.Petit);
-            lBonus.Add(Bonus.Le21);
-            lBonus.Add(Bonus.SimplePoignee);
-            return lBonus;
+            return Bonus.PetitLe21ExcuseSimplePoignee;
         }
 
-        internal List<Bonus> ChargerListeBonusUnSeul()
+        internal Bonus ChargerListeBonusUnSeul()
         {
-            List<Bonus> lBonus = new List<Bonus>();
-            lBonus.Add(Bonus.Escuse);
-            return lBonus;
+            return Bonus.Excuse;
         }
 
     }

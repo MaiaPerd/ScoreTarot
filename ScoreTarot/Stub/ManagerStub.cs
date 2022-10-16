@@ -44,15 +44,15 @@ namespace Stub
             }
             return listJoueur;
         }
-        public List<Bonus> ChargerListeBonusMoyen()
+        public Bonus ChargerListeBonusMoyen()
         {
             return new StubBonus().ChargerListeBonusMoyen();
         }
-        public List<Bonus> ChargerListeBonusBien()
+        public Bonus ChargerListeBonusBien()
         {
             return new StubBonus().ChargerListeBonusBien();
         }
-        public List<Bonus> ChargerListeBonusUnSeul()
+        public Bonus ChargerListeBonusUnSeul()
         {
             return new StubBonus().ChargerListeBonusUnSeul();
         }

@@ -28,27 +28,13 @@ namespace Model
             throw new NotImplementedException();
         }
 
-        public Task<List<Joueur>> getJoueurs()
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<Manche> getManche(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Manche>> getManche()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Partie> getPartie(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Partie>> getParties()
         {
             throw new NotImplementedException();
         }
@@ -79,6 +65,21 @@ namespace Model
         }
 
         public void updatePartie(Partie partie)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Joueur>> IDataManager.getJoueurs()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Manche>> IDataManager.getManche()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Partie>> IDataManager.getParties()
         {
             throw new NotImplementedException();
         }

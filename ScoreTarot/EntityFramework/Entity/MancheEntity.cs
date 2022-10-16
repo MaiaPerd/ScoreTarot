@@ -19,7 +19,7 @@ namespace EntityFramework.Entity
         public int NbJoueur { get; set; }
         [Required]
         public ContratEntity Contrat { get; set; }
-        public List<BonusEntity> Bonus { get; set; }
+        public BonusEntity Bonus { get; set; }
         [Required]
         public JoueurEntity JoueurQuiPrend { get; set; }
         public JoueurEntity JoueurAllier { get; set; }

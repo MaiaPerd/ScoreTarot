@@ -475,91 +475,91 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 169,
-                new List<Bonus>(){Bonus.Escuse},
+                Bonus.Excuse,
                 Contrat.GardeContre,
                 70
             };
             yield return new object[]
             {
                 -196,
-                new List<Bonus>(){Bonus.Escuse},
+                Bonus.Excuse,
                 Contrat.GardeContre,
                 5
             };
             yield return new object[]
             {
                 -191,
-                new List<Bonus>(){Bonus.Escuse,Bonus.DoublePoignee},
+                Bonus.ExcuseDoublePoignee,
                 Contrat.GardeContre,
                 40
             };
             yield return new object[]
             {
                 -151,
-                new List<Bonus>(){Bonus.Escuse,Bonus.Le21},
+                Bonus.Le21Excuse,
                 Contrat.GardeContre,
                 40
             };
             yield return new object[]
             {
                 -181,
-                new List<Bonus>(){Bonus.Escuse,Bonus.SimplePoignee},
+                Bonus.ExcuseSimplePoignee,
                 Contrat.GardeContre,
                 40
             };
             yield return new object[]
             {
                 -191,
-                new List<Bonus>(){Bonus.TriplePoignee},
+                Bonus.TriplePoignee,
                 Contrat.GardeContre,
                 55
             };
             yield return new object[]
             {
                 194,
-                new List<Bonus>(){Bonus.SimplePoignee},
+                Bonus.SimplePoignee,
                 Contrat.GardeContre,
                 80
             };
             yield return new object[]
             {
                 -201,
-                new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit},
+                Bonus.PetitAuBout | Bonus.Petit,
                 Contrat.GardeContre,
                 40
             };
             yield return new object[]
             {
                 190,
-                new List<Bonus>(){Bonus.Le21},
+                Bonus.Le21,
                 Contrat.GardeContre,
                 91
             };
             yield return new object[]
             {
                 -116,
-                new List<Bonus>(){},
+                Bonus.Inconu,
                 Contrat.GardeSans,
                 40
             };
             yield return new object[]
             {
                 -61,
-                new List<Bonus>(){Bonus.Escuse},
+                Bonus.Excuse,
                 Contrat.Garde,
                 40
             };
             yield return new object[]
             {
                 -41,
-                new List<Bonus>(){},
+                Bonus.Inconu,
                 Contrat.Prise,
                 40
             };
             yield return new object[]
             {
                 32,
-                new List<Bonus>(){Bonus.Escuse},
+                Bonus.Excuse,
                 Contrat.Prise,
                 58
             };
@@ -638,27 +638,27 @@ namespace TestsUnitaires
                 new Partie(
                     new List<Joueur>(){new Joueur("Patrick",50),new Joueur("Francis",15),new Joueur("Marta",77)},new List<Manche>()
                     {
-                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,new List<Bonus>(){Bonus.Escuse,Bonus.TriplePoignee},3)
+                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,Bonus.ExcuseTriplePoignee,3)
                     })
             };
             yield return new object[]{
                 new Partie(
                     new List<Joueur>(){new Joueur("Patrick",50),new Joueur("Francis",15),new Joueur("Marta",77)},new List<Manche>()
                     {
-                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,new List<Bonus>(){Bonus.Escuse,Bonus.TriplePoignee},3)
+                        new Manche(Contrat.Garde,new Joueur("Patrick",50),40,Bonus.ExcuseTriplePoignee,3)
                     })
             };
         }
         public static IEnumerable<object[]> Data_TestExtentionManche()
         {
             yield return new object[]{
-                new Manche(Contrat.Garde,new Joueur("Patoch",50),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.SimplePoignee},5)
+                new Manche(Contrat.Garde,new Joueur("Patoch",50),80,Bonus.PetitAuBoutSimplePoignee,5)
             };
             yield return new object[]{
-                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.TriplePoignee,Bonus.Escuse},4)
+                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,Bonus.PetitAuBoutExcuseTriplePoignee,4)
             };
             yield return new object[]{
-                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80,new List<Bonus>(){Bonus.PetitAuBout,Bonus.Petit,Bonus.TriplePoignee,Bonus.Escuse},4,new Joueur("arheuh",4))
+                new Manche(Contrat.Garde,new Joueur(";-;",9876543),80, Bonus.PetitAuBoutExcuseTriplePoignee,4,new Joueur("arheuh",4))
             };
         }
         public static IEnumerable<Object[]> Data_TestExtentionContrat()
