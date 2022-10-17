@@ -189,7 +189,7 @@ namespace Model
         /// <param name="parties"></param>
         /// <param name="joueur"></param>
         /// <returns></returns>
-        public int ScoreTotalDuJoueur(List<Partie> lParties, Joueur joueur)
+        public int ScoreTotalDuJoueur(IEnumerable<Partie> lParties, Joueur joueur)
         {
             int scoreTotal = 0;
             foreach (Partie partie in lParties)

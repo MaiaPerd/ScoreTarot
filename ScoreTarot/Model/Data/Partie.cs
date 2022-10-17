@@ -35,17 +35,19 @@ namespace Model
         /// La partie a un identifant unique issu de l base de donnée.
         /// </summary>
         /// <param name="id"></param> identifiant unique de la partie
-        /// <param name="joueurs"></param> liste des joueurs de la partie
-        /// <param name="manches"></param> liste des manches de la partie
+        /// <param name="lJoueur"></param> liste des joueurs de la partie
+        /// <param name="lManche"></param> liste des manches de la partie
         /// <exception cref="InvalidDataException"></exception>
-        public Partie(int id, List<Joueur> joueurs, List<Manche> manches)
+        public Partie(int id, IEnumerable<Joueur> lJoueur, IEnumerable<Manche> lManche)
         {
+            joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
             joueurs.AddRange(joueurs);
+            manches = lManche.ToList();
             Manches = new ReadOnlyCollection<Manche>(manches);
             if (manches != null)
             {
@@ -58,17 +60,19 @@ namespace Model
         /// <summary>
         /// Constructeur de partie. Une partie est un ensemble de manche qui son les parties de carte.
         /// </summary>
-        /// <param name="joueurs"></param> liste des joueurs de la partie
-        /// <param name="manches"></param> liste des manches de la partie
+        /// <param name="lJoueur"></param> liste des joueurs de la partie
+        /// <param name="lManche"></param> liste des manches de la partie
         /// <exception cref="InvalidDataException"></exception>
-        public Partie(List<Joueur> joueurs, List<Manche> manches)
+        public Partie(IEnumerable<Joueur> lJoueur, IEnumerable<Manche> lManche)
         {
+            joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
             joueurs.AddRange(joueurs);
+            manches = lManche.ToList();
             Manches = new ReadOnlyCollection<Manche>(manches);
             if (manches != null)
             {
@@ -80,10 +84,11 @@ namespace Model
         /// Constructeur de partie. Une partie est un ensemble de manche qui son les parties de carte.
         /// Une partie n'a pas de manche quand on la crée.
         /// </summary>
-        /// <param name="joueurs"></param> liste des joueurs de la partie
+        /// <param name="lJoueur"></param> liste des joueurs de la partie
         /// <exception cref="InvalidDataException"></exception>
-        public Partie(List<Joueur> joueurs)
+        public Partie(List<Joueur> lJoueur)
         {
+            joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
             {
