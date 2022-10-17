@@ -47,7 +47,7 @@ namespace Model
             joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             
-            if (manches != null)
+            if (lManche != null)
             {
                 manches = lManche.ToList();
                 Manches = new ReadOnlyCollection<Manche>(manches);
@@ -71,7 +71,7 @@ namespace Model
             joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
            
-            if (manches != null)
+            if (lManche != null)
             {
                 manches = lManche.ToList();
                 Manches = new ReadOnlyCollection<Manche>(manches);
