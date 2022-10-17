@@ -40,11 +40,11 @@ namespace Model
         /// <exception cref="InvalidDataException"></exception>
         public Partie(int id, IEnumerable<Joueur> lJoueur, IEnumerable<Manche> lManche)
         {
-            joueurs = lJoueur.ToList();  
-            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
+            if (lJoueur == null || lJoueur.Count() < NBJOUEURMIN || lJoueur.Count() > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
+            joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             manches = lManche.ToList();
             if (manches != null)
@@ -62,12 +62,12 @@ namespace Model
         /// <param name="lManche"></param> liste des manches de la partie
         /// <exception cref="InvalidDataException"></exception>
         public Partie(IEnumerable<Joueur> lJoueur, IEnumerable<Manche> lManche)
-        {
-            joueurs = lJoueur.ToList();
-            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
+        {     
+            if (lJoueur == null || lJoueur.Count() < NBJOUEURMIN || lJoueur.Count() > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
+            joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             manches = lManche.ToList();
             if (manches != null)
@@ -84,11 +84,11 @@ namespace Model
         /// <exception cref="InvalidDataException"></exception>
         public Partie(List<Joueur> lJoueur)
         {
-            joueurs = lJoueur.ToList();
-            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
+            if (lJoueur == null || lJoueur.Count() < NBJOUEURMIN || lJoueur.Count() > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
+            joueurs = lJoueur.ToList();
             Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
             Manches = new ReadOnlyCollection<Manche>(manches);
         }
