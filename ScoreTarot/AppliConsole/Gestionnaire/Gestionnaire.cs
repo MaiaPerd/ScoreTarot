@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using AppliConsole.InterfaceUtilisateur;
@@ -204,7 +205,7 @@ namespace AppliConsole.Gestionnaire
                 {
                     return null;
                 }
-                List<Joueur> joueurs = TrouverPartieAvecID(partie).Joueurs;
+                ReadOnlyCollection<Joueur> joueurs = TrouverPartieAvecID(partie).Joueurs;
                 joueur = gestionnaire.trouverJoueur(pseudo);
                 if (joueur is not Joueur)
                 {
