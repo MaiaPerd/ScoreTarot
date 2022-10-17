@@ -46,12 +46,10 @@ namespace Model
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
-            joueurs.AddRange(joueurs);
             manches = lManche.ToList();
-            Manches = new ReadOnlyCollection<Manche>(manches);
             if (manches != null)
             {
-                manches.AddRange(manches);
+                Manches = new ReadOnlyCollection<Manche>(manches);
             }
 
             Id = id;
@@ -71,12 +69,10 @@ namespace Model
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
-            joueurs.AddRange(joueurs);
             manches = lManche.ToList();
-            Manches = new ReadOnlyCollection<Manche>(manches);
             if (manches != null)
             {
-                manches.AddRange(manches);
+                Manches = new ReadOnlyCollection<Manche>(manches);
             }
         }
 
@@ -94,7 +90,6 @@ namespace Model
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
-            joueurs.AddRange(joueurs);
             Manches = new ReadOnlyCollection<Manche>(manches);
         }
 
