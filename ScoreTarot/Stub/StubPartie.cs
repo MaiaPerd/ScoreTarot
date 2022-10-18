@@ -26,7 +26,7 @@ namespace Stub
         {
             List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie3J();
             List<Manche> lManche = stubManche.ChargerLesManche3J(lJoueur);
-            return new Partie(lJoueur, lManche, 1);
+            return new Partie(1,lJoueur, lManche);
         }
 
         internal Partie ChargerPartie4J()
@@ -34,7 +34,7 @@ namespace Stub
             List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie4J();
             List<Manche> lManche = stubManche.ChargerLesManche4J(lJoueur);
             List<Partie> lespartie = new();
-            return new Partie(lJoueur, lManche, 2);
+            return new Partie(2, lJoueur, lManche);
         }
 
         internal Partie ChargerPartie5J()
@@ -42,7 +42,7 @@ namespace Stub
             List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie5J();
             List<Manche> lManche = stubManche.ChargerLesManche5J(lJoueur);
             List<Partie> lespartie = new();
-            return new Partie(lJoueur, lManche, 3);
+            return new Partie(3, lJoueur, lManche);
         }
     }
 }

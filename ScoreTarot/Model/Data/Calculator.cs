@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,7 +189,7 @@ namespace Model
         /// <param name="parties"></param>
         /// <param name="joueur"></param>
         /// <returns></returns>
-        public int ScoreTotalDuJoueur(List<Partie> lParties, Joueur joueur)
+        public int ScoreTotalDuJoueur(IEnumerable<Partie> lParties, Joueur joueur)
         {
             int scoreTotal = 0;
             foreach (Partie partie in lParties)
@@ -204,7 +205,7 @@ namespace Model
         /// <param name="parties"></param>
         /// <param name="joueur"></param>
         /// <returns></returns>
-        public int ScoreTotalDuJoueurPartie(List<Manche> lManches, Joueur joueur)
+        public int ScoreTotalDuJoueurPartie(ReadOnlyCollection<Manche> lManches, Joueur joueur)
         {
             int scoreTotal = 0;
             foreach (Manche manche in lManches)

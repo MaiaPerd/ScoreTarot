@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using static System.Formats.Asn1.AsnWriter;
@@ -7,57 +8,52 @@ namespace Model.Gestionnaire
 {
     public class Gestionnaire
     {
-        private readonly List<Joueur> lJoueur  = new List<Joueur>();
-        private List<Joueur> LJoueur
+        public ReadOnlyCollection<Joueur> Joueurs
         {
-            get
-            {
-                return lJoueur;
-            }
-            set
-            {
-                lJoueur.AddRange(value);
-            }
-            
+            get;
+            private set;
+        }
+        private List<Joueur> joueurs = new List<Joueur>();
+
+
+        public ReadOnlyCollection<Partie> Parties
+        {
+            get;
+            private set;
+        }
+        private List<Partie> parties = new List<Partie>();
+
+        public Gestionnaire()
+        {
+            Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
+            Parties = new ReadOnlyCollection<Partie>(parties);
         }
 
-        private readonly List<Partie> lPartie = new List<Partie>();
-        private List<Partie> LPartie
-        {
-            get
-            {
-                return lPartie;
-            }
-            set
-            {
-                lPartie.AddRange(value);
-            }
-        }
-       
+
         public void ajouterUnJoueur(String pseudo, int age, String nom, String prenom)
         {
-            LJoueur.Add(new Joueur(pseudo, age, nom, prenom));
+            joueurs.Add(new Joueur(pseudo, age, nom, prenom));
         }
 
         public void ajouterUneManche(int partie, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier)
         {
-            LPartie.Find(p => p.Id == partie).AjouterManche(new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier));
+            parties.Find(p => p.Id == partie).AjouterManche(new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier));
         }
 
         public System.Collections.ObjectModel.ReadOnlyCollection<Joueur> GetJoueurs()
         {
-            return LJoueur.AsReadOnly();
+            return joueurs.AsReadOnly();
         }
 
         public System.Collections.ObjectModel.ReadOnlyCollection<Partie> GetParties()
         {
-            return LPartie.AsReadOnly();
+            return parties.AsReadOnly();
         }
 
 
         public Partie trouverPartieAvecID(int id)
         {
-            return LPartie.Find(p => p.Id == id);
+            return parties.Find(p => p.Id == id);
         }
 
         public List<Joueur> listeJoueurVide()
@@ -67,54 +63,54 @@ namespace Model.Gestionnaire
 
         public Joueur trouverJoueur(String pseudo)
         {
-            return LJoueur.Find(j => j.Equals(pseudo));
+            return joueurs.Find(j => j.Equals(pseudo));
         }
 
         public void ajouterUnePartie(List<Joueur> joueurs)
         {
-            LPartie.Add(new Partie(joueurs));
+            parties.Add(new Partie(joueurs));
         }
 
         public void modfierPartie(Partie partie)
         {
-            LPartie.Remove(partie);// vérifier le remove sur id
-            LPartie.Add(partie);
+            parties.Remove(partie);// vérifier le remove sur id
+            parties.Add(partie);
             
         }
 
         public void modifierJoueur(int partie, Joueur joueur)
         {
-            LPartie.Find(p => p.Id == partie).ModifierJoueur(joueur);
+            parties.Find(p => p.Id == partie).ModifierJoueur(joueur);
         }
 
         public void modifierManche(int partie, Manche manche)
         {
-            LPartie.Find(p => p.Id == partie).ModifierManche(manche);
+            parties.Find(p => p.Id == partie).ModifierManche(manche);
         }
 
         public void ajouterDesPartie(List<Partie> lesPartie)
         {
-            LPartie.AddRange(lesPartie);
+            parties.AddRange(lesPartie);
         }
 
         public void ajouterDesManche(Partie partie, List<Manche> lesManches)
         {
-            lesManches.ForEach(manche => LPartie.Find(p => p.Equals(partie)).AjouterManche(manche));
+            lesManches.ForEach(manche => parties.Find(p => p.Equals(partie)).AjouterManche(manche));
         }
 
         public void ajouterDesJoueurs(List<Joueur> lesJoueurs)
         {
-            LJoueur.AddRange(lesJoueurs);
+            joueurs.AddRange(lesJoueurs);
         }
         public void supprimerJoueur(Joueur joueur)
         {
-            if(lJoueur.Contains(joueur))
-                lJoueur.Remove(joueur);
+            if(joueurs.Contains(joueur))
+                joueurs.Remove(joueur);
         }
         public void supprimerPartie(Partie partie)
         {
-            if(lPartie.Contains(partie))
-                lPartie.Remove(partie);
+            if(parties.Contains(partie))
+                parties.Remove(partie);
         }
 
     }

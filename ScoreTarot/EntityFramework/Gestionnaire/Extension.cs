@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using EntityFramework.Entity;
 using Model;
 
@@ -17,7 +18,7 @@ namespace EntityFramework
             return joueurEntity;
         }
 
-        public static IEnumerable<JoueurEntity> toEntities(this List<Joueur> joueurs)
+        public static IEnumerable<JoueurEntity> toEntities(this ReadOnlyCollection<Joueur> joueurs)
         {
             return joueurs.Select(joueur => joueur.toEntity());
         }
@@ -121,7 +122,7 @@ namespace EntityFramework
             return mancheEntity;
         }
 
-        public static IEnumerable<MancheEntity> toEntities(this List<Manche> manches)
+        public static IEnumerable<MancheEntity> toEntities(this ReadOnlyCollection<Manche> manches)
         {
             return manches.Select(manche => manche.toEntity());
         }
@@ -147,7 +148,7 @@ namespace EntityFramework
 
         public static Partie toModel(this PartieEntity partieEntity)
         {
-            return new Partie(partieEntity.Joueurs.toModels().ToList(), partieEntity.Manches.toModels().ToList(), partieEntity.Id);
+            return new Partie(partieEntity.Id, partieEntity.Joueurs.toModels().ToList(), partieEntity.Manches.toModels().ToList());
         }
 
     }

@@ -18,7 +18,6 @@ public class UnitTestPartie
         }
         Partie partie = new Partie(joueurs, manches);
         Assert.Equal(joueurs, partie.Joueurs);
-        if (manches == null) { manches = new List<Manche>();  }
         Assert.Equal(manches, partie.Manches);
     }
     

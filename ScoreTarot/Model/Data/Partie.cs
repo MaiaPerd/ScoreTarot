@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,114 +12,157 @@ namespace Model
         private const int NBJOUEURMIN = 3;
         private const int NBJOUEURMAX = 5;
 
-        public List<Joueur> Joueurs
+        public ReadOnlyCollection<Joueur> Joueurs
         {
-            get
-            {
-                return joueur;
-            }
-
-            private set
-            {
-                if (value == null || value.Count < NBJOUEURMIN || value.Count > NBJOUEURMAX)
-                {
-                    throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
-                }
-                joueur = value;
-                
-            }
+            get;
+            private set;
         }
-        private List<Joueur> joueur;
+        private List<Joueur> joueurs = new List<Joueur>();
 
         /// <summary>
         /// Une partie possède plusieurs manche, il est ainsi plus pratique d'ajouter des manches a tout moments
         /// </summary>
-        public List<Manche> Manches { get; private set; }
+        public ReadOnlyCollection<Manche> Manches
+        {
+            get;
+            private set;
+        }
+        private List<Manche> manches = new List<Manche>();
         public int Id { get; private set; }
 
-        public Partie(List<Joueur> joueurs, List<Manche> manches, int id)
+        /// <summary>
+        /// Constructeur de partie. Une partie est un ensemble de manche qui son les parties de carte.
+        /// La partie a un identifant unique issu de l base de donnée.
+        /// </summary>
+        /// <param name="id"></param> identifiant unique de la partie
+        /// <param name="lJoueur"></param> liste des joueurs de la partie
+        /// <param name="lManche"></param> liste des manches de la partie
+        /// <exception cref="InvalidDataException"></exception>
+        public Partie(int id, IEnumerable<Joueur> lJoueur, IEnumerable<Manche> lManche)
         {
-            joueur = new List<Joueur>();
-            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
+            if (lJoueur == null || lJoueur.Count() < NBJOUEURMIN || lJoueur.Count() > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
-            Joueurs.AddRange(joueurs);
-            Manches = new List<Manche>();
-            if (manches != null)
+            joueurs = lJoueur.ToList();
+            Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
+            
+            if (lManche != null)
             {
-                Manches.AddRange(manches);
+                manches = lManche.ToList();
+                Manches = new ReadOnlyCollection<Manche>(manches);
             }
 
             Id = id;
         }
 
-        public Partie(List<Joueur> joueurs, List<Manche> manches)
-        {
-            joueur = new List<Joueur>();
-            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
+        /// <summary>
+        /// Constructeur de partie. Une partie est un ensemble de manche qui son les parties de carte.
+        /// </summary>
+        /// <param name="lJoueur"></param> liste des joueurs de la partie
+        /// <param name="lManche"></param> liste des manches de la partie
+        /// <exception cref="InvalidDataException"></exception>
+        public Partie(IEnumerable<Joueur> lJoueur, IEnumerable<Manche> lManche)
+        {     
+            if (lJoueur == null || lJoueur.Count() < NBJOUEURMIN || lJoueur.Count() > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
-            Joueurs.AddRange(joueurs);
-            Manches = new List<Manche>();
-            if (manches != null)
+            joueurs = lJoueur.ToList();
+            Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
+           
+            if (lManche != null)
             {
-                Manches.AddRange(manches);
+                manches = lManche.ToList();
+                Manches = new ReadOnlyCollection<Manche>(manches);
             }
         }
 
-        public Partie(List<Joueur> joueurs)
+        /// <summary>
+        /// Constructeur de partie. Une partie est un ensemble de manche qui son les parties de carte.
+        /// Une partie n'a pas de manche quand on la crée.
+        /// </summary>
+        /// <param name="lJoueur"></param> liste des joueurs de la partie
+        /// <exception cref="InvalidDataException"></exception>
+        public Partie(List<Joueur> lJoueur)
         {
-            joueur = new List<Joueur>();
-            if (joueurs == null || joueurs.Count < NBJOUEURMIN || joueurs.Count > NBJOUEURMAX)
+            if (lJoueur == null || lJoueur.Count() < NBJOUEURMIN || lJoueur.Count() > NBJOUEURMAX)
             {
                 throw new InvalidDataException("Nombre de joueur incorrect, il doit être compris entre {NBJOUEURMIN} et {NBJOUEURMAX}");
             }
-            Joueurs.AddRange(joueurs);
-            Manches = new List<Manche>();
-
+            joueurs = lJoueur.ToList();
+            Joueurs = new ReadOnlyCollection<Joueur>(joueurs);
+            Manches = new ReadOnlyCollection<Manche>(manches);
         }
 
+        /// <summary>
+        /// Ajoute une manche a la partie.
+        /// </summary>
+        /// <param name="manche"></param>
+        /// <returns></returns>
         public bool AjouterManche(Manche manche)
         {
-            if (!this.Manches.Contains(manche) && manche != null) {
-                Manches.Add(manche);
-                return this.Manches.Contains(manche);
+            if (!this.manches.Contains(manche) && manche != null) {
+                manches.Add(manche);
+                return this.manches.Contains(manche);
             }
             return false;
         }
+
+        /// <summary>
+        /// Ajoute un joueur a la partie.
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <returns></returns>
         public bool AjouterJoueur(Joueur joueur)
         {
-            if(this.Joueurs.Count != NBJOUEURMAX)
+            if(this.joueurs.Count != NBJOUEURMAX)
             {
-                if (!this.Joueurs.Contains(joueur) && joueur != null)
+                if (!this.joueurs.Contains(joueur) && joueur != null)
                 {
-                    this.Joueurs.Add(joueur);
-                    return this.Joueurs.Contains(joueur);
+                    this.joueurs.Add(joueur);
+                    return this.joueurs.Contains(joueur);
                 }
             }
             return false;
         }
+
+        /// <summary>
+        /// Supprime le joueur donné en paramètre de la liste des joueurs.
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <returns></returns>
         public bool SupprimerJoueur(Joueur joueur)
         {
-            if (this.Joueurs.Contains(joueur))
+            if (this.joueurs.Contains(joueur))
             {   
-                return this.Joueurs.Remove(joueur);
+                return this.joueurs.Remove(joueur);
             }
             return false;
         }
+
+        /// <summary>
+        /// Supprime la manche donné en paramètre de la liste des manches.
+        /// </summary>
+        /// <param name="manche"></param>
+        /// <returns></returns>
         public bool SupprimerManche(Manche manche)
         {
-            if (this.Manches.Contains(manche))
+            if (this.manches.Contains(manche))
             {   
-                return this.Manches.Remove(manche);
+                return this.manches.Remove(manche);
             }
             return false;
         }
+
+        /// <summary>
+        /// Modifie la manche dans la liste des manches.
+        /// </summary>
+        /// <param name="manche"></param>
+        /// <returns></returns>
         public bool ModifierManche(Manche manche)
         {
-            if (this.Manches.Contains(manche)) {
+            if (this.manches.Contains(manche)) {
                 bool modif = this.SupprimerManche(manche);
                 if (modif)
                 {
@@ -127,9 +171,15 @@ namespace Model
             }
             return false;
         }
+
+        /// <summary>
+        /// Modifie le joueur dans la liste des joueurs.
+        /// </summary>
+        /// <param name="joueur"></param>
+        /// <returns></returns>
         public bool ModifierJoueur(Joueur joueur)
         {
-            if (this.Joueurs.Contains(joueur))
+            if (this.joueurs.Contains(joueur))
             {
                 bool modif = this.SupprimerJoueur(joueur);
                 if (modif)
