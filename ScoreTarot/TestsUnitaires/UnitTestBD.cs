@@ -72,13 +72,13 @@ namespace TestsUnitaires
             {
                 context.Database.EnsureCreated();
 
-                string nameToFind = "Te";
+                string nameToFind = "tes";
                 Assert.Equal(1, context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).Count());
                 nameToFind = "e";
                 Assert.Equal(2, context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).Count());
-                var test = context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).First();
+                var test = context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).Last();
                 test.Nom = "New name";
-
+                test.Age = 15;
                 context.SaveChanges();
             }
 
@@ -86,10 +86,16 @@ namespace TestsUnitaires
             {
                 context.Database.EnsureCreated();
 
-                string nameToFind = "Te";
-                Assert.Equal(0, context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).Count());
+                string nameToFind = "tes";
+                Assert.Equal(0, context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).Count());//Erreur
                 nameToFind = "name";
                 Assert.Equal(1, context.Joueurs.Where(n => n.Nom.Contains(nameToFind)).Count());
+                int ageToFind = 15;
+                Assert.Equal(1, context.Joueurs.Where(n => n.Age == ageToFind).Count());
+                ageToFind = 20;
+                Assert.Equal(2, context.Joueurs.Where(n => n.Age == ageToFind).Count());
+                string URLtoFind = "img";
+                Assert.Equal(3, context.Joueurs.Where(n => n.URLIMG.Contains(URLtoFind)).Count());
             }
         }
     }
