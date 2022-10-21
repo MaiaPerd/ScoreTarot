@@ -12,8 +12,11 @@ namespace EntityFramework.Entity
     public class JoueurEntity
     {
         [Key]
+        [MaxLength(20)]
         public string Pseudo { get; set; }
+        [MaxLength(15)]
         public string Nom { get;  set; }
+        [MaxLength(20)]
         public string Prenom { get;  set; }
         public string URLIMG { get; set; }
         [Required]

@@ -22,7 +22,9 @@ namespace EntityFramework.Entity
         public ContratEntity Contrat { get; set; }
         public BonusEntity Bonus { get; set; }
         [Required]
+        [MaxLength(20)]
         public JoueurEntity JoueurQuiPrend { get; set; }
+        [MaxLength(20)]
         public JoueurEntity JoueurAllier { get; set; }
         public DateTime Date { get; set; }
 
