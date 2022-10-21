@@ -12,6 +12,7 @@ namespace EntityFramework.Entity
     public class PartieEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get;  set; }
 
         [Required]
