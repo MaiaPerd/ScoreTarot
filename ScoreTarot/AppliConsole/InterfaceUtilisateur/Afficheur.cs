@@ -12,7 +12,7 @@ namespace AppliConsole.InterfaceUtilisateur
     {
         public void AfficherMenu()
         {
-            Console.WriteLine("-----    Menu   ------");
+            Console.WriteLine("\n-----    Menu   ------");
             Console.WriteLine("1 - afficher les parties");
             Console.WriteLine("2 - afficher les joueurs");
             Console.WriteLine("3 - supprimer un joueur");
@@ -21,7 +21,9 @@ namespace AppliConsole.InterfaceUtilisateur
             Console.WriteLine("6 - supprimer une partie");
             Console.WriteLine("7 - ajouter une partie");
             Console.WriteLine("8 - ajouter un joueur");
-            Console.WriteLine("666- quitter notre belle application");
+            Console.WriteLine("9 - ajouter une manche");
+            Console.WriteLine("10 - afficher les détails d'une partie");
+            Console.WriteLine("666- quitter notre belle application\n");
         }
         public void AfficherErreurChoix()
         {
@@ -31,11 +33,11 @@ namespace AppliConsole.InterfaceUtilisateur
         {
             Console.WriteLine("Veuillez entrez un chiffre correspondant a votre choix du menu");
         }
-        public void AfficherDetailManche(Manche manche,Partie partie)
+        public void AfficherDetailManche(Manche manche, Partie partie)
         {
-            Calculator calculator = new Calculator();
             int i=0;
             Console.WriteLine("affichage de la manche du "+manche.Date+ " nombre de joueurs : "+manche.NbJoueur);
+            Console.WriteLine("le contrat :" + manche.Contrat);
             Console.WriteLine("Les joueurs et leur score :");
             foreach (Joueur j in partie.Joueurs){
                 i++;
@@ -45,12 +47,12 @@ namespace AppliConsole.InterfaceUtilisateur
             if(manche.JoueurAllier==null)
                 Console.WriteLine(" le jour qui a pris : "+manche.JoueurQuiPrend);
             else
-                Console.WriteLine(" le jour qui a pris : " + manche.JoueurQuiPrend.Pseudo+" sans allier : "+manche.JoueurAllier.Pseudo);
+                Console.WriteLine(" le jour qui a pris : " + manche.JoueurQuiPrend.Pseudo+" son allier : "+manche.JoueurAllier.Pseudo);
 
         }
         public void AfficherJoueur(Joueur joueur)
         {
-            Console.WriteLine(" Joueur : "+joueur.Pseudo);
+            Console.WriteLine("\n-- Joueur : "+joueur.Pseudo);
             Console.WriteLine("age : " + joueur.Age);
             if (joueur.Nom != null)
                 Console.WriteLine("nom : "+joueur.Nom);
@@ -63,15 +65,17 @@ namespace AppliConsole.InterfaceUtilisateur
         }
         public void AfficherLesPartie(System.Collections.ObjectModel.ReadOnlyCollection<Partie> lesPartie)
         {
+            if (lesPartie.Count == 0)
+                Console.WriteLine("\naucune partie\n");
             int i=0;
             Console.WriteLine("affichage des parties:");
             foreach(Partie p in lesPartie)
             {
-                i++;
                 if(p.Manches.Count!=0)
                     Console.WriteLine(i+" - nombre de joueurs : "+p.Joueurs.Count+" date de la premiere manche : "+p.Manches.First().Date);
                 else
                     Console.WriteLine(i + " - nombre de joueurs : " + p.Joueurs.Count + "aucune manche");
+                i++;
             }
         }
         /// <summary>
@@ -121,6 +125,8 @@ namespace AppliConsole.InterfaceUtilisateur
 
         public void AfficherlisteJoueur(System.Collections.ObjectModel.ReadOnlyCollection<Joueur> lJoueur)
         {
+            if (lJoueur.Count == 0)
+                Console.WriteLine("\naucun joueurs\n");
             for(int i = 0; i < lJoueur.Count; i++)
             {
                 Console.WriteLine(i +" - "+ lJoueur[i].Pseudo);
@@ -129,6 +135,37 @@ namespace AppliConsole.InterfaceUtilisateur
         public void Afficherdemandemodif(String quoi)
         {
             Console.WriteLine("voulez vous modifier " + quoi + " ?");
+        }
+
+        public void AfficherDetailPartie(Partie partie)
+        {
+            Console.WriteLine("     les joueurs de la partie: ");
+            AfficherlisteJoueur(partie.Joueurs);
+            if(partie.Manches.Count()==0)
+                Console.WriteLine("aucune manche pour cette partie");
+            else
+            {
+                Console.WriteLine(      "les manches de la partie: ");
+                int i=0;
+                foreach (Manche m in partie.Manches)
+                {
+                    Console.WriteLine(i);
+                    AfficherDetailManche(m,partie);
+                    i += 1;
+                }
+            }
+        }
+        /// <summary>
+        /// Demande de ressaisie, exemple Voules vous ressaisir quoi
+        /// </summary>
+        /// <param name="quoi"></param>
+        public void AfficherDemandeRessaisi(String quoi)
+        {
+            Console.WriteLine("Voules vous ressaisir "+quoi);
+        }
+        public void AfficherDemandeSiVeuxSaisir(String quoi)
+        {
+            Console.WriteLine("voules vous saisir " + quoi);
         }
 
     }

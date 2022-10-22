@@ -30,12 +30,26 @@ namespace Model.Gestionnaire
         }
 
 
-        public void ajouterUnJoueur(String pseudo, int age, String nom, String prenom)
+        public Boolean AjouterUnJoueur(String pseudo, int age, String nom, String prenom)
         {
-            joueurs.Add(new Joueur(pseudo, age, nom, prenom));
+            if (!joueurs.Contains(new Joueur(pseudo, age, nom, prenom)))
+            {
+                joueurs.Add(new Joueur(pseudo, age, nom, prenom));
+                return true;
+            }
+            return false;
+        }
+        public Boolean AjouterUnJoueur(Joueur j)
+        {
+            if (!joueurs.Contains(j))
+            {
+                joueurs.Add(j);
+                return true;
+            }
+            return false;
         }
 
-        public void ajouterUneManche(int partie, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier)
+        public void AjouterUneManche(int partie, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier)
         {
             parties.Find(p => p.Id == partie).AjouterManche(new Manche(contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier));
         }
@@ -51,7 +65,7 @@ namespace Model.Gestionnaire
         }
 
 
-        public Partie trouverPartieAvecID(int id)
+        public Partie TrouverPartieAvecID(int id)
         {
             return parties.Find(p => p.Id == id);
         }
@@ -61,56 +75,97 @@ namespace Model.Gestionnaire
             return new List<Joueur>();
         }
 
-        public Joueur trouverJoueur(String pseudo)
+        public Joueur TrouverJoueur(String pseudo)
         {
             return joueurs.Find(j => j.Equals(pseudo));
         }
 
-        public void ajouterUnePartie(List<Joueur> joueurs)
+        public void AjouterUnePartie(List<Joueur> joueurs)
         {
             parties.Add(new Partie(joueurs));
         }
 
-        public void modfierPartie(Partie partie)
+        public void ModfierPartie(Partie partie)
         {
             parties.Remove(partie);// vérifier le remove sur id
             parties.Add(partie);
             
         }
 
-        public void modifierJoueur(int partie, Joueur joueur)
+        public void ModifierJoueur(int partie, Joueur joueur)
         {
             parties.Find(p => p.Id == partie).ModifierJoueur(joueur);
         }
 
-        public void modifierManche(int partie, Manche manche)
+        public void ModifierManche(Partie partie, Manche mancheAncienne,Manche mancheNV)
         {
-            parties.Find(p => p.Id == partie).ModifierManche(manche);
+            foreach(Partie p in parties)
+            {
+                if (p == partie)
+                {
+                    foreach (Manche m in p.Manches)
+                    {
+                        if (m == mancheAncienne)
+                        {
+                            m.modifierManche(mancheNV);
+                        }
+                    }
+                }
+            }
         }
 
-        public void ajouterDesPartie(List<Partie> lesPartie)
+        public void AjouterDesPartie(List<Partie> lesPartie)
         {
             parties.AddRange(lesPartie);
         }
 
-        public void ajouterDesManche(Partie partie, List<Manche> lesManches)
+        public void AjouterDesManche(Partie partie, List<Manche> lesManches)
         {
             lesManches.ForEach(manche => parties.Find(p => p.Equals(partie)).AjouterManche(manche));
         }
 
-        public void ajouterDesJoueurs(List<Joueur> lesJoueurs)
+        public void AjouterDesJoueurs(List<Joueur> lesJoueurs)
         {
             joueurs.AddRange(lesJoueurs);
         }
-        public void supprimerJoueur(Joueur joueur)
+        public void SupprimerJoueur(Joueur joueur)
         {
+            List<Partie> partieASupprimer=new();
+            foreach(Partie p in parties)
+            {
+                if (p.Joueurs.Contains(joueur))
+                {
+                    partieASupprimer.Add(p);
+                }
+            }
             if(joueurs.Contains(joueur))
                 joueurs.Remove(joueur);
+            SupprimerPlusieursPartie(partieASupprimer);
         }
-        public void supprimerPartie(Partie partie)
+        public void SupprimerPlusieursPartie(List<Partie> partieASupprimer)
+        {
+            foreach (Partie p in partieASupprimer)
+            {
+                parties.Remove(p);
+            }
+        }
+        public void SupprimerPartie(Partie partie)
         {
             if(parties.Contains(partie))
                 parties.Remove(partie);
+        }
+        public Boolean ModifierUnJoueur(Joueur ancien, Joueur nv)
+        {
+            if (joueurs.Contains(ancien)&&!joueurs.Contains(nv)) {
+                Joueur joueurdelalist = ancien;
+                foreach (Joueur j in this.joueurs) {
+                    if (j == ancien)
+                        j.modifierLeJoueur(nv);
+                } 
+                return true;
+            }
+            return false;
+            
         }
 
     }

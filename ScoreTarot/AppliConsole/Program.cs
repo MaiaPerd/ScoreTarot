@@ -8,11 +8,11 @@ namespace AppliConsole
         {
             AppliConsole.Gestionnaire.Gestionnaire gestionnaire = new Gestionnaire.Gestionnaire();
             int choix;
-            Afficheur afficheur = new Afficheur();
-            Sasisseur saisisseur = new Sasisseur();
+            Afficheur afficheur = new();
+            Sasisseur saisisseur = new();
             afficheur.AfficherMenu();
             afficheur.AfficherDemandeChoix();
-            choix = (int)saisisseur.SaisirInt();
+            choix = gestionnaire.SaisirInt();
             while (choix != 666)
             {
                 switch (choix)
@@ -34,12 +34,12 @@ namespace AppliConsole
                         }
                     case 4:
                         {
-                            new Afficheur().AfficherErreur("pas encore fait");
+                            gestionnaire.ModifierUnJoueur();
                             break;
                         }
                     case 5:
                         {
-                            new Afficheur().AfficherErreur("pas encore fait");
+                            gestionnaire.ModifierPartie();
                             break;
                         }
 
@@ -58,6 +58,16 @@ namespace AppliConsole
                             gestionnaire.AjouterUnJoueur();
                             break;
                         }
+                    case 9:
+                        {
+                            gestionnaire.AjouterUneManche();
+                            break;
+                        }
+                    case 10:
+                        {
+                            gestionnaire.afficherUnePartieEnDetail();
+                            break;
+                        }
                     default:
                         {
                             afficheur.AfficherErreurChoix();
@@ -68,7 +78,8 @@ namespace AppliConsole
                 }
                 afficheur.AfficherMenu();
                 afficheur.AfficherDemandeChoix();
-                choix=(int)saisisseur.SaisirInt();
+                choix = gestionnaire.SaisirInt();
+
             }
 
 
