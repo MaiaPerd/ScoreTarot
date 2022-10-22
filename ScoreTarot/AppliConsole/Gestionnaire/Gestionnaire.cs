@@ -292,11 +292,6 @@ namespace AppliConsole.Gestionnaire
             gestionnaire.ModifierJoueur(partie, joueur);
         }
 
-        public void ModifierManche(int partie, Manche manche)
-        {
-            gestionnaire.ModifierManche(partie, manche);
-        }
-
         public void AjouterDesPartie(List<Partie> lesPartie)
         {
             gestionnaire.AjouterDesPartie(lesPartie);
