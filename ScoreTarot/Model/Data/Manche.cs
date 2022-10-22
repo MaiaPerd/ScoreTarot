@@ -183,7 +183,14 @@ namespace Model
         {
             return Id.GetHashCode();
         }
-
+        public void modifierManche(Manche nouvelleManche)
+        {
+            joueurQuiPrend = nouvelleManche.joueurQuiPrend;
+            JoueurAllier = nouvelleManche.JoueurAllier;
+            score = nouvelleManche.score;
+            Bonus = nouvelleManche.Bonus;
+            Contrat = nouvelleManche.Contrat;
+        }
 
     }
 }

@@ -97,9 +97,21 @@ namespace Model.Gestionnaire
             parties.Find(p => p.Id == partie).ModifierJoueur(joueur);
         }
 
-        public void ModifierManche(int partie, Manche manche)
+        public void ModifierManche(Partie partie, Manche mancheAncienne,Manche mancheNV)
         {
-            parties.Find(p => p.Id == partie).ModifierManche(manche);
+            foreach(Partie p in parties)
+            {
+                if (p == partie)
+                {
+                    foreach (Manche m in p.Manches)
+                    {
+                        if (m == mancheAncienne)
+                        {
+                            m.modifierManche(mancheNV);
+                        }
+                    }
+                }
+            }
         }
 
         public void AjouterDesPartie(List<Partie> lesPartie)

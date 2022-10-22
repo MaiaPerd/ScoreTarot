@@ -58,14 +58,26 @@ namespace AppliConsole.Gestionnaire
         /// <param name="partie"></param>
         private void AjouterUneManche(int partie)
         {
-            Contrat contrat = this.ChoisirContrat();
-            Joueur joueurQuiPrend = this.selectionnerJoueurDansList(gestionnaire.Parties[partie]);
-            int score = this.AjouterEntier("score");
-            Bonus bonus = this.ChoisirBonus();
-            int nbJoueur = TrouverPartieAvecID(partie).Joueurs.Count;
-            Joueur joueurAllier = this.selectionnerJoueurDansList(gestionnaire.Parties[partie]);
-            gestionnaire.AjouterUneManche(partie, contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier);
+            if (gestionnaire.Parties.Count==0)
+            {
+                afficheur.AfficherErreur("aucune partie pour ajouter une manche!");
+            }
+            else {
+                Contrat contrat = this.ChoisirContrat();
+                Joueur joueurQuiPrend = this.selectionnerJoueurDansList(gestionnaire.Parties[partie], "qui prend");
+                int score = this.SaisirScore();
+                Bonus bonus = this.ChoisirBonus();
+                int nbJoueur = TrouverPartieAvecID(partie).Joueurs.Count;
+                int choixallier = DemandeOuiNon("le joueur allier", 2);
+                Joueur joueurAllier;
+                if (choixallier==1)
+                    joueurAllier = this.selectionnerJoueurDansList(gestionnaire.Parties[partie], "allié");
+                else
+                    joueurAllier = null;
+                gestionnaire.AjouterUneManche(partie, contrat, joueurQuiPrend, score, bonus, nbJoueur, joueurAllier);
+            }   
         }
+        
         /// <summary>
         /// est appelé par le program lorsque le joueur veut ajouter une manche
         /// il doit choisir a quel partie il veut l'ajouter puis rentrer les données pour créer une manche
@@ -76,10 +88,16 @@ namespace AppliConsole.Gestionnaire
             int choixPartie = this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
             AjouterUneManche(choixPartie);
         }
-        public Joueur selectionnerJoueurDansList(Partie partie)
+        /// <summary>
+        /// permet de sélectionner un joueur dans la partie, qui représente le joueur allié ou le joueur qui prend
+        /// </summary>
+        /// <param name="partie"></param>
+        /// <param name="qui"></param>
+        /// <returns></returns>
+        public Joueur selectionnerJoueurDansList(Partie partie,String qui)
         {
             afficheur.AfficherlisteJoueur(partie.Joueurs);
-            afficheur.AfficherDemandeChoixObject("de joueur");
+            afficheur.AfficherDemandeChoixObject("du joueur "+qui);
             int choix = ChoisirElementCorectDUneList(partie.Joueurs.Count);
             return partie.Joueurs[choix];
         }
@@ -193,6 +211,17 @@ namespace AppliConsole.Gestionnaire
             }
             return bonus;
         }
+        private int SaisirScore()
+        {
+            afficheur.AfficherDemandeEntreQuelqueChose("le score");
+            int score = SaisirInt();
+            while (score < 0 || score > 91)
+            {
+                afficheur.AfficherErreur("mauvais choix, le score est compris entre 0 et 91, recommencez");
+                score = SaisirInt();
+            }
+            return score;
+        }
 
         private int AjouterEntier(string quoi)
         {
@@ -212,56 +241,6 @@ namespace AppliConsole.Gestionnaire
                 }
             }
             return (int)valeur;
-        }
-
-        private Joueur JoueurExistantDansPartie(int partie, string prend)
-        {
-            Joueur joueur = gestionnaire.GetJoueurs()[0];
-            string pseudo = "";
-            bool pseudoCorrecte = false;
-            while (pseudoCorrecte == false)
-            {
-                afficheur.AfficherDemandeEntreQuelqueChose("le joueur "+prend+" : ");
-                pseudo = saisisseur.SaisirString();
-                if(prend.Equals("allier") && String.IsNullOrEmpty(pseudo))
-                {
-                    return null;
-                }
-                ReadOnlyCollection<Joueur> joueurs = TrouverPartieAvecID(partie).Joueurs;
-                joueur = gestionnaire.TrouverJoueur(pseudo);
-                if (joueur is not Joueur)
-                {
-                    afficheur.AfficherErreur("Le joueur ne fait pas partie de cette partie!");
-                }
-                else
-                {
-                    pseudoCorrecte = true;
-                }
-            }
-            return joueur;
-        }
-
-        private Joueur JoueurExistantDansLaListe()
-        {
-            Joueur joueur = gestionnaire.GetJoueurs()[0];
-            string pseudo = "";
-            bool pseudoCorrecte = false;
-            while (pseudoCorrecte == false)
-            {
-                pseudo = saisisseur.SaisirString();
-                joueur = gestionnaire.TrouverJoueur(pseudo);
-                if (joueur is not Joueur)
-                {
-                    afficheur.AfficherErreur("Le joueur ne fait pas partie de cette partie!");
-                    AjouterUnJoueur();
-                    break;
-                }
-                else
-                {
-                    pseudoCorrecte = true;
-                }
-            }
-            return joueur;
         }
 
         private Partie TrouverPartieAvecID(int id)
@@ -291,8 +270,12 @@ namespace AppliConsole.Gestionnaire
                     joueurs.Add(joueursPasDansLaPartie[choixjoueur]);
                     joueursPasDansLaPartie.Remove(joueursPasDansLaPartie[choixjoueur]);
                     afficheur.AfficherlisteJoueur(joueursPasDansLaPartie.AsReadOnly());
-                    if(joueurs.Count>=3)
-                        continuer = this.DemandeUnAutre("un joueur");
+                    if(joueurs.Count>=3 &&joueursPasDansLaPartie.Count!=0)
+                        continuer = this.DemandeOuiNon("un joueur0",0);
+                    if(joueursPasDansLaPartie.Count == 0)
+                    {
+                        continuer = 0;
+                    }
                 }
                 gestionnaire.AjouterUnePartie(joueurs);
             }
@@ -402,7 +385,7 @@ namespace AppliConsole.Gestionnaire
             string img = joueurAModifier.URLIMG;
             string prenom = joueurAModifier.Prenom;
             string nom = joueurAModifier.Nom;
-            int choix=DemandeModif("le pseudo");
+            int choix= DemandeOuiNon("le pseudo",1);
             if (choix == 1)
             {
                 string pseudochoisis = "";
@@ -422,48 +405,53 @@ namespace AppliConsole.Gestionnaire
                 }
                 pseudo = pseudochoisis;
             }
-            choix = DemandeModif("l'age");
+            choix = DemandeOuiNon("l'age",1);
             if (choix == 1)
             {
                 age = SaisirInt();
             }
-            choix = DemandeModif("le nom");
+            choix = DemandeOuiNon("le nom",1);
             if(choix == 1)
             {
                 nom = saisisseur.SaisirString();
             }
-            choix = DemandeModif("le prenom");
+            choix = DemandeOuiNon("le prenom",1);
             if (choix == 1)
             {
                 prenom = saisisseur.SaisirString();
             }
             return new Joueur(pseudo, age, nom, prenom);
         }
-        private int DemandeModif(String quoi)
+        
+        /// <summary>
+        /// raison : 0 ressaisie
+        ///          1 demande modif
+        ///          2 si joueur allier
+        /// </summary>
+        /// <param name="quoi"></param>
+        /// <param name="raison"></param>
+        /// <returns></returns>
+        private int DemandeOuiNon(String quoi,int raison)
         {
-            afficheur.Afficherdemandemodif(quoi);
-            int choix;
-            afficheur.AfficherDemandeEntreQuelqueChose(" 1 pour oui et 0 pour non");
-            choix = SaisirInt();
-            while (choix < 0 || choix > 1)
+            if (raison < 3 || raison > 0)
             {
-                afficheur.AfficherErreur("choix incorrect");
+                if (raison == 0)
+                    afficheur.AfficherDemandeRessaisi(quoi);
+                if (raison == 1)
+                    afficheur.Afficherdemandemodif(quoi);
+                if (raison == 2)
+                    afficheur.AfficherDemandeSiVeuxSaisir(quoi);
+                int choix;
+                afficheur.AfficherDemandeEntreQuelqueChose(" 1 pour oui et 0 pour non");
                 choix = SaisirInt();
+                while (choix < 0 || choix > 1)
+                {
+                    afficheur.AfficherErreur("choix incorrect");
+                    choix = SaisirInt();
+                }
+                return choix;
             }
-            return choix;
-        }
-        private int DemandeUnAutre(String quoi)
-        {
-            afficheur.AfficherDemandeRessaisi(quoi);
-            int choix;
-            afficheur.AfficherDemandeEntreQuelqueChose(" 1 pour oui et 0 pour non");
-            choix = SaisirInt();
-            while (choix < 0 || choix > 1)
-            {
-                afficheur.AfficherErreur("choix incorrect");
-                choix = SaisirInt();
-            }
-            return choix;
+            return 0;
         }
         public void ModifierPartie()
         {
@@ -472,61 +460,53 @@ namespace AppliConsole.Gestionnaire
             else
             {
                 afficheur.AfficherLesPartie(gestionnaire.Parties);
-                int choix = DemandeModif("une partie");
+                int choix = DemandeOuiNon("une partie",1);
                 if (choix == 1)
                 {
                     int choixpartie;
                     afficheur.AfficherDemandeChoixObject("de la partie");
                     choixpartie = ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
                     afficheur.AfficherDetailPartie(gestionnaire.Parties[choixpartie]);
-                    int demandeSiModifManche = DemandeModif("une manche de cette partie");
+                    int demandeSiModifManche = DemandeOuiNon("une manche de cette partie",1);
                     if (demandeSiModifManche == 1)
                     {
                         afficheur.AfficherDemandeChoixObject("de la manche");
                         int choixmanche = ChoisirElementCorectDUneList(gestionnaire.Parties[choixpartie].Manches.Count);
-                        int choixmodifContrat = DemandeModif("le contrat");
+                        int choixmodifContrat = DemandeOuiNon("le contrat",1);
+                        //contrat
+                        Contrat c= gestionnaire.Parties[choixpartie].Manches[choixmanche].Contrat;
                         if (choixmodifContrat == 1)
-                        {
-                            Contrat c = this.ChoisirContrat();
-                        }
-                        int choixmodifJoueurAllier = DemandeModif("le Joueur Allier");
-                        List<Joueur> lesJoueursDeLaPartie = new();
-                        lesJoueursDeLaPartie.AddRange(gestionnaire.Parties[choixpartie].Joueurs);
-                        if (choixmodifJoueurAllier == 1)
-                        {
-                            afficheur.AfficherlisteJoueur(lesJoueursDeLaPartie.AsReadOnly());
-                            int choixnewJoueurAllier = ChoisirElementCorectDUneList(lesJoueursDeLaPartie.Count);
-                        }
-                        int choixmodifJoueurQuiPrend = DemandeModif("le joueur qui prend");
+                            c = this.ChoisirContrat();
+                        //joueur allier
+                        int choixmodifJoueurAllier = DemandeOuiNon("le Joueur Allier",1);
+                        Joueur joueurAllie = gestionnaire.Parties[choixpartie].Manches[choixmanche].JoueurAllier;
+                        if (choixmodifJoueurAllier==1)
+                            joueurAllie=selectionnerJoueurDansList(gestionnaire.Parties[choixpartie], "allié");
+                        //joueur qui prend
+                        int choixmodifJoueurQuiPrend = DemandeOuiNon("le joueur qui prend",1);
+                        Joueur joueurQuiPrend = gestionnaire.Parties[choixpartie].Manches[choixmanche].JoueurQuiPrend;
                         if (choixmodifJoueurQuiPrend == 1)
-                        {
-                            afficheur.AfficherlisteJoueur(lesJoueursDeLaPartie.AsReadOnly());
-                            int choixnewJoueurQuiPrend = ChoisirElementCorectDUneList(lesJoueursDeLaPartie.Count);
-                        }
-                        int choixmodifScore = DemandeModif("le score");
-                        if (choixmodifScore == 1)
-                        {
-                            afficheur.AfficherDemandeEntreQuelqueChose("le score");
-                            int score = SaisirInt();
-                            while (score < 0 && score > 91)
-                            {
-                                afficheur.AfficherErreur("le score doit etre entre 0 et 91");
-                                score = SaisirInt();
-                            }
-                        }
-                        int choisirmodifBonus = DemandeModif("les bonus");
-                        Bonus lesBonus = Bonus.Inconu;//gestionnaire.Parties[choixpartie].Manches[choixmanche].Bonus;
+                            joueurQuiPrend = selectionnerJoueurDansList(gestionnaire.Parties[choixpartie], "qui prend");
+                        //score
+                        int choixmodifScore = DemandeOuiNon("le score",1);
+                        int score= gestionnaire.Parties[choixpartie].Manches[choixmanche].Score;
+                        score = SaisirScore();
+
+                        int choisirmodifBonus = DemandeOuiNon("les bonus",1);
+                        Bonus lesBonus = gestionnaire.Parties[choixpartie].Manches[choixmanche].Bonus;
                         if (choisirmodifBonus == 1)
                         {
                             lesBonus = ChoisirBonus();
                         }
-
+                        Manche nouvelleManche = new Manche( c, joueurQuiPrend, score, lesBonus, gestionnaire.Parties[choixpartie].Joueurs.Count, joueurAllie);
+                        gestionnaire.ModifierManche(gestionnaire.Parties[choixpartie], gestionnaire.Parties[choixpartie].Manches[choixmanche], nouvelleManche);
                     }
                 }
             }
         }
-        private int ChoisirElementCorectDUneList(int sizeOfTheList)
+        public int ChoisirElementCorectDUneList(int sizeOfTheList)
         {
+            sizeOfTheList -= 1;
             int choixObjet = SaisirInt();
             while (choixObjet < 0 || choixObjet > sizeOfTheList)
             {
@@ -557,6 +537,12 @@ namespace AppliConsole.Gestionnaire
                 intsaisi = SaisirInt();
             }
             return intsaisi;
+        }
+        public void afficherUnePartieEnDetail()
+        {
+            afficheur.AfficherLesPartie(gestionnaire.Parties);
+            int choixpartie =this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
+            afficheur.AfficherDetailPartie(gestionnaire.Parties[choixpartie]);
         }
 
     }

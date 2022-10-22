@@ -63,6 +63,11 @@ namespace AppliConsole
                             gestionnaire.AjouterUneManche();
                             break;
                         }
+                    case 10:
+                        {
+                            gestionnaire.afficherUnePartieEnDetail();
+                            break;
+                        }
                     default:
                         {
                             afficheur.AfficherErreurChoix();

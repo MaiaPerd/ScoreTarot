@@ -22,6 +22,7 @@ namespace AppliConsole.InterfaceUtilisateur
             Console.WriteLine("7 - ajouter une partie");
             Console.WriteLine("8 - ajouter un joueur");
             Console.WriteLine("9 - ajouter une manche");
+            Console.WriteLine("10 - afficher les détails d'une partie");
             Console.WriteLine("666- quitter notre belle application\n");
         }
         public void AfficherErreurChoix()
@@ -36,6 +37,7 @@ namespace AppliConsole.InterfaceUtilisateur
         {
             int i=0;
             Console.WriteLine("affichage de la manche du "+manche.Date+ " nombre de joueurs : "+manche.NbJoueur);
+            Console.WriteLine("le contrat :" + manche.Contrat);
             Console.WriteLine("Les joueurs et leur score :");
             foreach (Joueur j in partie.Joueurs){
                 i++;
@@ -45,7 +47,7 @@ namespace AppliConsole.InterfaceUtilisateur
             if(manche.JoueurAllier==null)
                 Console.WriteLine(" le jour qui a pris : "+manche.JoueurQuiPrend);
             else
-                Console.WriteLine(" le jour qui a pris : " + manche.JoueurQuiPrend.Pseudo+" sans allier : "+manche.JoueurAllier.Pseudo);
+                Console.WriteLine(" le jour qui a pris : " + manche.JoueurQuiPrend.Pseudo+" son allier : "+manche.JoueurAllier.Pseudo);
 
         }
         public void AfficherJoueur(Joueur joueur)
@@ -160,6 +162,10 @@ namespace AppliConsole.InterfaceUtilisateur
         public void AfficherDemandeRessaisi(String quoi)
         {
             Console.WriteLine("Voules vous ressaisir "+quoi);
+        }
+        public void AfficherDemandeSiVeuxSaisir(String quoi)
+        {
+            Console.WriteLine("voules vous saisir " + quoi);
         }
 
     }
