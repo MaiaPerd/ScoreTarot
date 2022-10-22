@@ -15,6 +15,8 @@ namespace EntityFramework
         public DbSet<JoueurEntity> Joueurs { get; set; }
         public DbSet<MancheEntity> Manches { get; set; }
         public DbSet<PartieEntity> Parties { get; set; }
+        public DbSet<PartieJoueur> PartieJoueurs { get; set; }
+       
 
         public SQLiteContext()
         { }
@@ -26,7 +28,7 @@ namespace EntityFramework
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite($"Data Source=baseTarotScore.db");
+                optionsBuilder.UseSqlite($"Data Source=baseTarotScore.db;");
             }
         }
 

@@ -3,6 +3,8 @@ using EntityFramework;
 using EntityFramework.Entity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using Model;
 
 namespace TestsUnitaires
 {
@@ -19,29 +21,39 @@ namespace TestsUnitaires
                 .UseInMemoryDatabase(databaseName: "Add_Test_Partie_database")
                 .Options;
 
+
             using (var context = new SQLiteContext(options))
             {
                 context.Database.EnsureCreated();
 
+
+                //List<JoueurEntity> joueurs = new List<JoueurEntity>();
+             //   joueurs.Add(new JoueurEntity { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", URLIMG = "image" });
+
                 Dictionary<string, PartieEntity> parties = new Dictionary<string, PartieEntity>()
                 {
-                    ["partie1"] = new PartieEntity {  },
-                    ["partie2"] = new PartieEntity {  }
+                    ["partie1"] = new PartieEntity { Id=1 },
+                    ["partie2"] = new PartieEntity { Id=2 }
                 };
                 Dictionary<string, JoueurEntity> joueurs = new Dictionary<string, JoueurEntity>()
                 {
-                    ["albertus"] = new JoueurEntity { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", URLIMG = "image" },
+                    ["albertus"] = new JoueurEntity {  Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", URLIMG = "image" },
                     ["dani"] = new JoueurEntity { Pseudo = "dani", Age = 10, Nom = "Duboit", Prenom = "Daniel", URLIMG = "image" },
-                    ["egard"] = new JoueurEntity { Pseudo = "egard", Age = 10, Nom = "Duboit", Prenom = "Egard", URLIMG = "image" },
+                    ["egard"] = new JoueurEntity {  Pseudo = "egard", Age = 10, Nom = "Duboit", Prenom = "Egard", URLIMG = "image" },
                     ["chaise"] = new JoueurEntity { Pseudo = "chaise", Age = 10, Nom = "Duboit", Prenom = "LaTable", URLIMG = "image" },
-                    ["andreal"] = new JoueurEntity { Pseudo = "andreal", Age = 10, Nom = "Bourdin", Prenom = "Andrea", URLIMG = "image" }
+                    ["andreal"] = new JoueurEntity {  Pseudo = "andreal", Age = 10, Nom = "Bourdin", Prenom = "Andrea", URLIMG = "image" }
                 };
 
-                context.Parties.AddRange(parties.Values);
-                context.Joueurs.AddRange(joueurs.Values);
 
-                parties["partie1"].AjouterJoueur(joueurs["albertus"]);
-                joueurs["albertus"].PartieJoueurs = parties["partie1"].PartieJoueurs;
+                context.Joueurs.Add(joueurs["albertus"]);
+                context.Parties.Add(parties["partie1"]);
+              
+                context.SaveChanges();
+
+                PartieJoueur partieJoueur = new PartieJoueur { Joueur = joueurs["albertus"], Partie = parties["partie1"] };
+
+                context.PartieJoueurs.Add(partieJoueur);
+                //  joueurs["albertus"].PartieJoueurs = parties["partie1"].PartieJoueurs;
                 //joueurs["albertus"].AjouterPartie(parties["partie1"]);
                 /*joueurs["dani"].AjouterPartie(parties["partie1"]);
                 joueurs["egard"].AjouterPartie(parties["partie1"]);
@@ -60,14 +72,25 @@ namespace TestsUnitaires
                 parties["partie2"].AjouterJoueur(joueurs["chaise"]);
                 parties["partie2"].AjouterJoueur(joueurs["andreal"]);
 
-                parties["partie2"].Manches.Add(manche3);
-                
+                parties["partie2"].Manches.Add(manche3);*/
 
-                context.SaveChanges();
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch(InvalidOperationException e)
+                {
+                    Console.WriteLine(e);
+                }
+                
+               
+
+               
             }
           
             using (var context = new SQLiteContext(options))
-            {
+            {/*
                 Assert.Equal(2, context.Parties.Count());
                 Assert.Equal(3, context.Parties.First().Joueurs.Count());
                 Assert.Equal(5, context.Parties.Last().Joueurs.Count());

@@ -35,6 +35,10 @@ namespace TestsUnitaires
                 MancheEntity manche2 = new MancheEntity { JoueurQuiPrend = dani, NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.PetitAuBoutLe21, Contrat = ContratEntity.Prise, Score = 41, Date = new DateTime(2022, 11, 27) };
                 MancheEntity manche3 = new MancheEntity { JoueurQuiPrend = albertus, NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.PetitAuBoutExcuse, Contrat = ContratEntity.GardeSans, Score = 46, Date = new DateTime(2022, 11, 27) };
 
+                PartieEntity partie = new PartieEntity { Id = 1 };
+
+                manche1.Partie = partie;
+
                 context.Manches.Add(manche1);
                 context.Manches.Add(manche2);
                 context.Manches.Add(manche3);

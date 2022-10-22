@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using EntityFramework.Entity;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                await context.AddAsync(joueur.toEntity);
+                await context.AddAsync(joueur.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -27,7 +28,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                await context.AddAsync(manche.toEntity);
+                await context.AddAsync(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -38,10 +39,38 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                await context.AddAsync(partie.toEntity);
+                await context.AddAsync(partie.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
+        }
+
+        public async Task clearJoueurs()
+        {
+            using (var context = new SQLiteContext())
+            {
+                context.RemoveRange(context.Joueurs);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task clearManches()
+        {
+            using (var context = new SQLiteContext())
+            {
+                context.RemoveRange(context.Manches);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task clearParties()
+        {
+            clearManches();
+            using (var context = new SQLiteContext())
+            {
+                context.RemoveRange(context.Parties);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task<Joueur> getJoueur(string pseudo)
@@ -112,7 +141,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Remove(joueur.toEntity);
+                context.Remove(joueur.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -123,7 +152,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Remove(manche.toEntity);
+                context.Remove(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -134,7 +163,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Remove(partie.toEntity);
+                context.Remove(partie.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -145,7 +174,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Update(joueur.toEntity);
+                context.Update(joueur.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -156,7 +185,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Update(manche.toEntity);
+                context.Update(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -167,7 +196,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Update(partie.toEntity);
+                context.Update(partie.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
