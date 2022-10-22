@@ -135,5 +135,13 @@ namespace Model
         {
             return pseudo.GetHashCode();
         }
+        public void modifierLeJoueur(Joueur nvJoueur)
+        {
+            pseudo=nvJoueur.Pseudo;
+            URLIMG=nvJoueur.URLIMG;
+            Age = nvJoueur.Age;
+            Nom=nvJoueur.Nom;
+            Prenom = nvJoueur.Prenom;
+        }
     }
 }
