@@ -61,7 +61,7 @@ namespace TestsUnitaires
                 parties["partie2"].AjouterJoueur(joueurs["andreal"]);
 
                 parties["partie2"].Manches.Add(manche3);
-                */
+                
 
                 context.SaveChanges();
             }
@@ -71,7 +71,7 @@ namespace TestsUnitaires
                 Assert.Equal(2, context.Parties.Count());
                 Assert.Equal(3, context.Parties.First().Joueurs.Count());
                 Assert.Equal(5, context.Parties.Last().Joueurs.Count());
-                Assert.Equal(3, context.Parties.First().Manches.Count());
+                Assert.Equal(3, context.Parties.First().Manches.Count());*/
             }
 
         }
