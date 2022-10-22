@@ -130,8 +130,24 @@ namespace Model.Gestionnaire
         }
         public void SupprimerJoueur(Joueur joueur)
         {
+            List<Partie> partieASupprimer=new();
+            foreach(Partie p in parties)
+            {
+                if (p.Joueurs.Contains(joueur))
+                {
+                    partieASupprimer.Add(p);
+                }
+            }
             if(joueurs.Contains(joueur))
                 joueurs.Remove(joueur);
+            SupprimerPlusieursPartie(partieASupprimer);
+        }
+        public void SupprimerPlusieursPartie(List<Partie> partieASupprimer)
+        {
+            foreach (Partie p in partieASupprimer)
+            {
+                parties.Remove(p);
+            }
         }
         public void SupprimerPartie(Partie partie)
         {
