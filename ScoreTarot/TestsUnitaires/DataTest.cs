@@ -710,5 +710,86 @@ namespace TestsUnitaires
             };
         }
         #endregion
+        #region Gestionnaire Model
+        public static IEnumerable<Object[]> Data_TestGestionnaire()
+        {
+            yield return new object[]
+            {
+                new List<Joueur>(){new Joueur("Daniel", 45),new Joueur("Patricier",78) },
+            };
+            yield return new object[]
+            {
+                new List<Joueur>(){new Joueur("Daniel", 45),new Joueur("Patricier",78),new Joueur("Paratata",6),new Joueur("Tarl",6) },
+            };
+            yield return new object[]
+            {
+                new List<Joueur>(){new Joueur("Daniel", 45),new Joueur("Patricier",78),new Joueur("Paratata",6),new Joueur("Tarl",6),new Joueur("f",6) },
+            };
+            yield return new object[]
+            {
+                new List<Joueur>(){new Joueur("Daniel", 45),new Joueur("Patricier",78),
+                    new Joueur("Paratata",6),new Joueur("Tarl",6),new Joueur("f",6),
+                new Joueur("p",6),new Joueur("g",6),new Joueur("o",6)},
+            };
+        }
+        public static IEnumerable<Object[]> Data_TestGestionnaireAjoutManche()
+        {
+            yield return new object[]
+            {
+                new Partie(new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)}),
+                Contrat.GardeSans,
+                new Joueur("sherpman",87),
+                45,
+                Bonus.Excuse|Bonus.SimplePoignee,
+                3,
+                null
+            };
+            yield return new object[]
+            {
+                new Partie(new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66),new Joueur("batman",87)}),
+                Contrat.GardeSans,
+                new Joueur("sherpman",87),
+                45,
+                Bonus.Excuse|Bonus.SimplePoignee,
+                4,
+                new Joueur("superman",66)
+            };
+        }
+        public static IEnumerable<Object[]> Data_TestGestionnaireModifManche()
+        {
+            yield return new object[]
+            {
+                new Partie(45,new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)},new List<Manche>()),
+                new Manche(Contrat.Garde,new Joueur("sherpman",87),40,Bonus.Excuse,3),
+                new Manche(Contrat.Prise,new Joueur("sherpman",87),40,Bonus.Excuse,3)
+            };
+            yield return new object[]
+            {
+                new Partie(45,new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)},new List<Manche>()),
+                new Manche(Contrat.Garde,new Joueur("sherpman",87),40,Bonus.Excuse,3),
+                new Manche(Contrat.Prise,new Joueur("sherpman",87),41,Bonus.Excuse,3)
+            };
+            yield return new object[]
+            {
+                new Partie(new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)}),
+                new Manche(Contrat.Garde,new Joueur("sherpman",87),40,Bonus.Excuse,3),
+                new Manche(Contrat.Prise,new Joueur("sherpman",87),40,Bonus.ExcuseDoublePoignee|Bonus.Petit,3)
+            };
+            yield return new object[]
+            {
+                new Partie(new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)}),
+                new Manche(Contrat.Garde,new Joueur("sherpman",87),40,Bonus.Excuse,3),
+                new Manche(Contrat.Prise,new Joueur("structman",88),40,Bonus.ExcuseDoublePoignee|Bonus.Petit,3)
+            };
+        }
+        public static IEnumerable<Object[]> Data_TestGestionnaireSuppressionJoueur()
+        {
+            yield return new object[]
+            {
+                new Partie(45,new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)},new List<Manche>()),
+                new List<Joueur>(){new Joueur("sherpman",87),new Joueur("structman",88),new Joueur("superman",66)}
+            };
+        }
+        #endregion
+        }
     }
-}

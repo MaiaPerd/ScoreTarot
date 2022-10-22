@@ -183,7 +183,7 @@ namespace Model
         {
             return Id.GetHashCode();
         }
-        public void modifierManche(Manche nouvelleManche)
+        public void ModifierManche(Manche nouvelleManche)
         {
             joueurQuiPrend = nouvelleManche.joueurQuiPrend;
             JoueurAllier = nouvelleManche.JoueurAllier;
