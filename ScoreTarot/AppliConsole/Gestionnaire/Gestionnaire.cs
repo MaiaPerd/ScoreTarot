@@ -150,6 +150,10 @@ namespace AppliConsole.Gestionnaire
             return partie.Joueurs[choix];
         }
 
+        /// <summary>
+        /// Permet de choisir un contrat pour une partie
+        /// </summary>
+        /// <returns></returns> le contrat choisi
         private Contrat ChoisirContrat()
         {
             int? valContrat = null;
@@ -184,6 +188,10 @@ namespace AppliConsole.Gestionnaire
             return contrat;
         }
 
+        /// <summary>
+        /// Permet de choisir un ensembe de bonus, tant que l'utilisateur veut ajouter des bonus ils continues.
+        /// </summary>
+        /// <returns></returns> une addition d'ennumeration de bonus
         private Bonus ChoisirBonus()
         {
             int? valBonus = null;
@@ -259,6 +267,11 @@ namespace AppliConsole.Gestionnaire
             }
             return bonus;
         }
+
+        /// <summary>
+        /// Permet de saisir le score.
+        /// </summary>
+        /// <returns></returns>
         private int SaisirScore()
         {
             afficheur.AfficherDemandeEntreQuelqueChose("le score");
@@ -271,6 +284,11 @@ namespace AppliConsole.Gestionnaire
             return score;
         }
 
+        /// <summary>
+        /// Permet de saisir un entier en function de la demande (quoi)
+        /// </summary>
+        /// <param name="quoi"></param> ce que l'on veut afficher dans la console
+        /// <returns></returns> valeur saisie par l'utilisateur si elle est correct.
         private int AjouterEntier(string quoi)
         {
             int? valeur = null;

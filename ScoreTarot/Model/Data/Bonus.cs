@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
+    /// <summary>
+    /// Enumeration proposant tout les bonus posible dans une partie de tarot.
+    /// </summary>
     [Flags]
     public enum Bonus : Byte
     {
