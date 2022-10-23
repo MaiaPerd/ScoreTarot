@@ -3,21 +3,51 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using AppliConsole.InterfaceUtilisateur;
+using EntityFramework;
 using Model;
 using Model.Gestionnaire;
-using Model.Interface;
 
 namespace AppliConsole.Gestionnaire
 {
     public class Gestionnaire
     {
         private readonly Model.Gestionnaire.Gestionnaire gestionnaire = new Model.Gestionnaire.Gestionnaire();
+        private readonly DataManager dataManager = new DataManager();
 
         private readonly Afficheur afficheur = new();
         private readonly Sasisseur saisisseur = new();
 
         public Gestionnaire()
         {
+            initialiseDonnees();
+        }
+
+        public async void initialiseDonnees()
+        {
+            using (var context = new SQLiteContext())
+            {
+                context.Database.EnsureCreated();
+
+                IEnumerable<Joueur> joueurs = await dataManager.getJoueurs();
+                joueurs.ToList().ForEach(j => gestionnaire.AjouterUnJoueur(j.Pseudo, j.Age, j.Nom, j.Prenom));
+            }
+        }
+
+        public async void sauvegarder()
+        {
+            using (var context = new SQLiteContext())
+            {
+                context.Database.EnsureCreated();
+
+                List<Joueur> joueurs = gestionnaire.Joueurs.ToList();
+                List<Partie> parties = gestionnaire.Parties.ToList();
+                joueurs.ForEach(j => dataManager.addJoueur(j));
+            }
+        }
+
+        public Model.Gestionnaire.Gestionnaire GetGestionnaire()
+        {
+            return gestionnaire;
         }
 
         public void AfficherManche(Manche manche, Partie partie)
