@@ -45,7 +45,7 @@ namespace AppliConsole.InterfaceUtilisateur
                 
             }
             if(manche.JoueurAllier==null)
-                Console.WriteLine(" le jour qui a pris : "+manche.JoueurQuiPrend);
+                Console.WriteLine(" le jour qui a pris : "+manche.JoueurQuiPrend.Pseudo);
             else
                 Console.WriteLine(" le jour qui a pris : " + manche.JoueurQuiPrend.Pseudo+" son allier : "+manche.JoueurAllier.Pseudo);
 
@@ -66,7 +66,7 @@ namespace AppliConsole.InterfaceUtilisateur
         public void AfficherLesPartie(System.Collections.ObjectModel.ReadOnlyCollection<Partie> lesPartie)
         {
             if (lesPartie.Count == 0)
-                Console.WriteLine("\naucune partie\n");
+                Console.WriteLine("\n aucune partie \n");
             int i=0;
             Console.WriteLine("affichage des parties:");
             foreach(Partie p in lesPartie)
@@ -74,7 +74,7 @@ namespace AppliConsole.InterfaceUtilisateur
                 if(p.Manches.Count!=0)
                     Console.WriteLine(i+" - nombre de joueurs : "+p.Joueurs.Count+" date de la premiere manche : "+p.Manches.First().Date);
                 else
-                    Console.WriteLine(i + " - nombre de joueurs : " + p.Joueurs.Count + "aucune manche");
+                    Console.WriteLine(i + " - nombre de joueurs : " + p.Joueurs.Count + " aucune manche");
                 i++;
             }
         }
@@ -139,13 +139,13 @@ namespace AppliConsole.InterfaceUtilisateur
 
         public void AfficherDetailPartie(Partie partie)
         {
-            Console.WriteLine("     les joueurs de la partie: ");
+            Console.WriteLine("\n     Les joueurs de la partie: ");
             AfficherlisteJoueur(partie.Joueurs);
             if(partie.Manches.Count()==0)
-                Console.WriteLine("aucune manche pour cette partie");
+                Console.WriteLine("\n aucune manche pour cette partie");
             else
             {
-                Console.WriteLine(      "les manches de la partie: ");
+                Console.WriteLine("\n      Les manches de la partie: ");
                 int i=0;
                 foreach (Manche m in partie.Manches)
                 {
