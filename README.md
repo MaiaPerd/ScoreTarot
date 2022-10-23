@@ -20,7 +20,7 @@ ScoreTarot est une application permettant de gérer les scores d'un utilisateur 
 en effet cette application peut lui permettre de garder une trace de ses précdentes parties.
 Cette application peut aussi lui facilité certains calculs des scores.
 
-#Requirements
+# Requirements
 
     Visual Studio
 
