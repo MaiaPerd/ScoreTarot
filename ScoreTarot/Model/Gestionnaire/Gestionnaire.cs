@@ -125,7 +125,7 @@ namespace Model.Gestionnaire
                 Joueur joueurdelalist = ancien;
                 foreach (Joueur j in this.joueurs) {
                     if (j == ancien)
-                        j.modifierLeJoueur(nv);
+                        j.ModifierLeJoueur(nv);
                 } 
                 return true;
             }

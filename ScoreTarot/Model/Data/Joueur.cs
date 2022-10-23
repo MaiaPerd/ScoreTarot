@@ -135,7 +135,7 @@ namespace Model
         {
             return pseudo.GetHashCode();
         }
-        public void modifierLeJoueur(Joueur nvJoueur)
+        public void ModifierLeJoueur(Joueur nvJoueur)
         {
             pseudo=nvJoueur.Pseudo;
             URLIMG=nvJoueur.URLIMG;
