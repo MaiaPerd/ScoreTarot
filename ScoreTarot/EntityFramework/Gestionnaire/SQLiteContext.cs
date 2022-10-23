@@ -33,7 +33,7 @@ namespace EntityFramework
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {/*
             modelBuilder.Entity<PartieJoueur>().Property<int>("PartieId");
             modelBuilder.Entity<PartieJoueur>().Property<String>("JoueurId");
 
@@ -47,7 +47,16 @@ namespace EntityFramework
                 .HasOne(partieJoueur => partieJoueur.Joueur)
                 .WithMany(joueur => joueur.PartieJoueurs)
                 .HasForeignKey("JoueurId");
-
+            */
+            modelBuilder.Entity<PartieJoueur>().HasKey("PartieForeignKey", "JoueurForeignKey");
+            /*
+            modelBuilder.Entity<PartieJoueur>()
+                .HasOne(partieJoueur => partieJoueur.Partie)
+                .WithMany(partie => partie.PartieJoueurs);
+            modelBuilder.Entity<PartieJoueur>()
+                .HasOne(partieJoueur => partieJoueur.Joueur)
+                .WithMany(joueur => joueur.PartieJoueurs);
+            */
             base.OnModelCreating(modelBuilder);
         }
 

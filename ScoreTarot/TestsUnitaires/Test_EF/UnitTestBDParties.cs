@@ -12,13 +12,13 @@ namespace TestsUnitaires
     {
       
         [Fact]
-        public void Add_Test_Parties()
+        public void Add_Modify_Test_Parties()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
             
             var options = new DbContextOptionsBuilder<SQLiteContext>()
-                .UseInMemoryDatabase(databaseName: "Add_Test_Partie_database")
+                .UseInMemoryDatabase(databaseName: "Add_Modify_Test_Partie_database")
                 .Options;
 
 
@@ -44,57 +44,42 @@ namespace TestsUnitaires
                     ["andreal"] = new JoueurEntity {  Pseudo = "andreal", Age = 10, Nom = "Bourdin", Prenom = "Andrea", URLIMG = "image" }
                 };
 
-
-                context.Joueurs.Add(joueurs["albertus"]);
-                context.Parties.Add(parties["partie1"]);
-              
-                context.SaveChanges();
-
-                PartieJoueur partieJoueur = new PartieJoueur { Joueur = joueurs["albertus"], Partie = parties["partie1"] };
-
-                context.PartieJoueurs.Add(partieJoueur);
-                //  joueurs["albertus"].PartieJoueurs = parties["partie1"].PartieJoueurs;
-                //joueurs["albertus"].AjouterPartie(parties["partie1"]);
-                /*joueurs["dani"].AjouterPartie(parties["partie1"]);
+                //Partie 1
+                joueurs["albertus"].AjouterPartie(parties["partie1"]);
+                joueurs["dani"].AjouterPartie(parties["partie1"]);
                 joueurs["egard"].AjouterPartie(parties["partie1"]);
 
+                //Partie2
+                joueurs["albertus"].AjouterPartie(parties["partie2"]);
+                joueurs["dani"].AjouterPartie(parties["partie2"]);
+                joueurs["egard"].AjouterPartie(parties["partie2"]);
+                joueurs["chaise"].AjouterPartie(parties["partie2"]);
+                joueurs["andreal"].AjouterPartie(parties["partie2"]);
+ 
                 MancheEntity manche1 = new MancheEntity { JoueurQuiPrend = joueurs["albertus"], NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.Le21DoublePoignee, Contrat = ContratEntity.Garde, Score = 52, Date = new DateTime(2022, 11, 27) };
                 MancheEntity manche2 = new MancheEntity { JoueurQuiPrend = joueurs["dani"], NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.PetitAuBoutLe21, Contrat = ContratEntity.Prise, Score = 41, Date = new DateTime(2022, 11, 27) };
-                MancheEntity manche3 = new MancheEntity { JoueurQuiPrend = joueurs["egard"], NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.PetitAuBoutExcuse, Contrat = ContratEntity.GardeSans, Score = 46, Date = new DateTime(2022, 11, 27), JoueurAllier = andreal };
+                MancheEntity manche3 = new MancheEntity { JoueurQuiPrend = joueurs["egard"], NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.PetitAuBoutExcuse, Contrat = ContratEntity.GardeSans, Score = 46, Date = new DateTime(2022, 11, 27), JoueurAllier = joueurs["andreal"] };
 
 
                 parties["partie1"].Manches.Add(manche1);
                 parties["partie1"].Manches.Add(manche2);
-                /*
-                parties["partie2"].AjouterJoueur(joueurs["albertus"]);
-                parties["partie2"].AjouterJoueur(joueurs["dani"]);
-                parties["partie2"].AjouterJoueur(joueurs["egard"]);
-                parties["partie2"].AjouterJoueur(joueurs["chaise"]);
-                parties["partie2"].AjouterJoueur(joueurs["andreal"]);
 
-                parties["partie2"].Manches.Add(manche3);*/
+                parties["partie2"].Manches.Add(manche3);
 
+                context.Joueurs.AddRange(joueurs.Values);
+                context.Parties.AddRange(parties.Values);
 
-                try
-                {
-                    context.SaveChanges();
-                }
-                catch(InvalidOperationException e)
-                {
-                    Console.WriteLine(e);
-                }
-                
-               
+                context.SaveChanges();
 
-               
             }
           
             using (var context = new SQLiteContext(options))
-            {/*
+            {
+                context.Database.EnsureCreated();
+
                 Assert.Equal(2, context.Parties.Count());
-                Assert.Equal(3, context.Parties.First().Joueurs.Count());
-                Assert.Equal(5, context.Parties.Last().Joueurs.Count());
-                Assert.Equal(3, context.Parties.First().Manches.Count());*/
+                Assert.Equal(8, context.PartieJoueurs.Count());
+                Assert.Equal(1, context.Manches.First().PartieForeignKey);
             }
 
         }
