@@ -146,8 +146,8 @@ namespace EntityFramework
             {
                 partieEntity.Id = partie.Id;
             }
-          //  partie.Joueurs.ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur.toEntity()));
-          //  partieEntity.Manches = partie.Manches.toEntities().ToList();
+            partie.Joueurs.ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur.toEntity()));
+            partieEntity.Manches = partie.Manches.toEntities().ToList();
             return partieEntity;
         }
 

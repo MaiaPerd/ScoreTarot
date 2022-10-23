@@ -41,6 +41,8 @@ namespace EntityFramework
             using (var context = new SQLiteContext())
             {
                 PartieEntity partieEntity = partie.toEntity();
+                partieEntity.Joueurs.Clear();
+                partieEntity.PartieJoueurs.Clear();
                 List<JoueurEntity> joueurEntity = new();
                 partie.Joueurs.ToList().ForEach(j =>
                 {
@@ -50,6 +52,8 @@ namespace EntityFramework
                 {
                     partieEntity.AjouterJoueur(joueur);
                 });
+
+            
                 
                 await context.Parties.AddAsync(partieEntity);
                 result = await context.SaveChangesAsync() == 1;
