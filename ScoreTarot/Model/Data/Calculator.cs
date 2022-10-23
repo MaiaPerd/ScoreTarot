@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Interface;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,28 +8,34 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Calculator
+    public class Calculator : ICalculator
     {
-        private int OBJECTIF = 56;
-        private int OBJECTIF2 = 51;
-        private int OBJECTIF3 = 41;
-        private int OBJECTIF4 = 36;
+        public static int OBJECTIF { get {return  56; } }
 
-        private int SCOREBASE = 25;
+        public static int OBJECTIF2 { get {return  51; }}
+        
+        public static int OBJECTIF3 { get { return 41; } }
+        public static int OBJECTIF4 { get { return 36; } }
 
-        private int GARDE = 2;
-        private int GARDESANS = 4;
-        private int GARDECONTRE = 6;
+        public static int SCOREBASE { get { return 25; } }
 
-        private int PETITPRISE = 10;
-        private int PETITGARDE = 20;
-        private int PETITGARDESANS = 30;
-        private int PETITGARDECONTRE = 40;
+        public static int GARDE { get { return 2; } }
+        public static int GARDESANS { get { return 4; } }
+        public static int GARDECONTRE { get { return 6; } }
 
-        private int POIGNEE = 20;
-        private int DOUBLEPOIGNEE = 30;
-        private int TRIPLEPOIGNEE = 40;
+        public static int PETITPRISE { get { return 10; } }
+        public static int PETITGARDE { get { return 20; } }
+        public static int PETITGARDESANS { get { return 30; } }
+        public static int PETITGARDECONTRE { get { return 40; } }
 
+        public static int POIGNEE { get { return 20; } }
+        public static int DOUBLEPOIGNEE { get { return 30; } }
+        public static int TRIPLEPOIGNEE { get { return 40; } }
+
+        public static int NBJOUEURMIN { get { return 3; } }
+        public static int NBJOUEURMAX { get { return 5; } }
+
+        public static int SCOREMAX { get { return 91; } }
         /// <summary>
         /// Methode qui calcule le score des joueurs qui non pas pris ou qui n'était pas allié au preneur.
         /// </summary>

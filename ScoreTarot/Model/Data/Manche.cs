@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -136,7 +137,7 @@ namespace Model
         /// <returns></returns>
         public int GetScoreJoueurManche(Joueur joueur)
         {
-            Calculator calcule = new Calculator();
+            ICalculator calcule = new SingletonICalculator().GetCalculator();
             if (joueur.Equals(JoueurQuiPrend))
             {
                 if (JoueurAllier != null)
