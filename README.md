@@ -22,11 +22,11 @@ Cette application peut aussi lui facilité certains calculs des scores.
 
 # Requirements
 
-    Visual Studio
+Visual Studio
 
 # Auteurs
-    MaÏa PERDERIZET
-    Cécile BONAL
+MaÏa PERDERIZET
+Cécile BONAL
 
 _Generated with a_ **Code#0** _template_  
 <img src="Documentation/doc_images/CodeFirst.png" height=40/>   
