@@ -8,7 +8,7 @@ namespace AppliConsole.Gestionnaire
 {
     public class DataManager 
     {
-        object dataManager;
+        object dataManager = new EntityFramework.DataManager();
 
         bool BD;
 
@@ -17,13 +17,8 @@ namespace AppliConsole.Gestionnaire
             getBDNull();
             if (BD)
             {
-                dataManager = new Stub.ManagerStub();
-                ((Stub.ManagerStub)dataManager).LoadJoueur().ForEach(j => addJoueur(j));
-                ((Stub.ManagerStub)dataManager).LoadPartie().ForEach(p => addPartie(p));
-            }
-            else
-            {
-                dataManager = new EntityFramework.DataManager();
+                (new Stub.ManagerStub()).LoadJoueur().ForEach(j => addJoueur(j));
+                (new Stub.ManagerStub()).LoadPartie().ForEach(p => addPartie(p));
             }
         }
 
@@ -36,8 +31,11 @@ namespace AppliConsole.Gestionnaire
                 {
                     BD = true;
                 }
+                else {
+                    BD = false;
+                }
             }
-            BD = false;
+           
         }
         
         public Task<bool> addJoueur(Joueur joueur)
