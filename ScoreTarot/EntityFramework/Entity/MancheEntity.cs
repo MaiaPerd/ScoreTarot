@@ -12,6 +12,7 @@ namespace EntityFramework.Entity
     public class MancheEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         public int Score { get; set; }
@@ -21,7 +22,9 @@ namespace EntityFramework.Entity
         public ContratEntity Contrat { get; set; }
         public BonusEntity Bonus { get; set; }
         [Required]
+        [MaxLength(20)]
         public JoueurEntity JoueurQuiPrend { get; set; }
+        [MaxLength(20)]
         public JoueurEntity JoueurAllier { get; set; }
         public DateTime Date { get; set; }
 

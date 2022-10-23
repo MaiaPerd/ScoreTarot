@@ -9,12 +9,14 @@ namespace EntityFramework
     {
         public static JoueurEntity toEntity(this Joueur joueur)
         {
-            JoueurEntity joueurEntity = new JoueurEntity();
-            joueurEntity.Age = joueur.Age;
-            joueurEntity.URLIMG = joueur.URLIMG;
-            joueurEntity.Pseudo = joueur.Pseudo;
-            joueurEntity.Nom = joueur.Nom;
-            joueurEntity.Prenom = joueur.Prenom;
+            JoueurEntity joueurEntity = new JoueurEntity
+            {
+                Age = joueur.Age,
+                URLIMG = joueur.URLIMG,
+                Pseudo = joueur.Pseudo,
+                Nom = joueur.Nom,
+                Prenom = joueur.Prenom,
+            };
             return joueurEntity;
         }
 
