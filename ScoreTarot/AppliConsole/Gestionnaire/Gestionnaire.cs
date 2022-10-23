@@ -22,7 +22,7 @@ namespace AppliConsole.Gestionnaire
             initialiseDonnees();
         }
 
-        public async void initialiseDonnees()
+        public async Task initialiseDonnees()
         {
             using (var context = new SQLiteContext())
             {
@@ -39,7 +39,7 @@ namespace AppliConsole.Gestionnaire
             }
         }
 
-        public async void sauvegarder()
+        public async Task sauvegarder()
         {
             using (var context = new SQLiteContext())
             {
