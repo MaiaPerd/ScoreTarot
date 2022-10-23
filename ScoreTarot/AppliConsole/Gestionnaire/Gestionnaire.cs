@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using AppliConsole.InterfaceUtilisateur;
 using Model;
 using Model.Gestionnaire;
+using Model.Interface;
 
 namespace AppliConsole.Gestionnaire
 {
