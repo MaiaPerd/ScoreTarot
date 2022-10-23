@@ -142,15 +142,28 @@ namespace EntityFramework
         public static PartieEntity toEntity(this Partie partie)
         {
             PartieEntity partieEntity = new PartieEntity();
-            partieEntity.Id = partie.Id;
-            partie.Joueurs.toEntities().ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur));
-            partieEntity.Manches = partie.Manches.toEntities().ToList();
+            if(partie.Id != 0)
+            {
+                partieEntity.Id = partie.Id;
+            }
+          //  partie.Joueurs.ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur.toEntity()));
+          //  partieEntity.Manches = partie.Manches.toEntities().ToList();
             return partieEntity;
         }
 
         public static Partie toModel(this PartieEntity partieEntity)
         {
-            return new Partie(partieEntity.Id, partieEntity.Joueurs.toModels().ToList(), partieEntity.Manches.toModels().ToList());
+            List<Joueur> joueurs = new();
+            List<JoueurEntity> joueurEntities = partieEntity.Joueurs.ToList();
+
+            partieEntity.PartieJoueurs.ToList().ForEach(j =>
+            {
+                JoueurEntity joueur = joueurEntities.Find(jour => jour.Pseudo.Equals(j.JoueurForeignKey));
+                joueurs.Add(joueur.toModel());
+                
+            });
+
+            return new Partie(partieEntity.Id, joueurs, partieEntity.Manches.toModels().ToList());
         }
 
     }

@@ -18,7 +18,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                await context.AddAsync(joueur.toEntity());
+                await context.Joueurs.AddAsync(joueur.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -29,7 +29,7 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                await context.AddAsync(manche.toEntity());
+                await context.Manches.AddAsync(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -40,7 +40,18 @@ namespace EntityFramework
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                await context.AddAsync(partie.toEntity());
+                PartieEntity partieEntity = partie.toEntity();
+                List<JoueurEntity> joueurEntity = new();
+                partie.Joueurs.ToList().ForEach(j =>
+                {
+                     joueurEntity.Add(context.Joueurs.Where(joueur => joueur.Pseudo == j.Pseudo).First());
+                });
+                joueurEntity.ForEach(joueur =>
+                {
+                    partieEntity.AjouterJoueur(joueur);
+                });
+                
+                await context.Parties.AddAsync(partieEntity);
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
@@ -170,8 +181,16 @@ namespace EntityFramework
             List<Partie> parties = new();
             using (var context = new SQLiteContext())
             {
+                 context.Parties.ToList().ForEach(p =>
+                {
+                    if (p.Joueurs.Count() == 0)
+                    {
+                        clearParties();
+                    }
+                });
+                List<Partie> partieEntities = context.Parties.Select(p => p.toModel()).ToList();
                 await Task.Run(() =>
-                    parties.AddRange(context.Parties.Select(p => p.toModel())));
+                    parties.AddRange(partieEntities));
             }
             return parties;
         }

@@ -30,6 +30,12 @@ namespace AppliConsole.Gestionnaire
 
                 IEnumerable<Joueur> joueurs = await dataManager.getJoueurs();
                 joueurs.ToList().ForEach(j => gestionnaire.AjouterUnJoueur(j.Pseudo, j.Age, j.Nom, j.Prenom));
+
+               
+                IEnumerable<Partie> parties = await dataManager.getParties();
+                
+                parties.ToList().ForEach(p => gestionnaire.AjouterUnePartie(p.Joueurs.ToList()));
+
             }
         }
 
@@ -42,6 +48,7 @@ namespace AppliConsole.Gestionnaire
                 List<Joueur> joueurs = gestionnaire.Joueurs.ToList();
                 List<Partie> parties = gestionnaire.Parties.ToList();
                 joueurs.ForEach(j => dataManager.addJoueur(j));
+                parties.ForEach(p => dataManager.addPartie(p));
             }
         }
 
