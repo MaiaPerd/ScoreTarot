@@ -52,6 +52,7 @@ namespace AppliConsole.Gestionnaire
             if (!bienfait)
                 afficheur.AfficherErreur("une erreur s'est produite");
         }
+
         /// <summary>
         /// permet de choisir rentrer une manche dans une partie
         /// </summary>
@@ -257,7 +258,7 @@ namespace AppliConsole.Gestionnaire
                 afficheur.AfficherErreur("\naucun joueur n'est enregistré ou pas assez, la création d'une partie est donc impossible.\n");
             else
             {
-                List<Joueur> joueurs = gestionnaire.listeJoueurVide();
+                List<Joueur> joueurs = new();
                 List<Joueur> joueursPasDansLaPartie=new();
                 joueursPasDansLaPartie.AddRange(gestionnaire.Joueurs);
                 afficheur.AfficherlisteJoueur(joueursPasDansLaPartie.AsReadOnly());
@@ -281,40 +282,11 @@ namespace AppliConsole.Gestionnaire
             }
         }
 
-        public void ModfierPartie(Partie partie)
-        {
-            gestionnaire.ModfierPartie(partie);
-            
-        }
-
-        public void ModifierJoueur(int partie, Joueur joueur)
-        {
-            gestionnaire.ModifierJoueur(partie, joueur);
-        }
-
-        public void AjouterDesPartie(List<Partie> lesPartie)
-        {
-            gestionnaire.AjouterDesPartie(lesPartie);
-        }
-
-        public void AjouterDesManche(Partie partie, List<Manche> lesManches)
-        {
-            gestionnaire.AjouterDesManche(partie, lesManches);
-        }
-
-        public void AjouterDesJoueurs(List<Joueur> lesJoueurs)
-        {
-            gestionnaire.AjouterDesJoueurs(lesJoueurs);
-        }
+       
 
         public void AfficherPartie()
         {
             afficheur.AfficherLesPartie(gestionnaire.GetParties());
-        }
-
-        public void AfficherJoueur(Joueur joueur)
-        {
-            afficheur.AfficherJoueur(joueur);
         }
 
         public void AfficherJoueurs()
@@ -509,16 +481,6 @@ namespace AppliConsole.Gestionnaire
                 choixObjet = SaisirInt();
             }
             return choixObjet;
-        }
-        private int RessaisiCorrect(int sizeOFlist,List<int> dejaChoisis)
-        {
-            int choixObject = SaisirInt();
-            while (choixObject<0||dejaChoisis.Contains(choixObject)||choixObject>sizeOFlist)
-            {
-                afficheur.AfficherErreur("mauvais choix, recommencez");
-                choixObject = SaisirInt();
-            }
-            return choixObject;
         }
         public int SaisirInt()
         {
