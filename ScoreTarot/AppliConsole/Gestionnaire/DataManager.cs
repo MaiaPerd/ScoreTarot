@@ -2,6 +2,7 @@
 using Model;
 using Model.Interface;
 using Stub;
+using EntityFramework;
 
 namespace AppliConsole.Gestionnaire
 {
@@ -29,15 +30,14 @@ namespace AppliConsole.Gestionnaire
         public async Task getBDNull()
         {
             EntityFramework.DataManager d = new EntityFramework.DataManager();
-            IEnumerable<Joueur> j = await d.getJoueurs();
-            if (j.Count() == 0)
+            using (SQLiteContext context = new SQLiteContext())
             {
-                BD = true;
+                if(context.Joueurs.Count() == 0)
+                {
+                    BD = true;
+                }
             }
-            else
-            {
-                BD = false;
-            }
+            BD = false;
         }
         
         public Task<bool> addJoueur(Joueur joueur)

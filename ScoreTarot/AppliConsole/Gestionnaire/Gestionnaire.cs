@@ -3,21 +3,58 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using AppliConsole.InterfaceUtilisateur;
+using EntityFramework;
 using Model;
 using Model.Gestionnaire;
-using Model.Interface;
 
 namespace AppliConsole.Gestionnaire
 {
     public class Gestionnaire
     {
         private readonly Model.Gestionnaire.Gestionnaire gestionnaire = new Model.Gestionnaire.Gestionnaire();
+        private readonly DataManager dataManager = new DataManager();
 
         private readonly Afficheur afficheur = new();
         private readonly Sasisseur saisisseur = new();
 
         public Gestionnaire()
         {
+            initialiseDonnees();
+        }
+
+        public async Task initialiseDonnees()
+        {
+            using (var context = new SQLiteContext())
+            {
+                context.Database.EnsureCreated();
+
+                IEnumerable<Joueur> joueurs = await dataManager.getJoueurs();
+                joueurs.ToList().ForEach(j => gestionnaire.AjouterUnJoueur(j.Pseudo, j.Age, j.Nom, j.Prenom));
+
+               
+                IEnumerable<Partie> parties = await dataManager.getParties();
+                
+                parties.ToList().ForEach(p => gestionnaire.AjouterUnePartie(p.Joueurs.ToList()));
+
+            }
+        }
+
+        public async Task sauvegarder()
+        {
+            using (var context = new SQLiteContext())
+            {
+                context.Database.EnsureCreated();
+
+                List<Joueur> joueurs = gestionnaire.Joueurs.ToList();
+                List<Partie> parties = gestionnaire.Parties.ToList();
+                joueurs.ForEach(j => dataManager.addJoueur(j));
+                parties.ForEach(p => dataManager.addPartie(p));
+            }
+        }
+
+        public Model.Gestionnaire.Gestionnaire GetGestionnaire()
+        {
+            return gestionnaire;
         }
 
         public void AfficherManche(Manche manche, Partie partie)
@@ -62,7 +99,7 @@ namespace AppliConsole.Gestionnaire
         {
             if (gestionnaire.Parties.Count==0)
             {
-                afficheur.AfficherErreur("aucune partie pour ajouter une manche!");
+                afficheur.AfficherErreur("\naucune partie pour ajouter une manche!");
             }
             else {
                 Contrat contrat = this.ChoisirContrat();
@@ -87,8 +124,17 @@ namespace AppliConsole.Gestionnaire
         public void AjouterUneManche()
         {
             afficheur.AfficherLesPartie(gestionnaire.Parties);
-            int choixPartie = this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
-            AjouterUneManche(choixPartie);
+            if(gestionnaire.Parties.Count != 0)
+            {
+                afficheur.AfficherDemandeChoix();
+                int choixPartie = this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
+                AjouterUneManche(choixPartie);
+            }
+            else
+            {
+                afficheur.AfficherErreur("\naucune partie pour ajouter une manche!");
+            }
+           
         }
         /// <summary>
         /// permet de sélectionner un joueur dans la partie, qui représente le joueur allié ou le joueur qui prend
@@ -104,6 +150,10 @@ namespace AppliConsole.Gestionnaire
             return partie.Joueurs[choix];
         }
 
+        /// <summary>
+        /// Permet de choisir un contrat pour une partie
+        /// </summary>
+        /// <returns></returns> le contrat choisi
         private Contrat ChoisirContrat()
         {
             int? valContrat = null;
@@ -138,6 +188,10 @@ namespace AppliConsole.Gestionnaire
             return contrat;
         }
 
+        /// <summary>
+        /// Permet de choisir un ensembe de bonus, tant que l'utilisateur veut ajouter des bonus ils continues.
+        /// </summary>
+        /// <returns></returns> une addition d'ennumeration de bonus
         private Bonus ChoisirBonus()
         {
             int? valBonus = null;
@@ -213,6 +267,11 @@ namespace AppliConsole.Gestionnaire
             }
             return bonus;
         }
+
+        /// <summary>
+        /// Permet de saisir le score.
+        /// </summary>
+        /// <returns></returns>
         private int SaisirScore()
         {
             afficheur.AfficherDemandeEntreQuelqueChose("le score");
@@ -225,6 +284,11 @@ namespace AppliConsole.Gestionnaire
             return score;
         }
 
+        /// <summary>
+        /// Permet de saisir un entier en function de la demande (quoi)
+        /// </summary>
+        /// <param name="quoi"></param> ce que l'on veut afficher dans la console
+        /// <returns></returns> valeur saisie par l'utilisateur si elle est correct.
         private int AjouterEntier(string quoi)
         {
             int? valeur = null;
@@ -435,39 +499,46 @@ namespace AppliConsole.Gestionnaire
                     afficheur.AfficherDemandeChoixObject("de la partie");
                     choixpartie = ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
                     afficheur.AfficherDetailPartie(gestionnaire.Parties[choixpartie]);
-                    int demandeSiModifManche = DemandeOuiNon("une manche de cette partie",1);
-                    if (demandeSiModifManche == 1)
+                    if(gestionnaire.Parties[choixpartie].Manches.Count() == 0)
                     {
-                        afficheur.AfficherDemandeChoixObject("de la manche");
-                        int choixmanche = ChoisirElementCorectDUneList(gestionnaire.Parties[choixpartie].Manches.Count);
-                        int choixmodifContrat = DemandeOuiNon("le contrat",1);
-                        //contrat
-                        Contrat c= gestionnaire.Parties[choixpartie].Manches[choixmanche].Contrat;
-                        if (choixmodifContrat == 1)
-                            c = this.ChoisirContrat();
-                        //joueur allier
-                        int choixmodifJoueurAllier = DemandeOuiNon("le Joueur Allier",1);
-                        Joueur joueurAllie = gestionnaire.Parties[choixpartie].Manches[choixmanche].JoueurAllier;
-                        if (choixmodifJoueurAllier==1)
-                            joueurAllie=selectionnerJoueurDansList(gestionnaire.Parties[choixpartie], "allié");
-                        //joueur qui prend
-                        int choixmodifJoueurQuiPrend = DemandeOuiNon("le joueur qui prend",1);
-                        Joueur joueurQuiPrend = gestionnaire.Parties[choixpartie].Manches[choixmanche].JoueurQuiPrend;
-                        if (choixmodifJoueurQuiPrend == 1)
-                            joueurQuiPrend = selectionnerJoueurDansList(gestionnaire.Parties[choixpartie], "qui prend");
-                        //score
-                        int choixmodifScore = DemandeOuiNon("le score",1);
-                        int score= gestionnaire.Parties[choixpartie].Manches[choixmanche].Score;
-                        score = SaisirScore();
-
-                        int choisirmodifBonus = DemandeOuiNon("les bonus",1);
-                        Bonus lesBonus = gestionnaire.Parties[choixpartie].Manches[choixmanche].Bonus;
-                        if (choisirmodifBonus == 1)
+                        afficheur.AfficherErreur("\naucune manche a modifier dans la partie");
+                    }
+                    else
+                    {
+                        int demandeSiModifManche = DemandeOuiNon("une manche de cette partie",1);
+                        if (demandeSiModifManche == 1)
                         {
-                            lesBonus = ChoisirBonus();
+                            afficheur.AfficherDemandeChoixObject("de la manche");
+                            int choixmanche = ChoisirElementCorectDUneList(gestionnaire.Parties[choixpartie].Manches.Count);
+                            int choixmodifContrat = DemandeOuiNon("le contrat",1);
+                            //contrat
+                            Contrat c= gestionnaire.Parties[choixpartie].Manches[choixmanche].Contrat;
+                            if (choixmodifContrat == 1)
+                                c = this.ChoisirContrat();
+                            //joueur allier
+                            int choixmodifJoueurAllier = DemandeOuiNon("le Joueur Allier",1);
+                            Joueur joueurAllie = gestionnaire.Parties[choixpartie].Manches[choixmanche].JoueurAllier;
+                            if (choixmodifJoueurAllier==1)
+                                joueurAllie=selectionnerJoueurDansList(gestionnaire.Parties[choixpartie], "allié");
+                            //joueur qui prend
+                            int choixmodifJoueurQuiPrend = DemandeOuiNon("le joueur qui prend",1);
+                            Joueur joueurQuiPrend = gestionnaire.Parties[choixpartie].Manches[choixmanche].JoueurQuiPrend;
+                            if (choixmodifJoueurQuiPrend == 1)
+                                joueurQuiPrend = selectionnerJoueurDansList(gestionnaire.Parties[choixpartie], "qui prend");
+                            //score
+                            int choixmodifScore = DemandeOuiNon("le score",1);
+                            int score= gestionnaire.Parties[choixpartie].Manches[choixmanche].Score;
+                            score = SaisirScore();
+
+                            int choisirmodifBonus = DemandeOuiNon("les bonus",1);
+                            Bonus lesBonus = gestionnaire.Parties[choixpartie].Manches[choixmanche].Bonus;
+                            if (choisirmodifBonus == 1)
+                            {
+                                lesBonus = ChoisirBonus();
+                            }
+                            Manche nouvelleManche = new Manche( c, joueurQuiPrend, score, lesBonus, gestionnaire.Parties[choixpartie].Joueurs.Count, joueurAllie);
+                            gestionnaire.ModifierManche(gestionnaire.Parties[choixpartie], gestionnaire.Parties[choixpartie].Manches[choixmanche], nouvelleManche);
                         }
-                        Manche nouvelleManche = new Manche( c, joueurQuiPrend, score, lesBonus, gestionnaire.Parties[choixpartie].Joueurs.Count, joueurAllie);
-                        gestionnaire.ModifierManche(gestionnaire.Parties[choixpartie], gestionnaire.Parties[choixpartie].Manches[choixmanche], nouvelleManche);
                     }
                 }
             }
@@ -499,6 +570,7 @@ namespace AppliConsole.Gestionnaire
         public void afficherUnePartieEnDetail()
         {
             afficheur.AfficherLesPartie(gestionnaire.Parties);
+            afficheur.AfficherDemandeChoix();
             int choixpartie =this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
             afficheur.AfficherDetailPartie(gestionnaire.Parties[choixpartie]);
         }

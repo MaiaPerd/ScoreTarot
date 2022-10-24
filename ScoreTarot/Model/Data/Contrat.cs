@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
+    /// <summary>
+    /// Enumeration proposant tout les contrat posible dans une partie de tarot.
+    /// </summary>
     public enum Contrat
     {
         Inconu,

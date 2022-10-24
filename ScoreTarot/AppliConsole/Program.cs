@@ -1,4 +1,6 @@
 ﻿using AppliConsole.InterfaceUtilisateur;
+using EntityFramework;
+using Model;
 
 namespace AppliConsole
 {
@@ -7,6 +9,7 @@ namespace AppliConsole
         static void Main(string[] args)
         {
             AppliConsole.Gestionnaire.Gestionnaire gestionnaire = new Gestionnaire.Gestionnaire();
+ 
             int choix;
             Afficheur afficheur = new();
             Sasisseur saisisseur = new();
@@ -81,6 +84,8 @@ namespace AppliConsole
                 choix = gestionnaire.SaisirInt();
 
             }
+
+            gestionnaire.sauvegarder();
 
 
         }
