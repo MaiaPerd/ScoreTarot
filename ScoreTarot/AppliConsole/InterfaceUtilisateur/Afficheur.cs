@@ -67,8 +67,9 @@ namespace AppliConsole.InterfaceUtilisateur
         {
             if (lesPartie.Count == 0)
                 Console.WriteLine("\n aucune partie \n");
+            else
+                Console.WriteLine("affichage des parties:");
             int i=0;
-            Console.WriteLine("affichage des parties:");
             foreach(Partie p in lesPartie)
             {
                 if(p.Manches.Count!=0)

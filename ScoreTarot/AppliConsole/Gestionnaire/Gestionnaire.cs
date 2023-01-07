@@ -570,9 +570,13 @@ namespace AppliConsole.Gestionnaire
         public void afficherUnePartieEnDetail()
         {
             afficheur.AfficherLesPartie(gestionnaire.Parties);
-            afficheur.AfficherDemandeChoix();
-            int choixpartie =this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
-            afficheur.AfficherDetailPartie(gestionnaire.Parties[choixpartie]);
+            if (gestionnaire.Parties.Count != 0)
+            {
+                afficheur.AfficherDemandeChoix();
+                int choixpartie = this.ChoisirElementCorectDUneList(gestionnaire.Parties.Count);
+                afficheur.AfficherDetailPartie(gestionnaire.Parties[choixpartie]);
+            }
+           
         }
 
     }
