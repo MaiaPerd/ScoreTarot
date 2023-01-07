@@ -22,6 +22,8 @@ namespace Model
                 }
             }
         }
+        public int Id { get; private set; }
+
         private String pseudo;
 
         public string Nom { get; private set; }

@@ -30,8 +30,6 @@ namespace EntityFramework.Entity
 
         [ForeignKey("PartieForeignKey")]
         public PartieEntity Partie { get; set; }
-
-        public int PartieForeignKey { get; set; }
        
     }
 }

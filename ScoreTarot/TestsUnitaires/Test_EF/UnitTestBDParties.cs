@@ -78,8 +78,11 @@ namespace TestsUnitaires
                 context.Database.EnsureCreated();
 
                 Assert.Equal(2, context.Parties.Count());
-                Assert.Equal(8, context.PartieJoueurs.Count());
-                Assert.Equal(1, context.Manches.First().PartieForeignKey);
+                Assert.Equal(5, context.Joueurs.Count());
+                Assert.Equal(3, context.Manches.Count());
+                Assert.Equal(2, context.Parties.Count());
+                /*Assert.Equal(8, context.PartieJoueurs.Count());
+                Assert.Equal(1, context.Manches.First().PartieForeignKey);*/
             }
 
         }

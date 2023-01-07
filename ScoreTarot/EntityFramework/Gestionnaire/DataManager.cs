@@ -13,7 +13,7 @@ namespace EntityFramework
     public class DataManager : ILoader, ISaver
     {
 
-        public async Task<bool> addJoueur(Joueur joueur)
+        public async Task<bool> AddJoueur(Joueur joueur)
         {
             bool result = false;
             using (var context = new SQLiteContext())
@@ -24,7 +24,7 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> addManche(Manche manche)
+        public async Task<bool> AddManche(Manche manche)
         {
             bool result = false;
             using (var context = new SQLiteContext())
@@ -35,14 +35,13 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> addPartie(Partie partie)
+        public async Task<bool> AddPartie(Partie partie)
         {
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                PartieEntity partieEntity = partie.toEntity();
+                /*PartieEntity partieEntity = partie.toEntity();
                 partieEntity.Joueurs.Clear();
-                partieEntity.PartieJoueurs.Clear();
                 List<JoueurEntity> joueurEntity = new();
                 partie.Joueurs.ToList().ForEach(j =>
                 {
@@ -56,12 +55,14 @@ namespace EntityFramework
             
                 
                 await context.Parties.AddAsync(partieEntity);
+                result = await context.SaveChangesAsync() == 1;*/
+                await context.Parties.AddAsync(partie.ToEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
         }
 
-        public async Task clearJoueurs()
+        public async Task ClearJoueurs()
         {
             using (var context = new SQLiteContext())
             {
@@ -70,7 +71,7 @@ namespace EntityFramework
             }
         }
 
-        public async Task clearManches()
+        public async Task ClearManches()
         {
             using (var context = new SQLiteContext())
             {
@@ -79,9 +80,9 @@ namespace EntityFramework
             }
         }
 
-        public async Task clearParties()
+        public async Task ClearParties()
         {
-            clearManches();
+            ClearManches();
             using (var context = new SQLiteContext())
             {
                 context.RemoveRange(context.Parties);
@@ -89,7 +90,7 @@ namespace EntityFramework
             }
         }
 
-        public async Task<Joueur> getJoueur(string pseudo)
+        public async Task<Joueur> GetJoueur(string pseudo)
         {
             Joueur joueur;
             using (var context = new SQLiteContext())
@@ -99,7 +100,7 @@ namespace EntityFramework
             return joueur;
         }
 
-        public async Task<IEnumerable<Joueur>> getJoueurPartie(int id)
+        /*public async Task<IEnumerable<Joueur>> GetJoueurPartie(int id)
         {
             List<Joueur> joueurs = new();
             using (var context = new SQLiteContext())
@@ -111,9 +112,9 @@ namespace EntityFramework
             }
             return joueurs;
             
-        }
+        }*/
 
-        public async Task<IEnumerable<Joueur>> getJoueurs()
+        public async Task<IEnumerable<Joueur>> GetJoueurs()
         {
             List<Joueur> joueurs = new();
             using (var context = new SQLiteContext())
@@ -124,29 +125,29 @@ namespace EntityFramework
             return joueurs;
         }
 
-        public async Task<Manche> getManche(int id)
+        public async Task<Manche> GetManche(int id)
         {
             Manche manche;
             using (var context = new SQLiteContext())
             {
-                manche = context.Manches.Where(m => m.Id.Equals(id)).First().toModel();
+                manche = context.Manches.Where(m => m.Id.Equals(id)).First().ToModel();
             }
             return manche;
         }
 
-        public async Task<IEnumerable<Manche>> getManchePartie(int id)
+        /*public async Task<IEnumerable<Manche>> GetManchePartie(int id)
         {
             List<Manche> manche = new();
             using (var context = new SQLiteContext())
             {
-                Partie partie = await getPartie(id);
+                Partie partie = await GetPartie(id);
                 await Task.Run(() =>
                     manche.AddRange(partie.Manches));
             }
             return manche;
-        }
+        }*/
 
-        public async Task<IEnumerable<Manche>> getManches()
+        /*public async Task<IEnumerable<Manche>> GetManches()
         {
             List<Manche> manches = new();
             using (var context = new SQLiteContext())
@@ -155,9 +156,9 @@ namespace EntityFramework
                     manches.AddRange(context.Manches.Select(m => m.toModel())));
             }
             return manches;
-        }
+        }*/
 
-        public async Task<Partie> getPartie(int id)
+        /*public async Task<Partie> GetPartie(int id)
         {
             Partie partie;
             using (var context = new SQLiteContext())
@@ -165,9 +166,9 @@ namespace EntityFramework
                 partie = context.Parties.Where(m => m.Id.Equals(id)).First().toModel();
             }
             return partie;
-        }
-
-        public async Task<IEnumerable<Partie>> getPartieJoueur(string pseudo)
+        }*/
+        //??
+        /*public async Task<IEnumerable<Partie>> GetPartieJoueur(string pseudo)
         {
             List<Partie> parties = new();
             using (var context = new SQLiteContext())
@@ -178,9 +179,9 @@ namespace EntityFramework
                     parties.AddRange(partieJoueurs.Select(partieJ => context.Parties.Find(partieJ.PartieForeignKey).toModel())));
             }
             return parties;
-        }
+        }*/
 
-        public async Task<IEnumerable<Partie>> getParties()
+        public async Task<IEnumerable<Partie>> GetParties()
         {
             List<Partie> parties = new();
             using (var context = new SQLiteContext())
@@ -189,28 +190,35 @@ namespace EntityFramework
                 {
                     if (p.Joueurs.Count() == 0)
                     {
-                        clearParties();
+                        ClearParties();
                     }
                 });
-                List<Partie> partieEntities = context.Parties.Select(p => p.toModel()).ToList();
+                List<Partie> partieEntities = context.Parties.Select(p => p.ToModel()).ToList();
                 await Task.Run(() =>
                     parties.AddRange(partieEntities));
             }
             return parties;
         }
 
-        public async Task<IEnumerable<Partie>> loadPartie(IEnumerable<Joueur> listJoueur)
+        public async Task<IEnumerable<Partie>> LoadPartie(IEnumerable<Joueur> listJoueur)
         {
             List<Partie> parties = new();
             using (var context = new SQLiteContext())
             {
-                await Task.Run(() =>
-                   parties.AddRange(context.Parties.Select(p => p.toModel())));
+                var query //= context.Parties.Join(context.Joueurs).Join(context.Manches).ToList();
+                    =(from c in context.Parties
+                      from jp in c.Joueurs
+                      join  j in context.Joueurs on jp.Id equals j.Id
+                      from mp in c.Manches
+                      join m in context.Manches on mp.Id equals m.Id
+                            select c).ToList();
+                /*await Task.Run(() =>
+                   parties.AddRange(context.Parties.Select(p => p.toModel())));*/
             }
             return parties;
         }
 
-        public async Task<bool> removeJoueur(Joueur joueur)
+        public async Task<bool> RemoveJoueur(Joueur joueur)
         {
             bool result = false;
             using (var context = new SQLiteContext())
@@ -222,7 +230,7 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> removeManche(Manche manche)
+        public async Task<bool> RemoveManche(Manche manche)
         {
             bool result = false;
             using (var context = new SQLiteContext())
@@ -233,28 +241,28 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> removePartie(Partie partie)
+        public async Task<bool> RemovePartie(Partie partie)
         {
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Remove(partie.toEntity());
+                context.Remove(partie.ToEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
         }
-
-        public async Task<bool> removePartieDuJoueur(Joueur joueur)
+        //??
+        public async Task<bool> RemovePartieDuJoueur(Joueur joueur)
         {
             bool result = false;
             using (var context = new SQLiteContext())
             {
                 List<Partie> p = new();
-                p.AddRange(context.Parties.Select(partie => partie.toModel()));
+                p.AddRange(context.Parties.Select(partie => partie.ToModel()));
                 p.ForEach(partie => {
                     if (partie.Joueurs.Contains(joueur))
                     {
-                        context.Remove(partie.toEntity());
+                        context.Remove(partie.ToEntity());
                     }
                     });
                 result = await context.SaveChangesAsync() == 1;
@@ -262,7 +270,7 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> updateJoueur(Joueur joueur)
+        public async Task<bool> UpdateJoueur(Joueur joueur)
         {
             bool result = false;
             using (var context = new SQLiteContext())
@@ -273,7 +281,7 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> updateManche(Manche manche)
+        public async Task<bool> UpdateManche(Manche manche)
         {
             bool result = false;
             using (var context = new SQLiteContext())
@@ -284,12 +292,12 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<bool> updatePartie(Partie partie)
+        public async Task<bool> UpdatePartie(Partie partie)
         {
             bool result = false;
             using (var context = new SQLiteContext())
             {
-                context.Update(partie.toEntity());
+                context.Update(partie.ToEntity());
                 result = await context.SaveChangesAsync() == 1;
             }
             return result;
