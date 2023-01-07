@@ -63,6 +63,10 @@ namespace AppliConsole.InterfaceUtilisateur
             else
                 Console.WriteLine("prenom : null");
         }
+        /// <summary>
+        /// Affiche les parties
+        /// </summary>
+        /// <param name="lesPartie"></param>
         public void AfficherLesPartie(System.Collections.ObjectModel.ReadOnlyCollection<Partie> lesPartie)
         {
             if (lesPartie.Count == 0)
