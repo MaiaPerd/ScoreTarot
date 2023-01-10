@@ -45,16 +45,16 @@ namespace TestsUnitaires
                 };
 
                 //Partie 1
-                joueurs["albertus"].AjouterPartie(parties["partie1"]);
-                joueurs["dani"].AjouterPartie(parties["partie1"]);
-                joueurs["egard"].AjouterPartie(parties["partie1"]);
+                parties["partie1"].AjouterJoueur(joueurs["albertus"]);
+                parties["partie1"].AjouterJoueur(joueurs["dani"]);
+                parties["partie1"].AjouterJoueur(joueurs["egard"]);
 
                 //Partie2
-                joueurs["albertus"].AjouterPartie(parties["partie2"]);
-                joueurs["dani"].AjouterPartie(parties["partie2"]);
-                joueurs["egard"].AjouterPartie(parties["partie2"]);
-                joueurs["chaise"].AjouterPartie(parties["partie2"]);
-                joueurs["andreal"].AjouterPartie(parties["partie2"]);
+                parties["partie2"].AjouterJoueur(joueurs["albertus"]);
+                parties["partie2"].AjouterJoueur(joueurs["dani"]);
+                parties["partie2"].AjouterJoueur(joueurs["egard"]);
+                parties["partie2"].AjouterJoueur(joueurs["chaise"]);
+                parties["partie2"].AjouterJoueur(joueurs["andreal"]);
  
                 MancheEntity manche1 = new MancheEntity { JoueurQuiPrend = joueurs["albertus"], NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.Le21DoublePoignee, Contrat = ContratEntity.Garde, Score = 52, Date = new DateTime(2022, 11, 27) };
                 MancheEntity manche2 = new MancheEntity { JoueurQuiPrend = joueurs["dani"], NbJoueur = context.Joueurs.Count(), Bonus = BonusEntity.PetitAuBoutLe21, Contrat = ContratEntity.Prise, Score = 41, Date = new DateTime(2022, 11, 27) };
@@ -81,6 +81,18 @@ namespace TestsUnitaires
                 Assert.Equal(5, context.Joueurs.Count());
                 Assert.Equal(3, context.Manches.Count());
                 Assert.Equal(2, context.Parties.Count());
+                var joueurPartie1 = (from c in context.Parties
+                                     from jp in c.Joueurs
+                                     join j in context.Joueurs on jp.Id equals j.Id
+                                     where c.Id == 1
+                                     select c.Joueurs).ToList();
+                var joueurPartie2 = (from c in context.Parties
+                                     from jp in c.Joueurs
+                                     join j in context.Joueurs on jp.Id equals j.Id
+                                     where c.Id == 2
+                                     select c.Joueurs).ToList();
+                //Assert.Equal(3, joueurPartie1.Count());
+                Assert.Equal(5, joueurPartie2.Count());
                 /*Assert.Equal(8, context.PartieJoueurs.Count());
                 Assert.Equal(1, context.Manches.First().PartieForeignKey);*/
             }

@@ -18,14 +18,19 @@ namespace EntityFramework.Entity
         public ICollection<MancheEntity> Manches { get; set; } = new List<MancheEntity>();
         public ICollection<JoueurEntity> Joueurs { get; set; } = new List<JoueurEntity>();
 
-        /*public void AjouterJoueur(JoueurEntity joueur)
+        public void AjouterJoueur(JoueurEntity joueur)
         {
+            /*this.Joueurs.Add(joueur);
+            PartieJoueurs.Add(
+                new PartieJoueur() { Partie = this,
+                    Joueur = joueur,
+                    PartieForeignKey = this.Id,
+                    JoueurForeignKey = joueur.Pseudo });*/
             this.Joueurs.Add(joueur);
-            PartieJoueurs.Add(new PartieJoueur() { Partie = this, Joueur = joueur, PartieForeignKey = this.Id, JoueurForeignKey = joueur.Pseudo });
         }
 
-        public virtual ICollection<PartieJoueur> PartieJoueurs { get; set; } = new List<PartieJoueur>();
-        */
+        //public virtual ICollection<PartieJoueur> PartieJoueurs { get; set; } = new List<PartieJoueur>();
+        
 
         /*
         [Required]
