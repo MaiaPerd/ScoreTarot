@@ -73,10 +73,10 @@ namespace AppliConsole.Gestionnaire
             return ((EntityFramework.DataManager)dataManager).GetJoueur(pseudo);   
         }
 
-        public Task<IEnumerable<Joueur>> getJoueurPartie(int id)
+        /*public Task<IEnumerable<Joueur>> getJoueurPartie(int id)
         {
             return ((EntityFramework.DataManager)dataManager).GetJoueurPartie(id);           
-        }
+        }*/
 
         public Task<IEnumerable<Joueur>> getJoueurs()
         {
@@ -88,7 +88,7 @@ namespace AppliConsole.Gestionnaire
             return ((EntityFramework.DataManager)dataManager).GetManche(id);
         }
 
-        public Task<IEnumerable<Manche>> getManchePartie(int id)
+        /*public Task<IEnumerable<Manche>> getManchePartie(int id)
         {
             return ((EntityFramework.DataManager)dataManager).GetManchePartie(id);
         }
@@ -96,9 +96,9 @@ namespace AppliConsole.Gestionnaire
         public Task<IEnumerable<Manche>> getManches()
         {
             return ((EntityFramework.DataManager)dataManager).GetManches();
-        }
+        }*/
 
-        public Task<Partie> getPartie(int id)
+        /*public Task<Partie> getPartie(int id)
         {
             return ((EntityFramework.DataManager)dataManager).GetPartie(id);
         }
@@ -106,7 +106,7 @@ namespace AppliConsole.Gestionnaire
         public Task<IEnumerable<Partie>> getPartieJoueur(string pseudo)
         {
             return ((EntityFramework.DataManager)dataManager).GetPartieJoueur(pseudo);
-        }
+        }*/
 
         public Task<IEnumerable<Partie>> getParties()
         {
