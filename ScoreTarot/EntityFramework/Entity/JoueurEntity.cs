@@ -11,7 +11,8 @@ namespace EntityFramework.Entity
     [Table("Joueur")]
     public class JoueurEntity
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [MaxLength(20)]
         public string Pseudo { get; set; }
         [MaxLength(15)]
@@ -22,7 +23,7 @@ namespace EntityFramework.Entity
         [Required]
         public int Age { get;  set; }
         
-        public ICollection<PartieEntity> Parties { get; set; } = new List<PartieEntity>();
+        //public ICollection<PartieEntity> Parties { get; set; } = new List<PartieEntity>();
         
         /*
         public IEnumerable<PartieEntity> Parties
@@ -33,13 +34,13 @@ namespace EntityFramework.Entity
             }
         }*/
 
-        public void AjouterPartie(PartieEntity partie)
+        /*public void AjouterPartie(PartieEntity partie)
         {
             this.Parties.Add(partie);
             PartieJoueurs.Add(new PartieJoueur() { Partie = partie, Joueur = this, JoueurForeignKey = this.Pseudo, PartieForeignKey = partie.Id }) ;
         }
 
-        public virtual ICollection<PartieJoueur> PartieJoueurs { get; set; } = new List<PartieJoueur>();
+        public virtual ICollection<PartieJoueur> PartieJoueurs { get; set; } = new List<PartieJoueur>();*/
         
 
     }

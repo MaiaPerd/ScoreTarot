@@ -124,46 +124,48 @@ namespace EntityFramework
             return mancheEntity;
         }
 
-        public static IEnumerable<MancheEntity> toEntities(this ReadOnlyCollection<Manche> manches)
+        public static IEnumerable<MancheEntity> ToEntities(this ReadOnlyCollection<Manche> manches)
         {
             return manches.Select(manche => manche.toEntity());
         }
 
-        public static Manche toModel(this MancheEntity mancheEntity)
+        public static Manche ToModel(this MancheEntity mancheEntity)
         {
             return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModel(), mancheEntity.NbJoueur, mancheEntity.JoueurAllier.toModel());
         }
 
-        public static IEnumerable<Manche> toModels(this ICollection<MancheEntity> manchesEntities)
+        public static IEnumerable<Manche> ToModels(this ICollection<MancheEntity> manchesEntities)
         {
-            return manchesEntities.Select(manche => manche.toModel());
+            return manchesEntities.Select(manche => manche.ToModel());
         }
 
-        public static PartieEntity toEntity(this Partie partie)
+        public static PartieEntity ToEntity(this Partie partie)
         {
-            PartieEntity partieEntity = new PartieEntity();
-            if(partie.Id != 0)
-            {
+            PartieEntity partieEntity = new();
+            //if(partie.Id != 0)
+            //{
                 partieEntity.Id = partie.Id;
-            }
-            partie.Joueurs.ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur.toEntity()));
-            partieEntity.Manches = partie.Manches.toEntities().ToList();
+            //}
+            //partie.Joueurs.ToList().ForEach(joueur => partieEntity.AjouterJoueur(joueur.toEntity()));
+            partieEntity.Joueurs = partie.Joueurs.toEntities().ToList();
+            partieEntity.Manches = partie.Manches.ToEntities().ToList();
             return partieEntity;
         }
 
-        public static Partie toModel(this PartieEntity partieEntity)
+        public static Partie ToModel(this PartieEntity partieEntity)
         {
-            List<Joueur> joueurs = new();
+            /*List<Joueur> joueurs = new();
             List<JoueurEntity> joueurEntities = partieEntity.Joueurs.ToList();
 
-            partieEntity.PartieJoueurs.ToList().ForEach(j =>
+            joueurEntities.ForEach(j =>
             {
-                JoueurEntity joueur = joueurEntities.Find(jour => jour.Pseudo.Equals(j.JoueurForeignKey));
-                joueurs.Add(joueur.toModel());
+                //JoueurEntity joueur = joueurEntities.Find(jour => jour.Pseudo.Equals(j.JoueurForeignKey));
+                joueurs.Add(j.toModel());
                 
-            });
+            });*/
 
-            return new Partie(partieEntity.Id, joueurs, partieEntity.Manches.toModels().ToList());
+
+            return new Partie(partieEntity.Id, partieEntity.Joueurs.toModels(), partieEntity.Manches.ToModels().ToList());
         }
 
     }

@@ -15,7 +15,6 @@ namespace EntityFramework
         public DbSet<JoueurEntity> Joueurs { get; set; }
         public DbSet<MancheEntity> Manches { get; set; }
         public DbSet<PartieEntity> Parties { get; set; }
-        public DbSet<PartieJoueur> PartieJoueurs { get; set; }
        
 
         public SQLiteContext()
@@ -48,7 +47,7 @@ namespace EntityFramework
                 .WithMany(joueur => joueur.PartieJoueurs)
                 .HasForeignKey("JoueurId");
             */
-            modelBuilder.Entity<PartieJoueur>().HasKey("PartieForeignKey", "JoueurForeignKey");
+            //modelBuilder.Entity<PartieJoueur>().HasKey("PartieForeignKey", "JoueurForeignKey");
             /*
             modelBuilder.Entity<PartieJoueur>()
                 .HasOne(partieJoueur => partieJoueur.Partie)

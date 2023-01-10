@@ -40,117 +40,117 @@ namespace AppliConsole.Gestionnaire
         
         public Task<bool> addJoueur(Joueur joueur)
         {
-            return ((EntityFramework.DataManager)dataManager).addJoueur(joueur);
+            return ((EntityFramework.DataManager)dataManager).AddJoueur(joueur);
         }
 
         public Task<bool> addManche(Manche manche)
         {
-            return ((EntityFramework.DataManager)dataManager).addManche(manche);   
+            return ((EntityFramework.DataManager)dataManager).AddManche(manche);   
         }
 
         public Task<bool> addPartie(Partie partie)
         {
-            return ((EntityFramework.DataManager)dataManager).addPartie(partie);
+            return ((EntityFramework.DataManager)dataManager).AddPartie(partie);
         }
 
         public Task clearJoueurs()
         {
-            return ((EntityFramework.DataManager)dataManager).clearJoueurs();  
+            return ((EntityFramework.DataManager)dataManager).ClearJoueurs();  
         }
 
         public Task clearManches()
         {
-            return ((EntityFramework.DataManager)dataManager).clearManches(); 
+            return ((EntityFramework.DataManager)dataManager).ClearManches(); 
         }
 
         public Task clearParties()
         {
-            return ((EntityFramework.DataManager)dataManager).clearParties(); 
+            return ((EntityFramework.DataManager)dataManager).ClearParties(); 
         }
 
         public Task<Joueur> getJoueur(string pseudo)
         {
-            return ((EntityFramework.DataManager)dataManager).getJoueur(pseudo);   
+            return ((EntityFramework.DataManager)dataManager).GetJoueur(pseudo);   
         }
 
-        public Task<IEnumerable<Joueur>> getJoueurPartie(int id)
+        /*public Task<IEnumerable<Joueur>> getJoueurPartie(int id)
         {
-            return ((EntityFramework.DataManager)dataManager).getJoueurPartie(id);           
-        }
+            return ((EntityFramework.DataManager)dataManager).GetJoueurPartie(id);           
+        }*/
 
         public Task<IEnumerable<Joueur>> getJoueurs()
         {
-            return ((EntityFramework.DataManager)dataManager).getJoueurs();
+            return ((EntityFramework.DataManager)dataManager).GetJoueurs();
         }
 
         public Task<Manche> getManche(int id)
         {
-            return ((EntityFramework.DataManager)dataManager).getManche(id);
+            return ((EntityFramework.DataManager)dataManager).GetManche(id);
         }
 
-        public Task<IEnumerable<Manche>> getManchePartie(int id)
+        /*public Task<IEnumerable<Manche>> getManchePartie(int id)
         {
-            return ((EntityFramework.DataManager)dataManager).getManchePartie(id);
+            return ((EntityFramework.DataManager)dataManager).GetManchePartie(id);
         }
 
         public Task<IEnumerable<Manche>> getManches()
         {
-            return ((EntityFramework.DataManager)dataManager).getManches();
-        }
+            return ((EntityFramework.DataManager)dataManager).GetManches();
+        }*/
 
-        public Task<Partie> getPartie(int id)
+        /*public Task<Partie> getPartie(int id)
         {
-            return ((EntityFramework.DataManager)dataManager).getPartie(id);
+            return ((EntityFramework.DataManager)dataManager).GetPartie(id);
         }
 
         public Task<IEnumerable<Partie>> getPartieJoueur(string pseudo)
         {
-            return ((EntityFramework.DataManager)dataManager).getPartieJoueur(pseudo);
-        }
+            return ((EntityFramework.DataManager)dataManager).GetPartieJoueur(pseudo);
+        }*/
 
         public Task<IEnumerable<Partie>> getParties()
         {
-            return ((EntityFramework.DataManager)dataManager).getParties();
+            return ((EntityFramework.DataManager)dataManager).GetParties();
         }
 
         public Task<IEnumerable<Partie>> loadPartie(IEnumerable<Joueur> listJoueur)
         {
-            return ((EntityFramework.DataManager)dataManager).loadPartie(listJoueur);
+            return ((EntityFramework.DataManager)dataManager).LoadPartie(listJoueur);
         }
 
         public Task<bool> removeJoueur(Joueur joueur)
         {
-            return ((EntityFramework.DataManager)dataManager).removeJoueur(joueur);
+            return ((EntityFramework.DataManager)dataManager).RemoveJoueur(joueur);
         }
 
         public Task<bool> removeManche(Manche manche)
         {
-            return ((EntityFramework.DataManager)dataManager).removeManche(manche);
+            return ((EntityFramework.DataManager)dataManager).RemoveManche(manche);
         }
 
         public Task<bool> removePartie(Partie partie)
         {
-            return ((EntityFramework.DataManager)dataManager).removePartie(partie);
+            return ((EntityFramework.DataManager)dataManager).RemovePartie(partie);
         }
 
         public Task<bool> removePartieDuJoueur(Joueur joueur)
         {
-            return ((EntityFramework.DataManager)dataManager).removePartieDuJoueur(joueur);
+            return ((EntityFramework.DataManager)dataManager).RemovePartieDuJoueur(joueur);
         }
 
         public Task<bool> updateJoueur(Joueur joueur)
         {
-            return ((EntityFramework.DataManager)dataManager).updateJoueur(joueur);
+            return ((EntityFramework.DataManager)dataManager).UpdateJoueur(joueur);
         }
 
         public Task<bool> updateManche(Manche manche)
         {
-            return ((EntityFramework.DataManager)dataManager).updateManche(manche);
+            return ((EntityFramework.DataManager)dataManager).UpdateManche(manche);
         }
 
         public Task<bool> updatePartie(Partie partie)
         {
-            return ((EntityFramework.DataManager)dataManager).updatePartie(partie);
+            return ((EntityFramework.DataManager)dataManager).UpdatePartie(partie);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace TestsUnitaires
         [MemberData(nameof(DataTest.Data_TestExtentionPartie), MemberType = typeof(DataTest))]
         public void TestExtentionPartie(Partie partie)
         {
-            PartieEntity party = partie.toEntity();
+            PartieEntity party = partie.ToEntity();
             Assert.Equal(party.Joueurs.Count(), partie.Joueurs.Count);
             Assert.Equal(party.Manches.Count,partie.Manches.Count);
             for(int i=0;i<party.Manches.Count;i++)

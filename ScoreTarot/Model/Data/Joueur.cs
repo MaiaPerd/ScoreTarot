@@ -8,6 +8,7 @@ namespace Model
 {
     public class Joueur :IEquatable<Joueur>
     {
+        public int Id { get; private set; }
         public string Pseudo { 
             get
             {

@@ -8,21 +8,21 @@ namespace Model.Interface
 {
     public interface ISaver
     {
-        public Task<bool> addJoueur(Joueur joueur);
-        public Task<bool> removeJoueur(Joueur joueur);
-        public Task<bool> updateJoueur(Joueur joueur);
-        public Task clearJoueurs();
+        public Task<bool> AddJoueur(Joueur joueur);
+        public Task<bool> RemoveJoueur(Joueur joueur);
+        public Task<bool> UpdateJoueur(Joueur joueur);
+        public Task ClearJoueurs();
 
-        public Task<bool> addPartie(Partie partie);
-        public Task<bool> removePartie(Partie partie);
-        public Task<bool> removePartieDuJoueur(Joueur joueur);
-        public Task<bool> updatePartie(Partie partie);
-        public Task clearParties();
+        public Task<bool> AddPartie(Partie partie);
+        public Task<bool> RemovePartie(Partie partie);
+        public Task<bool> RemovePartieDuJoueur(Joueur joueur);
+        public Task<bool> UpdatePartie(Partie partie);
+        public Task ClearParties();
 
-        public Task<bool> addManche(Manche manche);
-        public Task<bool> removeManche(Manche manche);
-        public Task<bool> updateManche(Manche manche);
-        public Task clearManches();
+        public Task<bool> AddManche(Manche manche);
+        public Task<bool> RemoveManche(Manche manche);
+        public Task<bool> UpdateManche(Manche manche);
+        public Task ClearManches();
 
     }
 }
