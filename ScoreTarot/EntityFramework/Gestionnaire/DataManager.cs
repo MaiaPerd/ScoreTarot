@@ -90,12 +90,12 @@ namespace EntityFramework
             }
         }
 
-        public async Task<Joueur> GetJoueur(string pseudo)
+        public async Task<Joueur> GetJoueurById(int id)
         {
             Joueur joueur;
             using (var context = new SQLiteContext())
             {
-                joueur = context.Joueurs.Where(joueur => joueur.Pseudo.Equals(pseudo)).First().toModel();
+                joueur = context.Joueurs.Where(joueur => joueur.Id.Equals(id)).First().toModel();
             }
             return joueur;
         }

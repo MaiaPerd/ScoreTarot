@@ -26,6 +26,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{3A88C88C-FB9E-4BF7-88BD-66D3B7CA4E66}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIRest", "APIRest\APIRest.csproj", "{8A1F3078-FAB6-4D63-B6B7-C63DA5C2F9B3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FF6A43CF-6942-491A-B439-CBDDD09D4949} = {FF6A43CF-6942-491A-B439-CBDDD09D4949}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{A0B5130E-05C7-4745-83EE-15F3938FD466}"
 	ProjectSection(ProjectDependencies) = postProject

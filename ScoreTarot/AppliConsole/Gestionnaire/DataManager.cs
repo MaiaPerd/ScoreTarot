@@ -68,9 +68,9 @@ namespace AppliConsole.Gestionnaire
             return ((EntityFramework.DataManager)dataManager).ClearParties(); 
         }
 
-        public Task<Joueur> getJoueur(string pseudo)
+        public Task<Joueur> getJoueur(int id)
         {
-            return ((EntityFramework.DataManager)dataManager).GetJoueur(pseudo);   
+            return ((EntityFramework.DataManager)dataManager).GetJoueurById(id);   
         }
 
         /*public Task<IEnumerable<Joueur>> getJoueurPartie(int id)

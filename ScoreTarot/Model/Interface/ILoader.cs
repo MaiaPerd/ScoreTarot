@@ -10,7 +10,7 @@ namespace Model.Interface
     {
         public Task<IEnumerable<Partie>> LoadPartie(IEnumerable<Joueur> listJoueur);
 
-        public Task<Joueur> GetJoueur(String pseudo);
+        public Task<Joueur> GetJoueurById(int id);
         //public Task<IEnumerable<Partie>> GetPartieJoueur(String pseudo);
         public Task<IEnumerable<Joueur>> GetJoueurs();
 
