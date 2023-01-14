@@ -45,6 +45,29 @@ namespace Model
         /// <param name="prenom"></param> prenom du joueur 
         /// <param name="nomImage"></param> lien pour accedé a l'image
         /// <exception cref="ArgumentNullException"></exception>
+        public Joueur(int id, string pseudo, int age, string nom, string prenom, string nomImage)
+        {
+            if (String.IsNullOrEmpty(pseudo))
+            {
+                throw new ArgumentNullException(nameof(pseudo));
+            }
+            Id = id;
+            Pseudo = pseudo;
+            Nom = nom;
+            Prenom = prenom;
+            Age = age;
+            URLIMG = "../image/" + nomImage;
+        }
+
+        /// <summary>
+        /// Constructeur du joueur avec toutes les données possible.
+        /// </summary>
+        /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique
+        /// <param name="age"></param> age du joueur
+        /// <param name="nom"></param> nom du joueur
+        /// <param name="prenom"></param> prenom du joueur 
+        /// <param name="nomImage"></param> lien pour accedé a l'image
+        /// <exception cref="ArgumentNullException"></exception>
         public Joueur(string pseudo, int age, string nom, string prenom, string nomImage )
         {
             if (String.IsNullOrEmpty(pseudo))
@@ -134,7 +157,7 @@ namespace Model
 
         public override int GetHashCode()
         {
-            return pseudo.GetHashCode();
+            return Id.GetHashCode();
         }
         public void ModifierLeJoueur(Joueur nvJoueur)
         {

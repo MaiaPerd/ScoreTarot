@@ -11,7 +11,7 @@ namespace Model
     /// </summary>
     public enum Contrat
     {
-        Inconu,
+        None,
         Prise,
         Garde,
         GardeSans,

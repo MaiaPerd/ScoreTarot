@@ -9,7 +9,7 @@ namespace EntityFramework.Entity
     [Flags]
     public enum BonusEntity : Byte
     {
-        Inconu = 0,
+        None = 0,
         PetitAuBout = 1,
         SimplePoignee = 2,
         DoublePoignee = 4,
