@@ -8,8 +8,9 @@ namespace DTOs
 {
     public class PartieDto
     {
+        public int Id { get; set; }
         public  List<JoueurDto> Joueurs { get; set; }
         public List<MancheDto> Manches { get; set; }
-        public int Id { get; set; }
+        
     }
 }
