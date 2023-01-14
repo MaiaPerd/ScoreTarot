@@ -13,7 +13,7 @@ namespace Model
     [Flags]
     public enum Bonus : Byte
     {
-        Inconu = 0,
+        None = 0,
         PetitAuBout = 1,
         SimplePoignee = 2,
         DoublePoignee = 4,

@@ -8,7 +8,7 @@ namespace EntityFramework.Entity
 {
     public enum ContratEntity : Byte
     {
-        Inconu = 0,
+        None = 0,
         Prise = 1,
         Garde = 2,
         GardeSans = 4,

@@ -19,7 +19,7 @@ public class UnitTestManche
         Manche manche = new Manche( contrat, joueurQuiPrend, score, bonus, nbJoueur);
         Assert.Equal(contrat, manche.Contrat);
         Assert.Equal(joueurQuiPrend, manche.JoueurQuiPrend);
-        if (bonus == null) { bonus = Bonus.Inconu;  }
+        if (bonus == null) { bonus = Bonus.None;  }
         Assert.Equal(bonus, manche.Bonus);
         Assert.Equal(score, manche.Score);
     }
