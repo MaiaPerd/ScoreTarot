@@ -538,7 +538,7 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 -116,
-                Bonus.Inconu,
+                Bonus.None,
                 Contrat.GardeSans,
                 40
             };
@@ -552,7 +552,7 @@ namespace TestsUnitaires
             yield return new object[]
             {
                 -41,
-                Bonus.Inconu,
+                Bonus.None,
                 Contrat.Prise,
                 40
             };

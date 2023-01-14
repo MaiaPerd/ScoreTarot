@@ -104,7 +104,7 @@ namespace Model
         {
             Contrat = contrat;
             Bonus = bonus;
-            if (contrat == Contrat.Inconu && score == 0)
+            if (contrat == Contrat.None && score == 0)
             {
                 throw new ArgumentNullException("Le contrat est null et score ne peut pas être zéro");
             }

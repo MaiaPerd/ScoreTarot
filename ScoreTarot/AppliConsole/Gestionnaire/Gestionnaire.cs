@@ -196,7 +196,7 @@ namespace AppliConsole.Gestionnaire
         {
             int? valBonus = null;
             bool fin = true;
-            Bonus bonus = Bonus.Inconu;
+            Bonus bonus = Bonus.None;
             while (fin)
             {
                 afficheur.AfficherBonus();
