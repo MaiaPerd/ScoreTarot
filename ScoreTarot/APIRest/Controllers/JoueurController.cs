@@ -3,6 +3,9 @@ using DTOs;
 using APIRest.MapperClass;
 using EntityFramework;
 using AutoMapper;
+using EntityFramework.Entity;
+using Model;
+using System.Net;
 
 namespace APIRest.Controllers
 {
@@ -21,23 +24,47 @@ namespace APIRest.Controllers
             _logger = logger;
             dataManager = dm;
         }
-
-        /*[HttpGet(Name = "GetJoueur")]
-        public IEnumerable<JoueurDto> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new JoueurDto
-            {
-                Id = index,
-                Pseudo = "test"
-            })
-            .ToArray();
-        }*/
         [HttpGet("{id}")]
         public JoueurDto GetJoueurById(int id)
         {
             var jdto = this.dataManager.GetJoueurById(id);
             return mapper.Map<JoueurDto>(jdto);
         }
-
+        [HttpGet]
+        public List<JoueurDto> GetLesJoueurs()
+        {
+            var data = dataManager.GetJoueurs();
+            var list= new List<JoueurDto>();
+            list = mapper.Map<List<JoueurDto>>(data);
+            return list;
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteJoueur(int i)
+        {
+            var leJoueur = dataManager.GetJoueurById(i);
+            await dataManager.RemoveJoueur(await leJoueur);
+            return StatusCode((int)HttpStatusCode.OK);
+        }
+        [HttpPost("{id}")]
+        public async Task<ActionResult> UpdateJoueur([FromBody] JoueurDto jdto , int i)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Request is invalid!");
+            }
+            var leJoueur = dataManager.GetJoueurById(i);
+            if(leJoueur == null)
+            {
+                return NotFound();
+            }
+            await dataManager.UpdateJoueur(mapper.Map<Joueur>(jdto));
+            return StatusCode((int)HttpStatusCode.OK);
+        }
+        [HttpPut]
+        public async Task<ActionResult> CreateJoueur([FromBody] JoueurDto jdto)
+        {
+            await dataManager.AddJoueur(mapper.Map<Joueur>(jdto));
+            return StatusCode((int)HttpStatusCode.OK);
+        }
     }
 }

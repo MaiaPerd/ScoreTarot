@@ -2,6 +2,7 @@
 using DTOs;
 using EntityFramework;
 using EntityFramework.Entity;
+using Model;
 using System.Collections.ObjectModel;
 
 namespace APIRest.MapperClass
@@ -13,6 +14,7 @@ namespace APIRest.MapperClass
             CreateMap<JoueurEntity, JoueurDto>().ReverseMap();
             CreateMap<PartieEntity, PartieDto>().ReverseMap();
             CreateMap<MancheEntity, MancheDto>().ReverseMap();
+            CreateMap<JoueurDto, Joueur>().ReverseMap();
 
         }
     }
