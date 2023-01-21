@@ -7,7 +7,7 @@ public class UnitTestManche
 {
     
     [Theory]
-    [MemberData(nameof(DataTest.Data_TestConstructeurManche), MemberType = typeof(DataTest))]
+    [MemberData(nameof(UnitTestControlerDto.Data_TestConstructeurManche), MemberType = typeof(UnitTestControlerDto))]
     public void TestConstructeurManche(bool estValide, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur)
     {
         if (!estValide)
@@ -25,14 +25,14 @@ public class UnitTestManche
     }
     
     [Theory]
-    [MemberData(nameof(DataTest.Data_TestGetScoreJoueurManche), MemberType = typeof(DataTest))]
+    [MemberData(nameof(UnitTestControlerDto.Data_TestGetScoreJoueurManche), MemberType = typeof(UnitTestControlerDto))]
     public void TestGetScoreJoueurManche(int score, Joueur joueur, Manche manche)
     {
         Assert.Equal(score, manche.GetScoreJoueurManche(joueur));
     }
 
     [Theory]
-    [MemberData(nameof(DataTest.Data_TestEqualsManche), MemberType=typeof(DataTest))]
+    [MemberData(nameof(UnitTestControlerDto.Data_TestEqualsManche), MemberType=typeof(UnitTestControlerDto))]
     public void TestEqualsManche(bool equal, Manche manche1, Manche manche2)
     {
         Assert.Equal(equal, manche1.Equals(manche2));

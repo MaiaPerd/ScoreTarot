@@ -12,7 +12,7 @@ namespace TestsUnitaires
     public class UnitTestGestionnaire
     {
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestGestionnaire), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestGestionnaire), MemberType = typeof(UnitTestControlerDto))]
         public void TestGestionnaireAjoutJoueurEtPartie(List<Joueur> joueurs)
         {
             Gestionnaire g = new Gestionnaire();
@@ -32,7 +32,7 @@ namespace TestsUnitaires
                 Assert.False(bienPasse);
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestGestionnaireAjoutManche), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestGestionnaireAjoutManche), MemberType = typeof(UnitTestControlerDto))]
         public void TestGestionnaireAjoutManche(Partie partie, Contrat contrat, Joueur joueurQuiPrend, int score, Bonus bonus, int nbJoueur, Joueur joueurAllier)
         {
             Gestionnaire g = new();
@@ -45,7 +45,7 @@ namespace TestsUnitaires
         }
 
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestGestionnaireModifManche), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestGestionnaireModifManche), MemberType = typeof(UnitTestControlerDto))]
         public void TestGestionnaireAjoutManch(Partie partie,Manche oldv, Manche newv)
         {
             List<Joueur> listj = new();
@@ -67,7 +67,7 @@ namespace TestsUnitaires
             Assert.Equal(newv2.Contrat, g.Parties[0].Manches[0].Contrat);
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestGestionnaireSuppressionJoueur), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestGestionnaireSuppressionJoueur), MemberType = typeof(UnitTestControlerDto))]
         public void TestGestionnaireSuppressionJoueur(Partie partie,List<Joueur> joueurs)
         {
             Gestionnaire g = new();
