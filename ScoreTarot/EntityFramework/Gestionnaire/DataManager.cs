@@ -90,12 +90,12 @@ namespace EntityFramework
             }
         }
 
-        public async Task<Joueur> GetJoueur(string pseudo)
+        public async Task<Joueur> GetJoueurById(int id)
         {
             Joueur joueur;
             using (var context = new SQLiteContext())
             {
-                joueur = context.Joueurs.Where(joueur => joueur.Pseudo.Equals(pseudo)).First().toModel();
+                joueur = context.Joueurs.Where(joueur => joueur.Id.Equals(id)).First().toModel();
             }
             return joueur;
         }
@@ -158,15 +158,23 @@ namespace EntityFramework
             return manches;
         }*/
 
-        /*public async Task<Partie> GetPartie(int id)
+        public async Task<Partie> GetPartieById(int id)
         {
             Partie partie;
             using (var context = new SQLiteContext())
             {
-                partie = context.Parties.Where(m => m.Id.Equals(id)).First().toModel();
+                var query //= context.Parties.Join(context.Joueurs).Join(context.Manches).ToList();
+                    = (from c in context.Parties
+                       where c.Id == id
+                       from jp in c.Joueurs
+                       join j in context.Joueurs on jp.Id equals j.Id
+                       from mp in c.Manches
+                       join m in context.Manches on mp.Id equals m.Id
+                       select c ).First();
+                partie=query.ToModel();
             }
             return partie;
-        }*/
+        }
         //??
         /*public async Task<IEnumerable<Partie>> GetPartieJoueur(string pseudo)
         {
