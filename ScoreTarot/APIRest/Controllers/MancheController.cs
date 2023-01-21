@@ -2,6 +2,7 @@ using AutoMapper;
 using DTOs;
 using EntityFramework;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileSystemGlobbing;
 using Model;
 using System.Net;
 
@@ -21,16 +22,26 @@ public class MancheController : ControllerBase
         dataManager = dm;
     }
     [HttpGet("{id}")]
-    public MancheDto GetMancheById(int id)
+    public IActionResult GetMancheById(int id)
     {
         var mdto = this.dataManager.GetManche(id);
-        return mapper.Map<MancheDto>(mdto);
+        if (mdto == null)
+        {
+            _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
+            return NotFound();
+        }
+        return Ok(mapper.Map<MancheDto>(mdto));
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteManche(int i)
     {
         var laManche = dataManager.GetManche(i);
+        if (laManche == null)
+        {
+            _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
+            return BadRequest("la manche n'existe pas");
+        }
         await dataManager.RemoveManche(await laManche);
         return StatusCode((int)HttpStatusCode.OK);
     }
@@ -56,6 +67,19 @@ public class MancheController : ControllerBase
     {
         await dataManager.AddManche(mapper.Map<Manche>(mdto));
         return StatusCode((int)HttpStatusCode.OK);
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetMancheByPage([FromQuery] int pageNumber, int pageSize)
+    {
+        var data = await dataManager.GetManche();
+        var manches = new List<MancheDto>();
+        foreach (Manche p in data)
+        {
+            manches.Add(mapper.Map<MancheDto>(p));
+        }
+        manches.Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+        return Ok(data);
     }
 
 }

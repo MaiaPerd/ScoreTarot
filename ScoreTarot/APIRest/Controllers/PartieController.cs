@@ -71,13 +71,25 @@ public class PartieController : ControllerBase
     }
 
     [HttpGet]
-    public List<PartieDto> GetLesParties()
+    public IActionResult GetLesParties()
     {
         var data = dataManager.GetParties();
         var list = new List<PartieDto>();
         list = mapper.Map<List<PartieDto>>(data);
-        return list;
+        return Ok(list);
     }
-    //filtrage a pagination, query string?
-    //test unitaire, action result log et gestion erreur
+
+    [HttpGet]
+    public async Task<IActionResult> GetPartieByPage([FromQuery] int pageNumber,int pageSize)
+    {
+        var data = await dataManager.GetParties();
+        var parties = new List<PartieDto>();
+        foreach(Partie p in data)
+        {
+            parties.Add(mapper.Map<PartieDto>(p));
+        }
+        parties.Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+        return Ok(data);
+    }
 }

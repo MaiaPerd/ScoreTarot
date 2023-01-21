@@ -27,6 +27,7 @@ namespace APIRest.MapperClass
                 .ForMember(mancheEn => mancheEn.JoueurQuiPrend.Id, act => act.MapFrom(source => source.JoueurQuiPrendId))
                 ;
             CreateMap<JoueurDto, Joueur>().ReverseMap();
+            CreateMap<Manche, MancheDto>().ReverseMap();
 
         }
     }

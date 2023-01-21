@@ -25,23 +25,33 @@ namespace APIRest.Controllers
             dataManager = dm;
         }
         [HttpGet("{id}")]
-        public JoueurDto GetJoueurById(int id)
+        public IActionResult GetJoueurById(int id)
         {
             var jdto = this.dataManager.GetJoueurById(id);
-            return mapper.Map<JoueurDto>(jdto);
+            if (jdto == null)
+            {
+                _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+                return NotFound();
+            }
+            return Ok(mapper.Map<JoueurDto>(jdto));
         }
         [HttpGet]
-        public List<JoueurDto> GetLesJoueurs()
+        public IActionResult GetLesJoueurs()
         {
             var data = dataManager.GetJoueurs();
             var list= new List<JoueurDto>();
             list = mapper.Map<List<JoueurDto>>(data);
-            return list;
+            return Ok(list);
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteJoueur(int i)
         {
             var leJoueur = dataManager.GetJoueurById(i);
+            if (leJoueur == null)
+            {
+                _logger.LogInformation("Request invalidDelete Joueur: le joueur n'existe pas!");
+                return BadRequest("le joueur n'existe pas");
+            }
             await dataManager.RemoveJoueur(await leJoueur);
             return StatusCode((int)HttpStatusCode.OK);
         }
@@ -65,6 +75,19 @@ namespace APIRest.Controllers
         {
             await dataManager.AddJoueur(mapper.Map<Joueur>(jdto));
             return StatusCode((int)HttpStatusCode.OK);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetJoueurByPage([FromQuery] int pageNumber, int pageSize)
+        {
+            var data = await dataManager.GetJoueurs();
+            var joueurs = new List<JoueurDto>();
+            foreach (Joueur p in data)
+            {
+                joueurs.Add(mapper.Map<JoueurDto>(p));
+            }
+            joueurs.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
+            return Ok(data);
         }
     }
 }
