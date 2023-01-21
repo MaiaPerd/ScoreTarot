@@ -21,16 +21,26 @@ public class PartieController : ControllerBase
         dataManager = dm;
     }
     [HttpGet("{id}")]
-    public PartieDto GetPartieById(int id)
+    public IActionResult GetPartieById(int id)
     {
         var pdto = this.dataManager.GetPartieById(id);
-        return mapper.Map<PartieDto>(pdto);
+        if (pdto == null)
+        {
+            _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+            return NotFound();
+        }
+        return Ok(mapper.Map<PartieDto>(pdto));
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeletePartie(int i)
     {
         var laPartie = dataManager.GetPartieById(i);
+        if (laPartie == null)
+        {
+            _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+            return BadRequest("la partie n'existe pas");
+        }
         await dataManager.RemovePartie(await laPartie);
         return StatusCode((int)HttpStatusCode.OK);
     }
@@ -44,10 +54,10 @@ public class PartieController : ControllerBase
             _logger.LogInformation("Request invalid pour updatepartie");
             return BadRequest("Request is invalid!");
         }
-        var leJoueur = dataManager.GetPartieById(i);
-        if (leJoueur == null)
+        var laPartie = dataManager.GetPartieById(i);
+        if (laPartie == null)
         {
-            _logger.LogInformation("");
+            _logger.LogInformation("cette partie a update n'existe pas!");
             return NotFound();
         }
         await dataManager.UpdatePartie(mapper.Map<Partie>(pdto));
