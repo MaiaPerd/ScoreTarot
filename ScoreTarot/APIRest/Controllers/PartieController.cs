@@ -47,6 +47,7 @@ public class PartieController : ControllerBase
         var leJoueur = dataManager.GetPartieById(i);
         if (leJoueur == null)
         {
+            _logger.LogInformation("");
             return NotFound();
         }
         await dataManager.UpdatePartie(mapper.Map<Partie>(pdto));
