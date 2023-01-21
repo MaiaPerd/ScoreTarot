@@ -41,6 +41,7 @@ public class PartieController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
+            _logger.LogInformation("Request invalid pour updatepartie");
             return BadRequest("Request is invalid!");
         }
         var leJoueur = dataManager.GetPartieById(i);
@@ -58,4 +59,14 @@ public class PartieController : ControllerBase
         return StatusCode((int)HttpStatusCode.OK);
     }
 
+    [HttpGet]
+    public List<PartieDto> GetLesParties()
+    {
+        var data = dataManager.GetParties();
+        var list = new List<PartieDto>();
+        list = mapper.Map<List<PartieDto>>(data);
+        return list;
+    }
+    //filtrage a pagination, query string?
+    //test unitaire, action result log et gestion erreur
 }
