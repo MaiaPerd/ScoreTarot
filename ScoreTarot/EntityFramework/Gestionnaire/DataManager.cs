@@ -310,5 +310,82 @@ namespace EntityFramework
             }
             return result;
         }
+
+        public async Task<Joueur?> AddJoueurDB(Joueur joueur)
+        {
+            return joueur;// A modifier
+            Joueur? j = null;
+            using (var context = new SQLiteContext())
+            {
+                await context.Joueurs.AddAsync(joueur.toEntity());
+                if( await context.SaveChangesAsync() == 1)
+                {
+                    j = joueur;
+                }
+            }
+            return j;
+        }
+
+        public async Task<Joueur?> UpdateJoueurDB(Joueur joueur)
+        {
+            Joueur? j = null;
+            using (var context = new SQLiteContext())
+            {
+                context.Update(joueur.toEntity());
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    j = joueur;
+                }
+            }
+            return j;
+        }
+
+        public async Task<Joueur?> RemoveJoueurDB(Joueur joueur)
+        {
+            Joueur? j = null;
+            using (var context = new SQLiteContext())
+            {
+                context.Remove(joueur.toEntity());
+                context.Remove(context.Parties.Where(m => m.Joueurs.Contains(joueur.toEntity())));
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    j = joueur;
+                }
+            }
+            return j;
+        }
+        public async Task<Manche> AddMancheDB(Manche manche)
+        {
+            return manche; // A Modifier
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                await context.Manches.AddAsync(manche.toEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return manche;
+        }
+
+        public async Task<Manche> UpdateMancheDB(Manche manche)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                context.Update(manche.toEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return manche;
+        }
+
+        public async Task<Manche> RemoveMancheDB(Manche manche)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                context.Remove(manche.toEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return manche;
+        }
     }
 }

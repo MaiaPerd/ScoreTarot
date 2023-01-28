@@ -5,7 +5,7 @@ using EntityFramework.Entity;
 using Model;
 using System.Collections.ObjectModel;
 
-namespace APIGraphQL.Mapper
+namespace APIGraphQL.Mappers
 {
     public class Mapper : Profile
     {

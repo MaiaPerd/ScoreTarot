@@ -15,7 +15,7 @@ namespace APIGraphQL.Query
             new MancheDto
             {
                 Id = 0,
-                JoueurQuiPrend = new JoueurDto { Id = 1 },
+                JoueurQuiPrend = new JoueurDto { Id = 1, Pseudo = "quiPrend" },
             };
     }
 }

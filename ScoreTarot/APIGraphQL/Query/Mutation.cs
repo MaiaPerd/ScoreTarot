@@ -12,28 +12,45 @@ namespace APIGraphQL.Query
         private readonly DataManager dataManager;
         private readonly IMapper mapper;
 
-        public Mutation(DataManager dataManager, IMapper mapper)
+        public Mutation(IMapper mapper)
         {
-            this.dataManager = dataManager;
             this.mapper = mapper;
+            this.dataManager = new DataManager(); // Regarder pour l'injection
         }
 
-        public async Task<bool> AddJoueur(JoueurDto joueur)
+        //Voir pour avoir 2 mutation
+
+        public async Task<JoueurDto> AddJoueur(JoueurDto joueur)
         {
-            // return joueur
-            return await dataManager.AddJoueur(mapper.Map<Joueur>(joueur));
+            mapper.Map<Joueur>(joueur);
+            return mapper.Map<JoueurDto>(await dataManager.AddJoueurDB(mapper.Map<Joueur>(joueur)) ?? throw new ArgumentNullException());
         }
 
-        public async Task<bool> UpdateJoueur(JoueurDto joueur)
+        public async Task<JoueurDto> UpdateJoueur(JoueurDto joueur)
         {
-            // update l'id et la modification
             //https://chillicream.com/docs/hotchocolate/v12/defining-a-schema/mutations
-            return await dataManager.UpdateJoueur(mapper.Map<Joueur>(joueur));
+            return mapper.Map<JoueurDto>(await dataManager.UpdateJoueurDB(mapper.Map<Joueur>(joueur)) ?? throw new ArgumentNullException());
         }
 
-        public async Task<bool> DeleteJoueur(JoueurDto joueur)
+        public async Task<JoueurDto> DeleteJoueur(JoueurDto joueur)
         {
-            return await dataManager.RemoveJoueur(mapper.Map<Joueur>(joueur));
+            return mapper.Map<JoueurDto>(await dataManager.RemoveJoueurDB(mapper.Map<Joueur>(joueur)) ?? throw new ArgumentNullException());
+        }
+
+        public async Task<MancheDto> AddManche(MancheDto manche)
+        {
+            return mapper.Map<MancheDto>(await dataManager.AddMancheDB(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException());
+        }
+
+        public async Task<MancheDto> UpdateManche(MancheDto manche)
+        {
+            //https://chillicream.com/docs/hotchocolate/v12/defining-a-schema/mutations
+            return mapper.Map<MancheDto>(await dataManager.UpdateMancheDB(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException());
+        }
+
+        public async Task<MancheDto> DeleteManche(MancheDto manche)
+        {
+            return mapper.Map<MancheDto>(await dataManager.RemoveMancheDB(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException());
         }
     }
 
