@@ -9,8 +9,6 @@ using System.Net;
 
 namespace APIRest.Controllers
 {
-    namespace APIRest.Controllers
-    {
         [ApiController]
         [Route("[controller]")]
         public class JoueurController : ControllerBase
@@ -93,4 +91,3 @@ namespace APIRest.Controllers
             }
         }
     }
-}

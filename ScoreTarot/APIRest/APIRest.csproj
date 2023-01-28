@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
-    <ProjectReference Include="..\EntityFramework\EntityFramework.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Service\Service.csproj" />

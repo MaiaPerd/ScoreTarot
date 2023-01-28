@@ -1,4 +1,4 @@
-﻿namespace DTOs
+﻿namespace APIRest.DTOs
 {
     public class JoueurDto
     {
