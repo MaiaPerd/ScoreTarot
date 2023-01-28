@@ -147,16 +147,16 @@ namespace EntityFramework
             return manche;
         }*/
 
-        /*public async Task<IEnumerable<Manche>> GetManches()
+        public async Task<IEnumerable<Manche>> GetManches()
         {
             List<Manche> manches = new();
             using (var context = new SQLiteContext())
             {
                 await Task.Run(() =>
-                    manches.AddRange(context.Manches.Select(m => m.toModel())));
+                    manches.AddRange(context.Manches.Select(m => m.ToModel())));
             }
             return manches;
-        }*/
+        }
 
         public async Task<Partie> GetPartieById(int id)
         {
