@@ -29,12 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", 
 		{5C708FAC-6195-42D1-9FBC-05168675F284} = {5C708FAC-6195-42D1-9FBC-05168675F284}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestRest", "UnitTestRest\UnitTestRest.csproj", "{7F3D9B1B-1BB6-4120-B910-FBC90DCD2DEE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5C708FAC-6195-42D1-9FBC-05168675F284} = {5C708FAC-6195-42D1-9FBC-05168675F284}
-		{8A1F3078-FAB6-4D63-B6B7-C63DA5C2F9B3} = {8A1F3078-FAB6-4D63-B6B7-C63DA5C2F9B3}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,10 +71,6 @@ Global
 		{A0B5130E-05C7-4745-83EE-15F3938FD466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B5130E-05C7-4745-83EE-15F3938FD466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B5130E-05C7-4745-83EE-15F3938FD466}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F3D9B1B-1BB6-4120-B910-FBC90DCD2DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F3D9B1B-1BB6-4120-B910-FBC90DCD2DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F3D9B1B-1BB6-4120-B910-FBC90DCD2DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F3D9B1B-1BB6-4120-B910-FBC90DCD2DEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
