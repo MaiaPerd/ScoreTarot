@@ -6,80 +6,84 @@ using Microsoft.Extensions.FileSystemGlobbing;
 using Model;
 using System.Net;
 
-[ApiController]
-[Route("[controller]")]
-public class MancheController : ControllerBase
+
+namespace APIRest.Controllers
 {
-
-    private readonly ILogger<MancheController> _logger;
-    private readonly IMapper mapper;
-    private readonly DataManager dataManager;
-
-    public MancheController(ILogger<MancheController> logger, IMapper m, DataManager dm)
+    [ApiController]
+    [Route("[controller]")]
+    public class MancheController : ControllerBase
     {
-        mapper = m;
-        _logger = logger;
-        dataManager = dm;
-    }
-    [HttpGet("{id}")]
-    public IActionResult GetMancheById(int id)
-    {
-        var mdto = this.dataManager.GetManche(id);
-        if (mdto == null)
+
+        private readonly ILogger<MancheController> _logger;
+        private readonly IMapper mapper;
+        private readonly DataManager dataManager;
+
+        public MancheController(ILogger<MancheController> logger, IMapper m, DataManager dm)
         {
-            _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
-            return NotFound();
+            mapper = m;
+            _logger = logger;
+            dataManager = dm;
         }
-        return Ok(mapper.Map<MancheDto>(mdto));
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteManche(int i)
-    {
-        var laManche = dataManager.GetManche(i);
-        if (laManche == null)
+        [HttpGet("{id}")]
+        public IActionResult GetMancheById(int id)
         {
-            _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
-            return BadRequest("la manche n'existe pas");
+            var mdto = this.dataManager.GetManche(id);
+            if (mdto == null)
+            {
+                _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
+                return NotFound();
+            }
+            return Ok(mapper.Map<MancheDto>(mdto));
         }
-        await dataManager.RemoveManche(await laManche);
-        return StatusCode((int)HttpStatusCode.OK);
-    }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteManche(int i)
+        {
+            var laManche = dataManager.GetManche(i);
+            if (laManche == null)
+            {
+                _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
+                return BadRequest("la manche n'existe pas");
+            }
+            await dataManager.RemoveManche(await laManche);
+            return StatusCode((int)HttpStatusCode.OK);
+        }
 
 
-    [HttpPost("{id}")]
-    public async Task<ActionResult> UpdateManche([FromBody] MancheDto mdto, int i)
-    {
-        if (!ModelState.IsValid)
+        [HttpPost("{id}")]
+        public async Task<ActionResult> UpdateManche([FromBody] MancheDto mdto, int i)
         {
-            return BadRequest("Request is invalid!");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Request is invalid!");
+            }
+            var leJoueur = dataManager.GetJoueurById(i);
+            if (leJoueur == null)
+            {
+                return NotFound();
+            }
+            await dataManager.UpdateManche(mapper.Map<Manche>(mdto));
+            return StatusCode((int)HttpStatusCode.OK);
         }
-        var leJoueur = dataManager.GetJoueurById(i);
-        if (leJoueur == null)
+        [HttpPut]
+        public async Task<ActionResult> CreateManche([FromBody] MancheDto mdto)
         {
-            return NotFound();
+            await dataManager.AddManche(mapper.Map<Manche>(mdto));
+            return StatusCode((int)HttpStatusCode.OK);
         }
-        await dataManager.UpdateManche(mapper.Map<Manche>(mdto));
-        return StatusCode((int)HttpStatusCode.OK);
-    }
-    [HttpPut]
-    public async Task<ActionResult> CreateManche([FromBody] MancheDto mdto)
-    {
-        await dataManager.AddManche(mapper.Map<Manche>(mdto));
-        return StatusCode((int)HttpStatusCode.OK);
-    }
-    [HttpGet]
-    public async Task<IActionResult> GetMancheByPage([FromQuery] int pageNumber, int pageSize)
-    {
-        var data = await dataManager.GetManche();
-        var manches = new List<MancheDto>();
-        foreach (Manche p in data)
+        [HttpGet]
+        public async Task<IActionResult> GetMancheByPage([FromQuery] int pageNumber, int pageSize)
         {
-            manches.Add(mapper.Map<MancheDto>(p));
+            var data = await dataManager.GetManches();
+            var manches = new List<MancheDto>();
+            foreach (Manche p in data)
+            {
+                manches.Add(mapper.Map<MancheDto>(p));
+            }
+            manches.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
+            return Ok(data);
         }
-        manches.Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize);
-        return Ok(data);
-    }
 
+    }
 }
