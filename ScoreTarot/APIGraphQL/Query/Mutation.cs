@@ -12,8 +12,9 @@ namespace APIGraphQL.Query
         private readonly DataManager dataManager;
         private readonly IMapper mapper;
 
-        public Mutation(IMapper mapper)
+        public Mutation(IMapper mapper, SQLiteContext dbContext)
         {
+
             this.mapper = mapper;
             this.dataManager = new DataManager(); // Regarder pour l'injection
         }
