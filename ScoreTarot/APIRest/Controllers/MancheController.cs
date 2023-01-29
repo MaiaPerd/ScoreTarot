@@ -1,3 +1,4 @@
+using APIRest.DTOs;
 using AutoMapper;
 using DTOs;
 using EntityFramework;

@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using DTOs;
 using APIRest.MapperClass;
 using EntityFramework;
 using AutoMapper;
 using EntityFramework.Entity;
 using Model;
 using System.Net;
+using APIRest.DTOs;
 
 namespace APIRest.Controllers
 {
