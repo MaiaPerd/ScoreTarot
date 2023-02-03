@@ -15,36 +15,21 @@ namespace APIGraphQL.Query
             this.dataManager = new DataManager();
         }
 
-
-        public JoueurDto GetJoueur() =>
-            new JoueurDto
-            {
-                Id = 0,
-                Pseudo = "test"
-            };
+        public async Task<IEnumerable<JoueurDto>> GetJoueurs()
+        {
+            return mapper.Map<IEnumerable<JoueurDto>>(await dataManager.GetJoueurs());
+        }
 
         public async Task<JoueurDto> GetJoueurById(int id)
         {
             return mapper.Map<JoueurDto>(await dataManager.GetJoueurById(id));
         }
 
-        public MancheDto GetManche() =>
-            new MancheDto
-            {
-                Id = 0,
-                JoueurQuiPrend = new JoueurDto { Id = 1, Pseudo = "quiPrend" },
-            };
-
         public async Task<MancheDto> GetMancheById(int id)
         {
             return mapper.Map<MancheDto>(await dataManager.GetManche(id));
         }
 
-        public PartieDto GetPartie() =>
-            new PartieDto
-            {
-                Id = 0
-            };
 
         public async Task<PartieDto> GetPartieById(int id)
         {

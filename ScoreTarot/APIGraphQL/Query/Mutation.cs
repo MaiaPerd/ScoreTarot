@@ -45,7 +45,6 @@ namespace APIGraphQL.Query
 
         public async Task<MancheDto> UpdateManche(MancheDto manche)
         {
-            //https://chillicream.com/docs/hotchocolate/v12/defining-a-schema/mutations
             return mapper.Map<MancheDto>(await dataManager.UpdateMancheDB(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException());
         }
 
@@ -53,6 +52,7 @@ namespace APIGraphQL.Query
         {
             return mapper.Map<MancheDto>(await dataManager.RemoveMancheDB(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException());
         }
+
     }
 
 }

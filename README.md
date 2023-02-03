@@ -69,7 +69,7 @@ Les projets:
 - TestsUnitaires: L'ensemble des tests des différent projets.
 
 # Auteurs
-MaÏa PERDERIZET
+Maïa PERDERIZET
 Cécile BONAL
 
 _Generated with a_ **Code#0** _template_  
