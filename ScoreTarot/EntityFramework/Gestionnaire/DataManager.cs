@@ -311,11 +311,11 @@ namespace EntityFramework
             return result;
         }
 
-        public async Task<Joueur?> AddJoueurDB(Joueur joueur)
+        public async Task<Joueur?> AddJoueurDB(Joueur joueur, SQLiteContext contextDB)
         {
             return joueur;// A modifier
             Joueur? j = null;
-            using (var context = new SQLiteContext())
+            using (var context = contextDB)
             {
                 await context.Joueurs.AddAsync(joueur.toEntity());
                 if( await context.SaveChangesAsync() == 1)
@@ -326,10 +326,10 @@ namespace EntityFramework
             return j;
         }
 
-        public async Task<Joueur?> UpdateJoueurDB(Joueur joueur)
+        public async Task<Joueur?> UpdateJoueurDB(Joueur joueur, SQLiteContext contextDB)
         {
             Joueur? j = null;
-            using (var context = new SQLiteContext())
+            using (var context = contextDB)
             {
                 context.Update(joueur.toEntity());
                 if (await context.SaveChangesAsync() == 1)
@@ -340,10 +340,10 @@ namespace EntityFramework
             return j;
         }
 
-        public async Task<Joueur?> RemoveJoueurDB(Joueur joueur)
+        public async Task<Joueur?> RemoveJoueurDB(Joueur joueur, SQLiteContext contextDB)
         {
             Joueur? j = null;
-            using (var context = new SQLiteContext())
+            using (var context = contextDB)
             {
                 context.Remove(joueur.toEntity());
                 context.Remove(context.Parties.Where(m => m.Joueurs.Contains(joueur.toEntity())));
@@ -354,11 +354,11 @@ namespace EntityFramework
             }
             return j;
         }
-        public async Task<Manche> AddMancheDB(Manche manche)
+        public async Task<Manche> AddMancheDB(Manche manche, SQLiteContext contextDB)
         {
             return manche; // A Modifier
             bool result = false;
-            using (var context = new SQLiteContext())
+            using (var context = contextDB)
             {
                 await context.Manches.AddAsync(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
@@ -366,10 +366,10 @@ namespace EntityFramework
             return manche;
         }
 
-        public async Task<Manche> UpdateMancheDB(Manche manche)
+        public async Task<Manche> UpdateMancheDB(Manche manche, SQLiteContext contextDB)
         {
             bool result = false;
-            using (var context = new SQLiteContext())
+            using (var context = contextDB)
             {
                 context.Update(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
@@ -377,10 +377,10 @@ namespace EntityFramework
             return manche;
         }
 
-        public async Task<Manche> RemoveMancheDB(Manche manche)
+        public async Task<Manche> RemoveMancheDB(Manche manche, SQLiteContext contextDB)
         {
             bool result = false;
-            using (var context = new SQLiteContext())
+            using (var context = contextDB)
             {
                 context.Remove(manche.toEntity());
                 result = await context.SaveChangesAsync() == 1;
