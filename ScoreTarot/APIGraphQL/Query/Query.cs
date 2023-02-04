@@ -23,6 +23,11 @@ namespace APIGraphQL.Query
             return mapper.Map<JoueurDto>(await dataManager.GetJoueurById(id));
         }
 
+        public async Task<IEnumerable<MancheDto>> GetManches([Service] DataManagerAPI dataManager)
+        {
+            return mapper.Map<IEnumerable<MancheDto>>(await dataManager.GetManches());
+        }
+
         public async Task<MancheDto> GetMancheById(int id, [Service] DataManagerAPI dataManager)
         {
             return mapper.Map<MancheDto>(await dataManager.GetManche(id));
@@ -34,9 +39,14 @@ namespace APIGraphQL.Query
             return mapper.Map<PartieDto>(await dataManager.GetPartieById(id));
         }
 
-        public async Task<List<JoueurDto>> GetJoueurByPartie(int idPartie, [Service] DataManagerAPI dataManager)
+        public async Task<IEnumerable<JoueurDto>> GetJoueurByPartie(int idPartie, [Service] DataManagerAPI dataManager)
         {
             return mapper.Map<PartieDto>(await dataManager.GetPartieById(idPartie)).Joueurs;
+        }
+
+        public async Task<IEnumerable<PartieDto>> GetParties([Service] DataManagerAPI dataManager)
+        {
+            return mapper.Map<IEnumerable<PartieDto>>(await dataManager.GetParties());
         }
 
     }
