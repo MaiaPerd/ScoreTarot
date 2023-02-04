@@ -18,11 +18,11 @@ namespace APIRest.Controllers
             private readonly IMapper mapper;
             private readonly DataManager dataManager;
 
-            public JoueurController(ILogger<JoueurController> logger, IMapper m, DataManager dm)
+            public JoueurController(ILogger<JoueurController> logger, IMapper m)
             {
                 mapper = m;
                 _logger = logger;
-                dataManager = dm;
+                dataManager = new DataManager();
             }
             [HttpGet("{id}")]
             public IActionResult GetJoueurById(int id)
@@ -33,14 +33,16 @@ namespace APIRest.Controllers
                     _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
                     return NotFound();
                 }
-                return Ok(mapper.Map<JoueurDto>(jdto));
+                //var enmap = mapper.Map<JoueurDto>(jdto);
+                
+                return Ok(jdto);
             }
             [HttpGet]
             public IActionResult GetLesJoueurs()
             {
                 var data = dataManager.GetJoueurs();
                 var list = new List<JoueurDto>();
-                list = mapper.Map<List<JoueurDto>>(data);
+                //list = mapper.Map<List<JoueurDto>>(data);
                 return Ok(list);
             }
             [HttpDelete("{id}")]
@@ -76,7 +78,7 @@ namespace APIRest.Controllers
                 await dataManager.AddJoueur(mapper.Map<Joueur>(jdto));
                 return StatusCode((int)HttpStatusCode.OK);
             }
-            [HttpGet]
+            [HttpGet("byPage")]
             public async Task<IActionResult> GetJoueurByPage([FromQuery] int pageNumber, int pageSize)
             {
                 var data = await dataManager.GetJoueurs();

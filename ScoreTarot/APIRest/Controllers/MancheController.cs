@@ -1,6 +1,5 @@
 using APIRest.DTOs;
 using AutoMapper;
-using DTOs;
 using EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileSystemGlobbing;
@@ -17,13 +16,12 @@ namespace APIRest.Controllers
 
         private readonly ILogger<MancheController> _logger;
         private readonly IMapper mapper;
-        private readonly DataManager dataManager;
+        private readonly DataManager dataManager = new DataManager();
 
-        public MancheController(ILogger<MancheController> logger, IMapper m, DataManager dm)
+        public MancheController(ILogger<MancheController> logger, IMapper m)
         {
             mapper = m;
             _logger = logger;
-            dataManager = dm;
         }
         [HttpGet("{id}")]
         public IActionResult GetMancheById(int id)
@@ -34,7 +32,7 @@ namespace APIRest.Controllers
                 _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
                 return NotFound();
             }
-            return Ok(mapper.Map<MancheDto>(mdto));
+            return Ok(mdto);//mapper.Map<MancheDto>(mdto));
         }
 
         [HttpDelete("{id}")]
@@ -72,18 +70,18 @@ namespace APIRest.Controllers
             await dataManager.AddManche(mapper.Map<Manche>(mdto));
             return StatusCode((int)HttpStatusCode.OK);
         }
-        [HttpGet]
+        [HttpGet("ByPage")]
         public async Task<IActionResult> GetMancheByPage([FromQuery] int pageNumber, int pageSize)
         {
             var data = await dataManager.GetManches();
             var manches = new List<MancheDto>();
-            foreach (Manche p in data)
+            /*foreach (Manche p in data)
             {
                 manches.Add(mapper.Map<MancheDto>(p));
-            }
+            }*/
             manches.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize);
-            return Ok(data);
+            return Ok(manches);
         }
 
     }

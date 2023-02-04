@@ -1,6 +1,5 @@
 using APIRest.DTOs;
 using AutoMapper;
-using DTOs;
 using EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -16,13 +15,12 @@ namespace APIRest.Controllers
 
         private readonly ILogger<PartieController> _logger;
         private readonly IMapper mapper;
-        private readonly DataManager dataManager;
+        private readonly DataManager dataManager = new DataManager();
 
-        public PartieController(ILogger<PartieController> logger, IMapper m, DataManager dm)
+        public PartieController(ILogger<PartieController> logger, IMapper m)
         {
             mapper = m;
             _logger = logger;
-            dataManager = dm;
         }
         [HttpGet("{id}")]
         public IActionResult GetPartieById(int id)
@@ -33,7 +31,7 @@ namespace APIRest.Controllers
                 _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
                 return NotFound();
             }
-            return Ok(mapper.Map<PartieDto>(pdto));
+            return Ok(pdto);//mapper.Map<PartieDto>(pdto));
         }
 
         [HttpDelete("{id}")]
@@ -79,19 +77,19 @@ namespace APIRest.Controllers
         {
             var data = dataManager.GetParties();
             var list = new List<PartieDto>();
-            list = mapper.Map<List<PartieDto>>(data);
-            return Ok(list);
+            //list = mapper.Map<List<PartieDto>>(data);
+            return Ok(data);
         }
 
-        [HttpGet]
+        [HttpGet("byPage")]
         public async Task<IActionResult> GetPartieByPage([FromQuery] int pageNumber, int pageSize)
         {
             var data = await dataManager.GetParties();
             var parties = new List<PartieDto>();
-            foreach (Partie p in data)
+            /*foreach (Partie p in data)
             {
                 parties.Add(mapper.Map<PartieDto>(p));
-            }
+            }*/
             parties.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize);
             return Ok(data);
