@@ -25,7 +25,4 @@
   <ItemGroup>
     <None Remove="Gestionnaire\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Gestionnaire\" />
-  </ItemGroup>
 </Project>
