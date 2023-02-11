@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TestsUnitaires
 {
-    public class DataTest
+    public class UnitTestControlerDto
     {
 
         #region Data Manche

@@ -1,14 +1,18 @@
 using APIRest.MapperClass;
+using EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDbContext<SQLiteContext>(option => option.UseSqlite($"Data Source=../EntityFramework/baseTarotScore.db"));
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(typeof(Mapper));
+builder.Services.AddAutoMapper(typeof(MapperApiREST));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

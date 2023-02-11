@@ -43,7 +43,7 @@ namespace TestsUnitaires
             Assert.Equal(combienDeJoueur, managerStub.ChargerDesJoueurPourUnePartie(combienDeJoueur).Count);
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestStub), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestStub), MemberType = typeof(UnitTestControlerDto))]
         public void TesterStubChargerListManche(int combienDeJoueur,List<Joueur> joueurs,int nbManche)
         {
             ManagerStub managerStub = new ManagerStub();

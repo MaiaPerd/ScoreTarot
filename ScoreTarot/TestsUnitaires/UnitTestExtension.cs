@@ -15,7 +15,7 @@ namespace TestsUnitaires
     public class UnitTestExtension
     {
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestExtensionJoueur),MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestExtensionJoueur),MemberType = typeof(UnitTestControlerDto))]
         public void TestExetentionJoueur(Joueur joueur)
         {
             JoueurEntity joueure= joueur.toEntity();
@@ -26,7 +26,7 @@ namespace TestsUnitaires
             Assert.Equal(joueur.Age, joueure.Age);
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestExtentionPartie), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestExtentionPartie), MemberType = typeof(UnitTestControlerDto))]
         public void TestExtentionPartie(Partie partie)
         {
             PartieEntity party = partie.ToEntity();
@@ -61,7 +61,7 @@ namespace TestsUnitaires
             }
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestExtentionManche),MemberType =typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestExtentionManche),MemberType =typeof(UnitTestControlerDto))]
         public void Data_TestExtentionManche(Manche manche)
         {
             MancheEntity manchy = manche.toEntity();
@@ -99,7 +99,7 @@ namespace TestsUnitaires
             Assert.Equal(age, jentity.Age);
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestExtentionContrat),MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestExtentionContrat),MemberType = typeof(UnitTestControlerDto))]
         public void TesterContratEntity(Contrat contrat)
         {
             ContratEntity contratEntity = contrat.toEntity();
@@ -121,7 +121,7 @@ namespace TestsUnitaires
             }
         }
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestExtensionBonus), MemberType=typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestExtensionBonus), MemberType=typeof(UnitTestControlerDto))]
         public void TestExtentionBonus(Bonus bonus)
         {
             BonusEntity bonusEntity = bonus.toEntity();

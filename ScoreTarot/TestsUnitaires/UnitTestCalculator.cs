@@ -46,7 +46,7 @@ namespace TestsUnitaires
 
 
         [Theory]
-        [MemberData(nameof(DataTest.Data_TestCalculator), MemberType = typeof(DataTest))]
+        [MemberData(nameof(UnitTestControlerDto.Data_TestCalculator), MemberType = typeof(UnitTestControlerDto))]
         public void TestMethodeCalculator_calculeScoreJoueurQuiPrend(int result,Bonus lBonus, Contrat contrat, int scoreJoueur)
         {
             Calculator calculator = new Calculator();

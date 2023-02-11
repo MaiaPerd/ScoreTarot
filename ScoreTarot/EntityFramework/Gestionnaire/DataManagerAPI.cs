@@ -69,6 +69,16 @@ namespace EntityFramework
             return joueurs;
         }
 
+        public async Task<IEnumerable<Joueur>> GetJoueursByPseudo(String pseudo)
+        {
+            List<Joueur> joueurs = new();
+            joueurs.Select(joueur => joueur.Pseudo ==  pseudo);
+            await Task.Run(() =>
+                joueurs.AddRange(context.Joueurs.Select(joueur => joueur.toModel())));
+
+            return joueurs;
+        }
+
 
         public async Task ClearJoueurs()
         {
@@ -183,6 +193,36 @@ namespace EntityFramework
         public Task<IEnumerable<Partie>> LoadPartie(IEnumerable<Joueur> listJoueur)
         {
             throw new NotImplementedException();
+        }
+        public async Task<bool> RemovePartie(Partie partie)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                context.Remove(partie.ToEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return result;
+        }
+        public async Task<bool> UpdatePartie(Partie partie)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                context.Update(partie.ToEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return result;
+        }
+        public async Task<bool> AddPartie(Partie partie)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                await context.Parties.AddAsync(partie.ToEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return result;
         }
     }
 }

@@ -1,5 +1,5 @@
+using APIRest.DTOs;
 using AutoMapper;
-using DTOs;
 using EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -15,13 +15,13 @@ namespace APIRest.Controllers
 
         private readonly ILogger<PartieController> _logger;
         private readonly IMapper mapper;
-        private readonly DataManager dataManager;
+        private readonly DataManagerAPI dataManager;
 
-        public PartieController(ILogger<PartieController> logger, IMapper m, DataManager dm)
+        public PartieController(ILogger<PartieController> logger, IMapper m, DataManagerAPI dm)
         {
             mapper = m;
             _logger = logger;
-            dataManager = dm;
+            this.dataManager = dm;
         }
         [HttpGet("{id}")]
         public IActionResult GetPartieById(int id)
@@ -29,10 +29,10 @@ namespace APIRest.Controllers
             var pdto = this.dataManager.GetPartieById(id);
             if (pdto == null)
             {
-                _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+                _logger.LogInformation("Request GetPartieById: la partie n'apas été trouvé");
                 return NotFound();
             }
-            return Ok(mapper.Map<PartieDto>(pdto));
+            return Ok(pdto);//mapper.Map<PartieDto>(pdto));
         }
 
         [HttpDelete("{id}")]
@@ -41,7 +41,7 @@ namespace APIRest.Controllers
             var laPartie = dataManager.GetPartieById(i);
             if (laPartie == null)
             {
-                _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+                _logger.LogInformation("Request invalidDelete: la partie n'a pas été trouvé");
                 return BadRequest("la partie n'existe pas");
             }
             await dataManager.RemovePartie(await laPartie);
@@ -54,13 +54,13 @@ namespace APIRest.Controllers
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogInformation("Request invalid pour updatepartie");
+                _logger.LogInformation("Request invalid pour updatepartie:ModelState est invalid");
                 return BadRequest("Request is invalid!");
             }
             var laPartie = dataManager.GetPartieById(i);
             if (laPartie == null)
             {
-                _logger.LogInformation("cette partie a update n'existe pas!");
+                _logger.LogInformation("UpdatePartie: la partie n'a pas été trouvé");
                 return NotFound();
             }
             await dataManager.UpdatePartie(mapper.Map<Partie>(pdto));
@@ -78,19 +78,19 @@ namespace APIRest.Controllers
         {
             var data = dataManager.GetParties();
             var list = new List<PartieDto>();
-            list = mapper.Map<List<PartieDto>>(data);
-            return Ok(list);
+            //list = mapper.Map<List<PartieDto>>(data);
+            return Ok(data);
         }
 
-        [HttpGet]
+        [HttpGet("byPage")]
         public async Task<IActionResult> GetPartieByPage([FromQuery] int pageNumber, int pageSize)
         {
             var data = await dataManager.GetParties();
             var parties = new List<PartieDto>();
-            foreach (Partie p in data)
+            /*foreach (Partie p in data)
             {
                 parties.Add(mapper.Map<PartieDto>(p));
-            }
+            }*/
             parties.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize);
             return Ok(data);
