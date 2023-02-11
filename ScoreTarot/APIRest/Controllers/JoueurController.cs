@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
-using DTOs;
 using APIRest.MapperClass;
 using EntityFramework;
 using AutoMapper;
 using EntityFramework.Entity;
 using Model;
 using System.Net;
+using APIRest.DTOs;
 
 namespace APIRest.Controllers
 {
-    namespace APIRest.Controllers
-    {
         [ApiController]
         [Route("[controller]")]
         public class JoueurController : ControllerBase
@@ -18,13 +16,14 @@ namespace APIRest.Controllers
 
             private readonly ILogger<JoueurController> _logger;
             private readonly IMapper mapper;
-            private readonly DataManager dataManager;
+            private readonly DataManagerAPI dataManager;
 
-            public JoueurController(ILogger<JoueurController> logger, IMapper m, DataManager dm)
+            public JoueurController(ILogger<JoueurController> logger, IMapper m, DataManagerAPI dataManager)
             {
                 mapper = m;
                 _logger = logger;
-                dataManager = dm;
+                this.dataManager = dataManager;
+
             }
             [HttpGet("{id}")]
             public IActionResult GetJoueurById(int id)
@@ -32,17 +31,19 @@ namespace APIRest.Controllers
                 var jdto = this.dataManager.GetJoueurById(id);
                 if (jdto == null)
                 {
-                    _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+                    _logger.LogInformation("GetJoueurById: le joueur n'a pas été trouvé");
                     return NotFound();
                 }
-                return Ok(mapper.Map<JoueurDto>(jdto));
+                //var enmap = mapper.Map<JoueurDto>(jdto);
+                
+                return Ok(jdto);
             }
             [HttpGet]
             public IActionResult GetLesJoueurs()
             {
                 var data = dataManager.GetJoueurs();
                 var list = new List<JoueurDto>();
-                list = mapper.Map<List<JoueurDto>>(data);
+                //list = mapper.Map<List<JoueurDto>>(data);
                 return Ok(list);
             }
             [HttpDelete("{id}")]
@@ -51,7 +52,7 @@ namespace APIRest.Controllers
                 var leJoueur = dataManager.GetJoueurById(i);
                 if (leJoueur == null)
                 {
-                    _logger.LogInformation("Request invalidDelete Joueur: le joueur n'existe pas!");
+                    _logger.LogInformation("DeleteJoueur: Request invalidDelete Joueur: le joueur n'existe pas!");
                     return BadRequest("le joueur n'existe pas");
                 }
                 await dataManager.RemoveJoueur(await leJoueur);
@@ -62,11 +63,12 @@ namespace APIRest.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest("Request is invalid!");
+                    return BadRequest("UpdateJoueur: Request is invalid! -> ModelState invalid");
                 }
                 var leJoueur = dataManager.GetJoueurById(i);
                 if (leJoueur == null)
                 {
+                    _logger.LogInformation("UpdateJoueur: Request invalid, le joueur donné est null");
                     return NotFound();
                 }
                 await dataManager.UpdateJoueur(mapper.Map<Joueur>(jdto));
@@ -78,7 +80,7 @@ namespace APIRest.Controllers
                 await dataManager.AddJoueur(mapper.Map<Joueur>(jdto));
                 return StatusCode((int)HttpStatusCode.OK);
             }
-            [HttpGet]
+            [HttpGet("byPage")]
             public async Task<IActionResult> GetJoueurByPage([FromQuery] int pageNumber, int pageSize)
             {
                 var data = await dataManager.GetJoueurs();
@@ -91,6 +93,14 @@ namespace APIRest.Controllers
                     .Take(pageSize);
                 return Ok(data);
             }
+
+        [HttpGet("byPseudo{pseudo}")]
+        public IActionResult GetLesJoueursByPseudo([FromBody] String pseudo)
+        {
+            var data = dataManager.GetJoueursByPseudo(pseudo);
+            var list = new List<JoueurDto>();
+            
+            return Ok(list);
         }
     }
 }

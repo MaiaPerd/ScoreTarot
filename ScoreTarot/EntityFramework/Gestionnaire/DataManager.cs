@@ -259,7 +259,6 @@ namespace EntityFramework
             }
             return result;
         }
-        //??
         public async Task<bool> RemovePartieDuJoueur(Joueur joueur)
         {
             bool result = false;

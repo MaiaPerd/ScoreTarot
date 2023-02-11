@@ -22,7 +22,7 @@ namespace Stub
             return lespartie;
         }
 
-        internal Partie ChargerPartie3J()
+        public Partie ChargerPartie3J()
         {
             List<Joueur> lJoueur = new StubJoueur().ChargerJoueurPartie3J();
             List<Manche> lManche = stubManche.ChargerLesManche3J(lJoueur);
