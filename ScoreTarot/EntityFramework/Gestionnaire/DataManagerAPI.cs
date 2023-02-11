@@ -194,5 +194,35 @@ namespace EntityFramework
         {
             throw new NotImplementedException();
         }
+        public async Task<bool> RemovePartie(Partie partie)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                context.Remove(partie.ToEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return result;
+        }
+        public async Task<bool> UpdatePartie(Partie partie)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                context.Update(partie.ToEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return result;
+        }
+        public async Task<bool> AddPartie(Partie partie)
+        {
+            bool result = false;
+            using (var context = new SQLiteContext())
+            {
+                await context.Parties.AddAsync(partie.ToEntity());
+                result = await context.SaveChangesAsync() == 1;
+            }
+            return result;
+        }
     }
 }

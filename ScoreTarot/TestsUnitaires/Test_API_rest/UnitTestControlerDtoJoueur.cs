@@ -19,6 +19,7 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using APIRest.MapperClass;
 using Microsoft.Extensions.Logging.Abstractions;
 using EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestsUnitaires.Test_API_rest
 {
@@ -28,6 +29,7 @@ namespace TestsUnitaires.Test_API_rest
         private readonly IMapper _mapper;
         private readonly JoueurController _joueurController;
         private readonly ILogger<JoueurController> _logger;
+        private readonly DataManagerAPI dmAPI;
 
         public UnitTestControlerDtoJoueur()
         {
@@ -35,6 +37,10 @@ namespace TestsUnitaires.Test_API_rest
             _mapper = maperconf.CreateMapper();
             _logger = new NullLogger<JoueurController>();
             //_logger = Mock.Of<ILogger<JoueurController>>(); no mieux davoir un logger null
+            var options = new DbContextOptionsBuilder<SQLiteContext>()
+                .UseInMemoryDatabase(databaseName: "TestApiDataBaseREST")
+                .Options;
+            dmAPI = new DataManagerAPI(new SQLiteContext(options));
         }
 
 
@@ -43,7 +49,7 @@ namespace TestsUnitaires.Test_API_rest
         {
             Joueur j = new Joueur("nom", 45);
             await new DataManager().AddJoueur(j);
-            var actionResult = new JoueurController(_logger, _mapper).GetLesJoueurs();
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetLesJoueurs();
 
             var actionResultOK = actionResult as OkObjectResult;
 
@@ -57,7 +63,7 @@ namespace TestsUnitaires.Test_API_rest
         {
             Joueur j = new Joueur("nom", 45);
             await new DataManager().AddJoueur(j);
-            var actionResult = new JoueurController(_logger, _mapper).GetJoueurById(0);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetJoueurById(0);
 
             var actionResultOK = actionResult as OkObjectResult;
 
@@ -72,7 +78,7 @@ namespace TestsUnitaires.Test_API_rest
             Joueur j = new Joueur("nom", 45);
             await new DataManager().AddJoueur(j);
 
-            var actionResult = new JoueurController(_logger, _mapper).DeleteJoueur(0);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).DeleteJoueur(0);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
@@ -84,7 +90,7 @@ namespace TestsUnitaires.Test_API_rest
         {
             Joueur j = new Joueur("nom", 45);
             await new DataManager().AddJoueur(j);
-            var actionResult = new JoueurController(_logger, _mapper).UpdateJoueur(j.toDTO(),j.Id);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).UpdateJoueur(j.toDTO(),j.Id);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
@@ -99,7 +105,7 @@ namespace TestsUnitaires.Test_API_rest
         {
             Joueur j = new Joueur("nom", 45);
             await new DataManager().AddJoueur(j);
-            var actionResult = new JoueurController(_logger, _mapper).GetJoueurByPage(0,1);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetJoueurByPage(0,1);
 
             var actionResultOK = await actionResult as OkObjectResult;
 

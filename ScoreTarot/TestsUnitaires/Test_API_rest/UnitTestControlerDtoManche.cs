@@ -22,6 +22,7 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace TestsUnitaires.Test_API_rest
 {
+    [TestClass]
     public class UnitTestControlerDtoManche
     {
         private readonly IMapper _mapper;
