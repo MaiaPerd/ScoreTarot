@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", 
 		{5C708FAC-6195-42D1-9FBC-05168675F284} = {5C708FAC-6195-42D1-9FBC-05168675F284}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGraphQL", "APIGraphQL\APIGraphQL.csproj", "{BE4C3E93-03DF-4382-AD34-8DD7036950E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{A0B5130E-05C7-4745-83EE-15F3938FD466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B5130E-05C7-4745-83EE-15F3938FD466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B5130E-05C7-4745-83EE-15F3938FD466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE4C3E93-03DF-4382-AD34-8DD7036950E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE4C3E93-03DF-4382-AD34-8DD7036950E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE4C3E93-03DF-4382-AD34-8DD7036950E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4C3E93-03DF-4382-AD34-8DD7036950E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
