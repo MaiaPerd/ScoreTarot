@@ -16,12 +16,13 @@ namespace APIRest.Controllers
 
         private readonly ILogger<MancheController> _logger;
         private readonly IMapper mapper;
-        private readonly DataManager dataManager = new DataManager();
+        private readonly DataManagerAPI dataManager;
 
-        public MancheController(ILogger<MancheController> logger, IMapper m)
+        public MancheController(ILogger<MancheController> logger, IMapper m, DataManagerAPI dm)
         {
             mapper = m;
             _logger = logger;
+            this.dataManager = dm;
         }
         [HttpGet("{id}")]
         public IActionResult GetMancheById(int id)
@@ -29,7 +30,7 @@ namespace APIRest.Controllers
             var mdto = this.dataManager.GetManche(id);
             if (mdto == null)
             {
-                _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
+                _logger.LogInformation("Request GetMancheById: la manche n a pas été trouvé");
                 return NotFound();
             }
             return Ok(mdto);//mapper.Map<MancheDto>(mdto));
@@ -41,7 +42,7 @@ namespace APIRest.Controllers
             var laManche = dataManager.GetManche(i);
             if (laManche == null)
             {
-                _logger.LogInformation("Request invalidDelete Manche: la manche n'existe pas!");
+                _logger.LogInformation("Request DeleteManche: la manche n'a pas été trouvé");
                 return BadRequest("la manche n'existe pas");
             }
             await dataManager.RemoveManche(await laManche);
@@ -54,11 +55,12 @@ namespace APIRest.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Request is invalid!");
+                return BadRequest("UpdateManche -> Request is invalid, ModelState est invalid");
             }
             var leJoueur = dataManager.GetJoueurById(i);
             if (leJoueur == null)
             {
+                _logger.LogInformation("UpdateManche -> Request DeleteManche: la manche n'a pas été trouvé");
                 return NotFound();
             }
             await dataManager.UpdateManche(mapper.Map<Manche>(mdto));
@@ -69,19 +71,6 @@ namespace APIRest.Controllers
         {
             await dataManager.AddManche(mapper.Map<Manche>(mdto));
             return StatusCode((int)HttpStatusCode.OK);
-        }
-        [HttpGet("ByPage")]
-        public async Task<IActionResult> GetMancheByPage([FromQuery] int pageNumber, int pageSize)
-        {
-            var data = await dataManager.GetManches();
-            var manches = new List<MancheDto>();
-            /*foreach (Manche p in data)
-            {
-                manches.Add(mapper.Map<MancheDto>(p));
-            }*/
-            manches.Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize);
-            return Ok(manches);
         }
 
     }

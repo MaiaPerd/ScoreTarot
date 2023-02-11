@@ -15,12 +15,13 @@ namespace APIRest.Controllers
 
         private readonly ILogger<PartieController> _logger;
         private readonly IMapper mapper;
-        private readonly DataManager dataManager = new DataManager();
+        private readonly DataManagerAPI dataManager;
 
-        public PartieController(ILogger<PartieController> logger, IMapper m)
+        public PartieController(ILogger<PartieController> logger, IMapper m, DataManagerAPI dm)
         {
             mapper = m;
             _logger = logger;
+            this.dataManager = dm;
         }
         [HttpGet("{id}")]
         public IActionResult GetPartieById(int id)
@@ -28,7 +29,7 @@ namespace APIRest.Controllers
             var pdto = this.dataManager.GetPartieById(id);
             if (pdto == null)
             {
-                _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+                _logger.LogInformation("Request GetPartieById: la partie n'apas été trouvé");
                 return NotFound();
             }
             return Ok(pdto);//mapper.Map<PartieDto>(pdto));
@@ -40,7 +41,7 @@ namespace APIRest.Controllers
             var laPartie = dataManager.GetPartieById(i);
             if (laPartie == null)
             {
-                _logger.LogInformation("Request invalidDelete Partie: la partie n'existe pas!");
+                _logger.LogInformation("Request invalidDelete: la partie n'a pas été trouvé");
                 return BadRequest("la partie n'existe pas");
             }
             await dataManager.RemovePartie(await laPartie);
@@ -53,13 +54,13 @@ namespace APIRest.Controllers
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogInformation("Request invalid pour updatepartie");
+                _logger.LogInformation("Request invalid pour updatepartie:ModelState est invalid");
                 return BadRequest("Request is invalid!");
             }
             var laPartie = dataManager.GetPartieById(i);
             if (laPartie == null)
             {
-                _logger.LogInformation("cette partie a update n'existe pas!");
+                _logger.LogInformation("UpdatePartie: la partie n'a pas été trouvé");
                 return NotFound();
             }
             await dataManager.UpdatePartie(mapper.Map<Partie>(pdto));

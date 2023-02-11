@@ -69,6 +69,16 @@ namespace EntityFramework
             return joueurs;
         }
 
+        public async Task<IEnumerable<Joueur>> GetJoueursByPseudo(String pseudo)
+        {
+            List<Joueur> joueurs = new();
+            joueurs.Select(joueur => joueur.Pseudo ==  pseudo);
+            await Task.Run(() =>
+                joueurs.AddRange(context.Joueurs.Select(joueur => joueur.toModel())));
+
+            return joueurs;
+        }
+
 
         public async Task ClearJoueurs()
         {

@@ -5,6 +5,8 @@ using AutoMapper;
 using EntityFramework;
 using EntityFramework.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,12 +27,20 @@ namespace TestsUnitaires.Test_API_rest
         private readonly IMapper _mapper;
         private readonly MancheController _mancheController;
         private readonly ILogger<MancheController> _logger;
+        private readonly DataManagerAPI dmAPI;
 
         public UnitTestControlerDtoManche()
         {
             var maperconf = new MapperConfiguration(cgf => cgf.AddProfile(typeof(MapperApiREST)));
             _mapper = maperconf.CreateMapper();
             _logger = new NullLogger<MancheController>();
+            var connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
+            var options = new DbContextOptionsBuilder<SQLiteContext>()
+                .UseInMemoryDatabase(databaseName: "TestApiDataBaseREST")
+                .Options;
+            dmAPI = new DataManagerAPI(new SQLiteContext(options));
         }
 
 
@@ -38,7 +48,7 @@ namespace TestsUnitaires.Test_API_rest
         public async Task TestGetMancheById()
         {
             //insert l'objet
-            var actionResult = new MancheController(_logger, _mapper).GetMancheById(0);
+            var actionResult = new MancheController(_logger, _mapper, dmAPI).GetMancheById(0);
 
             var actionResultOK = actionResult as OkObjectResult;//verrifie si reponse 200, il contient le code retour + les données
             //assert
@@ -53,7 +63,7 @@ namespace TestsUnitaires.Test_API_rest
             Joueur j = new Joueur("nom", 45);
             await new DataManager().AddJoueur(j);
 
-            var actionResult = new MancheController(_logger, _mapper).DeleteManche(0);
+            var actionResult = new MancheController(_logger, _mapper, dmAPI).DeleteManche(0);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
@@ -65,7 +75,7 @@ namespace TestsUnitaires.Test_API_rest
         {
             Manche m = new Manche(Contrat.Garde,new Joueur("nomperso",45),40,Bonus.DoublePoignee,5);
             await new DataManager().AddManche(m);
-            var actionResult = new MancheController(_logger, _mapper).UpdateManche(m.toDTO(), m.Id);
+            var actionResult = new MancheController(_logger, _mapper, dmAPI).UpdateManche(m.toDto(), m.Id);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
@@ -73,21 +83,6 @@ namespace TestsUnitaires.Test_API_rest
             var mancheDto = actionResultOK.Value as MancheDto;
             Assert.IsNotNull(mancheDto);
             Assert.AreNotEqual(m.Date, mancheDto.Date);
-        }
-
-        [TestMethod]
-        public async Task TestGetMancheBypage()
-        {
-            Manche m = new Manche(Contrat.Garde, new Joueur("nomperso", 45), 40, Bonus.DoublePoignee, 5);
-            await new DataManager().AddJoueur(j);
-            var actionResult = new MancheController(_logger, _mapper).GetMancheByPage(0, 1);
-
-            var actionResultOK = await actionResult as OkObjectResult;
-
-            actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));//should().be marche pas
-            var joueurDto = actionResultOK.Value as IEnumerable<MancheDto>;
-            Assert.IsNotNull(joueurDto);
-            Assert.AreEqual(m.Date, joueurDto.First().Date);
         }
     }
 }

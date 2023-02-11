@@ -23,5 +23,17 @@ namespace APIRest.MapperClass
             var j = new Joueur(joueurdto.Id, joueurdto.Pseudo, joueurdto.Age, joueurdto.Nom, joueurdto.Prenom, joueurdto.URLIMG);
             return j;
         }
+
+        public static MancheDto toDto(this Manche manche)
+        {
+            MancheDto dto = new MancheDto();
+            dto.JoueurQuiPrendId = manche.JoueurQuiPrend.Id;
+            dto.Id = manche.Id;
+            dto.NbJoueur = manche.NbJoueur;
+            dto.JoueurAllierId = manche.JoueurAllier.Id;
+            dto.Contrat = manche.Contrat;
+            dto.Bonus = dto.Bonus;
+            return dto;
+        }
     }
 }
