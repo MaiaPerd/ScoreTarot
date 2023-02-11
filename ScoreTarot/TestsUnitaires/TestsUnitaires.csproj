@@ -27,6 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\APIGraphQL\APIGraphQL.csproj" />
+    <ProjectReference Include="..\APIRest\APIRest.csproj" />
     <ProjectReference Include="..\EntityFramework\EntityFramework.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
     <ProjectReference Include="..\Stub\Stub.csproj" />

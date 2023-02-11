@@ -22,7 +22,7 @@ namespace EntityFramework
         public async Task<Joueur?> AddJoueur(Joueur joueur)
         {
             Joueur? j = null;
-            if (!context.Joueurs.Contains(joueur.toEntity()))
+            if (context.Joueurs.Find(joueur.Id) == null)
             {
                 await context.Joueurs.AddAsync(joueur.toEntity());
                 if (await context.SaveChangesAsync() == 1)
@@ -36,24 +36,30 @@ namespace EntityFramework
         public async Task<Joueur?> UpdateJoueur(Joueur joueur)
         {
             Joueur? j = null;
-            context.Update(joueur.toEntity());
-            if (await context.SaveChangesAsync() == 1)
+            if (context.Joueurs.Find(joueur.Id) != null)
             {
-                j = joueur;
+                context.Update(joueur.toEntity());
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    j = joueur;
+                }
             }
+      
             return j;
         }
 
         public async Task<Joueur?> RemoveJoueur(Joueur joueur)
         {
             Joueur? j = null;
-            context.Remove(joueur.toEntity());
-            context.Remove(context.Parties.Where(m => m.Joueurs.Contains(joueur.toEntity())));
-            if (await context.SaveChangesAsync() == 1)
-            {
-                j = joueur;
+            if (context.Joueurs.Find(joueur.Id) != null) {
+                context.Remove(context.Parties.Select(m => m.Joueurs.Contains(joueur.toEntity())));
+                context.Remove(joueur.toEntity());
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    j = joueur;
+                }
             }
-            
+ 
             return j;
         }
 
@@ -144,11 +150,10 @@ namespace EntityFramework
         public async Task<IEnumerable<Manche>> GetManches()
         {
             List<Manche> manches = new();
-            using (var context = new SQLiteContext())
-            {
+
                 await Task.Run(() =>
                     manches.AddRange(context.Manches.Select(manche => manche.ToModel())));
-            }
+            
             return manches;
         }
 
@@ -188,31 +193,28 @@ namespace EntityFramework
         public async Task<bool> RemovePartie(Partie partie)
         {
             bool result = false;
-            using (var context = new SQLiteContext())
-            {
+          
                 context.Remove(partie.ToEntity());
                 result = await context.SaveChangesAsync() == 1;
-            }
+            
             return result;
         }
         public async Task<bool> UpdatePartie(Partie partie)
         {
             bool result = false;
-            using (var context = new SQLiteContext())
-            {
+    
                 context.Update(partie.ToEntity());
                 result = await context.SaveChangesAsync() == 1;
-            }
+            
             return result;
         }
         public async Task<bool> AddPartie(Partie partie)
         {
             bool result = false;
-            using (var context = new SQLiteContext())
-            {
+    
                 await context.Parties.AddAsync(partie.ToEntity());
                 result = await context.SaveChangesAsync() == 1;
-            }
+            
             return result;
         }
     }

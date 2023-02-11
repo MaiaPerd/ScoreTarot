@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
-using Stub;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,6 @@ using APIRest.DTOs;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using EntityFramework.Entity;
-using Moq;
 using Microsoft.AspNetCore.Mvc;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using APIRest.MapperClass;

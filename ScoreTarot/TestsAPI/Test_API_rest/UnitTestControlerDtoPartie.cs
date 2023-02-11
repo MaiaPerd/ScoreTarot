@@ -13,10 +13,10 @@ using System.Text;
 using System.Threading.Tasks;
 using APIRest.MapperClass;
 using EntityFramework;
-using Stub;
 using APIRest.DTOs;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using Microsoft.EntityFrameworkCore;
+using Stub;
 
 namespace TestsUnitaires.Test_API_rest
 {

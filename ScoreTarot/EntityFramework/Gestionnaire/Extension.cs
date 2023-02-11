@@ -11,6 +11,7 @@ namespace EntityFramework
         {
             JoueurEntity joueurEntity = new JoueurEntity
             {
+                Id = joueur.Id,
                 Age = joueur.Age,
                 URLIMG = joueur.URLIMG,
                 Pseudo = joueur.Pseudo,

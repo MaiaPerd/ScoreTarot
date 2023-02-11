@@ -14,6 +14,6 @@ namespace DTOs
         public string Prenom { get; set; }
         public int Age { get; set; }
         [Url]
-        public string URLIMG { get; private set; }
+        public string URLIMG { get; set; }
     }
 }

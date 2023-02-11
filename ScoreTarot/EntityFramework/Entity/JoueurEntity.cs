@@ -11,7 +11,6 @@ namespace EntityFramework.Entity
     [Table("Joueur")]
     public class JoueurEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [MaxLength(20)]
         public string Pseudo { get; set; }
