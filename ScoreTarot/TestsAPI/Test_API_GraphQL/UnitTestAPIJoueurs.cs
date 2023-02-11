@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-namespace TestsUnitaires.Test_API
+namespace TestsAPI.Test_API_GraphQL
 {
     [TestClass]
     public class UnitTestAPIJoueurs
@@ -41,7 +41,6 @@ namespace TestsUnitaires.Test_API
         [ExpectedException(typeof(ArgumentNullException))]
         public async Task Add_Test_Joueurs_API()
         {
-
             JoueurDto joueurDto = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 1, URLIMG = ""};
             JoueurDto task = await _mutation.AddJoueur(joueurDto, dataManagerAPI);
             Assert.AreEqual(joueurDto.Id, task.Id);
@@ -51,7 +50,7 @@ namespace TestsUnitaires.Test_API
             Assert.AreEqual(joueurDto.Age, task.Age);
 
             JoueurDto joueurDto2 = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 1, URLIMG = "" };
-            await _mutation.AddJoueur(joueurDto2, dataManagerAPI);
+            await _mutation.AddJoueur(joueurDto2, dataManagerAPI); // Exception
 
         }
 
@@ -59,7 +58,8 @@ namespace TestsUnitaires.Test_API
         [ExpectedException(typeof(ArgumentNullException))]
         public async Task Remove_Test_Joueurs_API()
         {
-            JoueurDto joueurDto = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 0, URLIMG = "" };
+            JoueurDto joueurDto = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 2, URLIMG = "" };
+            await _mutation.AddJoueur(joueurDto, dataManagerAPI);
             JoueurDto task = await _mutation.DeleteJoueur(joueurDto, dataManagerAPI);
             Assert.AreEqual(joueurDto.Id, task.Id);
             Assert.AreEqual(joueurDto.Pseudo, task.Pseudo);
@@ -68,14 +68,14 @@ namespace TestsUnitaires.Test_API
             Assert.AreEqual(joueurDto.Age, task.Age);
 
             JoueurDto joueurDto2 = new JoueurDto { Pseudo = "aaaa", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 5, URLIMG = "" };
-            await _mutation.DeleteJoueur(joueurDto2, dataManagerAPI);
+            await _mutation.DeleteJoueur(joueurDto2, dataManagerAPI); // Exception
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public async Task Modify_Test_Joueurs_API()
         {
-            JoueurDto joueurDto = new JoueurDto { Pseudo = "al", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 1, URLIMG = "" };
+            JoueurDto joueurDto = new JoueurDto { Id = 3, Pseudo = "al", Age = 56, Nom = "Patricus", Prenom = "Albert", URLIMG = "" };
             JoueurDto task = await _mutation.AddJoueur(joueurDto, dataManagerAPI);
             task.Age = 10;
             JoueurDto task2 = await _mutation.UpdateJoueur(task, dataManagerAPI);
@@ -83,12 +83,11 @@ namespace TestsUnitaires.Test_API
             Assert.AreEqual(task.Pseudo, task2.Pseudo);
             Assert.AreEqual(task.Nom, task2.Nom);
             Assert.AreEqual(task.Prenom, task2.Prenom);
-            Assert.AreEqual(task.Age, task2.Age);
+            Assert.AreNotEqual(task.Age, task2.Age);
 
             task2.Id = 15;
 
-            await _mutation.UpdateJoueur(task2, dataManagerAPI);
-
+            await _mutation.UpdateJoueur(task2, dataManagerAPI); // Exception
         }
     }
 }

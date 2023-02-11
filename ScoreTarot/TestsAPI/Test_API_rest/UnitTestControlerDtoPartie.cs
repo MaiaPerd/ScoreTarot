@@ -17,8 +17,9 @@ using APIRest.DTOs;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using Microsoft.EntityFrameworkCore;
 using Stub;
+using Microsoft.Data.Sqlite;
 
-namespace TestsUnitaires.Test_API_rest
+namespace TestsAPI.Test_API_rest
 {
     [TestClass]
     public class UnitTestControlerDtoPartie
@@ -33,6 +34,9 @@ namespace TestsUnitaires.Test_API_rest
             var maperconf = new MapperConfiguration(cgf => cgf.AddProfile(typeof(MapperApiREST)));
             _mapper = maperconf.CreateMapper();
             _logger = new NullLogger<PartieController>();
+            var connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
             var options = new DbContextOptionsBuilder<SQLiteContext>()
                 .UseInMemoryDatabase(databaseName: "TestApiDataBaseREST")
                 .Options;
@@ -43,10 +47,10 @@ namespace TestsUnitaires.Test_API_rest
         public async Task TestGetPartie()
         {
             Partie p = new StubPartie().ChargerPartie3J();
-            await new DataManager().AddPartie(p);
+            await dmAPI.AddPartie(p);
             var actionResult = new PartieController(_logger, _mapper, dmAPI).GetLesParties();
 
-            var actionResultOK = actionResult as OkObjectResult;
+            var actionResultOK = await actionResult as OkObjectResult;
 
             actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));
             var partieDto = actionResultOK.Value as PartieDto;
@@ -57,10 +61,10 @@ namespace TestsUnitaires.Test_API_rest
         public async Task TestGetPartieByid()
         {
             Partie p = new StubPartie().ChargerPartie3J();
-            await new DataManager().AddPartie(p);
+            await dmAPI.AddPartie(p);
             var actionResult = new PartieController(_logger, _mapper, dmAPI).GetPartieById(0);
 
-            var actionResultOK = actionResult as OkObjectResult;
+            var actionResultOK = await actionResult as OkObjectResult;
 
             actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));
             var partieDto = actionResultOK.Value as PartieDto;

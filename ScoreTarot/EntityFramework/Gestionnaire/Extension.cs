@@ -28,7 +28,7 @@ namespace EntityFramework
 
         public static Joueur toModel(this JoueurEntity joueurEntity)
         {
-            return new Joueur(joueurEntity.Pseudo, joueurEntity.Age, joueurEntity.Nom, joueurEntity.Prenom, joueurEntity.URLIMG);
+            return new Joueur(joueurEntity.Id, joueurEntity.Pseudo, joueurEntity.Age, joueurEntity.Nom, joueurEntity.Prenom, joueurEntity.URLIMG);
         }
 
         public static IEnumerable<Joueur> toModels(this IEnumerable<JoueurEntity> joueursEntities)

@@ -1,4 +1,5 @@
 ﻿using EntityFramework.Entity;
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.Interface;
 using System;
@@ -36,9 +37,11 @@ namespace EntityFramework
         public async Task<Joueur?> UpdateJoueur(Joueur joueur)
         {
             Joueur? j = null;
-            if (context.Joueurs.Find(joueur.Id) != null)
+            JoueurEntity? joueurEntity = context.Joueurs.Find(joueur.Id);
+            if (joueurEntity != null)
             {
-                context.Update(joueur.toEntity());
+                joueurEntity = joueur.toEntity();
+                context.Joueurs.Update(joueurEntity);
                 if (await context.SaveChangesAsync() == 1)
                 {
                     j = joueur;
@@ -51,9 +54,10 @@ namespace EntityFramework
         public async Task<Joueur?> RemoveJoueur(Joueur joueur)
         {
             Joueur? j = null;
-            if (context.Joueurs.Find(joueur.Id) != null) {
-                context.Remove(context.Parties.Select(m => m.Joueurs.Contains(joueur.toEntity())));
-                context.Remove(joueur.toEntity());
+            JoueurEntity? joueurEntity = context.Joueurs.Find(joueur.Id);
+            if (joueurEntity != null) {
+               // context.Remove(context.Parties.Select(m => m.Joueurs.Contains(joueur.toEntity())));
+                context.Joueurs.Remove(joueurEntity);
                 if (await context.SaveChangesAsync() == 1)
                 {
                     j = joueur;
@@ -67,8 +71,11 @@ namespace EntityFramework
         {
             List<Joueur> joueurs = new();
 
-            await Task.Run(() =>
-                joueurs.AddRange(context.Joueurs.Select(joueur => joueur.toModel())));
+            var a = context.Joueurs.Select(joueur => joueur.toModel());
+            joueurs.AddRange(a);
+
+           //await Task.Run(() =>
+             //   joueurs.AddRange(context.Joueurs.Select(joueur => joueur.toModel())));
             
             return joueurs;
         }
@@ -157,11 +164,9 @@ namespace EntityFramework
             return manches;
         }
 
-        public async Task<Joueur> GetJoueurById(int id)
+        public async Task<Joueur?> GetJoueurById(int id)
         {
-            Joueur joueur;
-            joueur = context.Joueurs.Where(joueur => joueur.Id.Equals(id)).First().toModel();
-            return joueur;
+            return context.Joueurs.Find(id).toModel();
         }
 
         public async Task<Manche> GetManche(int id)

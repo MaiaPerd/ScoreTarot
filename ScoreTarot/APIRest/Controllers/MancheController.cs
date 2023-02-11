@@ -25,28 +25,27 @@ namespace APIRest.Controllers
             this.dataManager = dm;
         }
         [HttpGet("{id}")]
-        public IActionResult GetMancheById(int id)
+        public async Task<ActionResult> GetMancheById(int id)
         {
-            var mdto = this.dataManager.GetManche(id);
+            var mdto = await this.dataManager.GetManche(id);
             if (mdto == null)
             {
-                _logger.LogInformation("Request GetMancheById: la manche n a pas été trouvé");
+                _logger.LogInformation("Request GetMancheById: la manche n a pas ï¿½tï¿½ trouvï¿½");
                 return NotFound();
             }
-            return Ok(mdto);//mapper.Map<MancheDto>(mdto));
+            return Ok(mapper.Map<MancheDto>(mdto));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteManche(int i)
         {
-            var laManche = dataManager.GetManche(i);
+            var laManche = await dataManager.GetManche(i);
             if (laManche == null)
             {
-                _logger.LogInformation("Request DeleteManche: la manche n'a pas été trouvé");
+                _logger.LogInformation("Request DeleteManche: la manche n'a pas ï¿½tï¿½ trouvï¿½");
                 return BadRequest("la manche n'existe pas");
             }
-            await dataManager.RemoveManche(await laManche);
-            return StatusCode((int)HttpStatusCode.OK);
+            return Ok(mapper.Map<MancheDto>(await dataManager.RemoveManche(laManche)));
         }
 
 
@@ -57,14 +56,13 @@ namespace APIRest.Controllers
             {
                 return BadRequest("UpdateManche -> Request is invalid, ModelState est invalid");
             }
-            var leJoueur = dataManager.GetJoueurById(i);
+            var leJoueur = await dataManager.GetJoueurById(i);
             if (leJoueur == null)
             {
-                _logger.LogInformation("UpdateManche -> Request DeleteManche: la manche n'a pas été trouvé");
+                _logger.LogInformation("UpdateManche -> Request DeleteManche: la manche n'a pas ï¿½tï¿½ trouvï¿½");
                 return NotFound();
             }
-            await dataManager.UpdateManche(mapper.Map<Manche>(mdto));
-            return StatusCode((int)HttpStatusCode.OK);
+            return Ok(mapper.Map<MancheDto>(await dataManager.UpdateManche(mapper.Map<Manche>(mdto))));
         }
         [HttpPut]
         public async Task<ActionResult> CreateManche([FromBody] MancheDto mdto)

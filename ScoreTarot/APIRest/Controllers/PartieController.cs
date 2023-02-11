@@ -24,28 +24,28 @@ namespace APIRest.Controllers
             this.dataManager = dm;
         }
         [HttpGet("{id}")]
-        public IActionResult GetPartieById(int id)
+        public async Task<ActionResult> GetPartieById(int id)
         {
-            var pdto = this.dataManager.GetPartieById(id);
+            var pdto = await this.dataManager.GetPartieById(id);
             if (pdto == null)
             {
-                _logger.LogInformation("Request GetPartieById: la partie n'apas été trouvé");
+                _logger.LogInformation("Request GetPartieById: la partie n'apas ï¿½tï¿½ trouvï¿½");
                 return NotFound();
             }
-            return Ok(pdto);//mapper.Map<PartieDto>(pdto));
+            return Ok(mapper.Map<PartieDto>(pdto));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePartie(int i)
         {
-            var laPartie = dataManager.GetPartieById(i);
+            var laPartie = await dataManager.GetPartieById(i);
             if (laPartie == null)
             {
-                _logger.LogInformation("Request invalidDelete: la partie n'a pas été trouvé");
+                _logger.LogInformation("Request invalidDelete: la partie n'a pas ï¿½tï¿½ trouvï¿½");
                 return BadRequest("la partie n'existe pas");
             }
-            await dataManager.RemovePartie(await laPartie);
-            return StatusCode((int)HttpStatusCode.OK);
+     
+            return Ok(mapper.Map<PartieDto>(await dataManager.RemovePartie(laPartie)));
         }
 
 
@@ -57,15 +57,16 @@ namespace APIRest.Controllers
                 _logger.LogInformation("Request invalid pour updatepartie:ModelState est invalid");
                 return BadRequest("Request is invalid!");
             }
-            var laPartie = dataManager.GetPartieById(i);
+            var laPartie = await dataManager.GetPartieById(i);
             if (laPartie == null)
             {
-                _logger.LogInformation("UpdatePartie: la partie n'a pas été trouvé");
+                _logger.LogInformation("UpdatePartie: la partie n'a pas ï¿½tï¿½ trouvï¿½");
                 return NotFound();
             }
-            await dataManager.UpdatePartie(mapper.Map<Partie>(pdto));
-            return StatusCode((int)HttpStatusCode.OK);
+
+            return Ok(mapper.Map<PartieDto>(await dataManager.UpdatePartie(mapper.Map<Partie>(pdto))));
         }
+
         [HttpPut]
         public async Task<ActionResult> CreatePartie([FromBody] PartieDto pdto)
         {
@@ -74,11 +75,10 @@ namespace APIRest.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetLesParties()
+        public async Task<ActionResult> GetLesParties()
         {
-            var data = dataManager.GetParties();
-            var list = new List<PartieDto>();
-            //list = mapper.Map<List<PartieDto>>(data);
+            var data = await dataManager.GetParties();
+            var list = mapper.Map<List<PartieDto>>(data);
             return Ok(data);
         }
 
