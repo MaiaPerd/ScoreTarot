@@ -10,7 +10,8 @@ using System.Net;
 namespace APIRest.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
     public class MancheController : ControllerBase
     {
 
