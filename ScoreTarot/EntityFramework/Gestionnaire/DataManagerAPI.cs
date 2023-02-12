@@ -140,10 +140,10 @@ namespace EntityFramework
             return null;
         }
 
-        public async Task<Manche?> UpdateManche(Manche manche)
+        public async Task<Manche?> UpdateManche(Manche manche, int id)
         {
             Manche? m = null;
-            MancheEntity? mancheEntity = context.Manches.Find(manche.Id);
+            MancheEntity? mancheEntity = context.Manches.Find(id);
             if (mancheEntity != null)
             {
                 mancheEntity = mancheEntity.toEntityToEntity(manche);
@@ -157,16 +157,16 @@ namespace EntityFramework
             return m;
         }
 
-        public async Task<Manche?> RemoveManche(Manche manche)
+        public async Task<Manche?> RemoveManche(int manche)
         {
             Manche? m = null;
-            MancheEntity? mancheEntity = context.Manches.Find(manche.Id);
+            MancheEntity? mancheEntity = context.Manches.Find(manche);
             if (mancheEntity != null)
             {
                 context.Manches.Remove(mancheEntity);
                 if (await context.SaveChangesAsync() == 1)
                 {
-                    m = manche;
+                    m = mancheEntity.ToModel();
                 }
             }
 

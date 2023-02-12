@@ -79,7 +79,7 @@ namespace APIGraphQL.Query
             _logger.LogInformation("Vous essayer de modifier une manche dans la base: id " + manche.Id);
             try
             {
-                return mapper.Map<MancheDto>(await dataManager.UpdateManche(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException("La manche n'a pas pu être modifier, erreur lors de la modification dans la base, l'id est peut-être inexistant"));
+                return mapper.Map<MancheDto>(await dataManager.UpdateManche(mapper.Map<Manche>(manche), manche.Id) ?? throw new ArgumentNullException("La manche n'a pas pu être modifier, erreur lors de la modification dans la base, l'id est peut-être inexistant"));
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace APIGraphQL.Query
             _logger.LogInformation("Vous essayer de supprimer une manche dans la base: id " + manche.Id);
             try
             {
-                return mapper.Map<MancheDto>(await dataManager.RemoveManche(mapper.Map<Manche>(manche)) ?? throw new ArgumentNullException("La manche n'a pas pu être supprimer, erraur dans la base, l'id est peut-être inexistant"));
+                return mapper.Map<MancheDto>(await dataManager.RemoveManche(manche.Id) ?? throw new ArgumentNullException("La manche n'a pas pu être supprimer, erraur dans la base, l'id est peut-être inexistant"));
             }
             catch (Exception e)
             {

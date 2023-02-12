@@ -30,7 +30,13 @@ namespace APIRest.MapperClass
             dto.JoueurQuiPrendId = manche.JoueurQuiPrend.Id;
             dto.Id = manche.Id;
             dto.NbJoueur = manche.NbJoueur;
-            dto.JoueurAllierId = manche.JoueurAllier.Id;
+            if(manche.JoueurAllier != null)
+            {
+                dto.JoueurAllierId = manche.JoueurAllier.Id;
+            } else
+            {
+                dto.JoueurAllierId = null;
+            }
             dto.Contrat = manche.Contrat;
             dto.Bonus = dto.Bonus;
             return dto;

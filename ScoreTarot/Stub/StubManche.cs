@@ -11,7 +11,7 @@ namespace Stub
     {
         private StubBonus stubBonus = new StubBonus();
 
-        internal Manche ChargerUneManche(List<Joueur> lJoueur)
+        public Manche ChargerUneManche(List<Joueur> lJoueur)
         {
             return new Manche(1, Contrat.GardeContre, lJoueur[0], 50, stubBonus.ChargerListeBonusMoyen(), 4);
         }

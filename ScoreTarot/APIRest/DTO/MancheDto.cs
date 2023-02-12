@@ -12,7 +12,7 @@ namespace APIRest.DTOs
         public Contrat Contrat { get; set; }
         public Bonus Bonus { get; set; }
         public int JoueurQuiPrendId { get; set; }
-        public int JoueurAllierId { get;  set; }
+        public int? JoueurAllierId { get;  set; }
         public int Score { get; set; }
         public DateTime Date { get;  set; }
         public int Id { get;  set; }

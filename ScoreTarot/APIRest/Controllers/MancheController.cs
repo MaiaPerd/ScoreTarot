@@ -45,7 +45,7 @@ namespace APIRest.Controllers
                 _logger.LogInformation("Request DeleteManche: la manche n'a pas �t� trouv�");
                 return BadRequest("la manche n'existe pas");
             }
-            return Ok(mapper.Map<MancheDto>(await dataManager.RemoveManche(laManche)));
+            return Ok(mapper.Map<MancheDto>(await dataManager.RemoveManche(i)));
         }
 
 
@@ -62,7 +62,7 @@ namespace APIRest.Controllers
                 _logger.LogInformation("UpdateManche -> Request DeleteManche: la manche n'a pas �t� trouv�");
                 return NotFound();
             }
-            return Ok(mapper.Map<MancheDto>(await dataManager.UpdateManche(mapper.Map<Manche>(laManche))));
+            return Ok(mapper.Map<MancheDto>(await dataManager.UpdateManche(laManche, mdto.Id)));
         }
         [HttpPut]
         public async Task<ActionResult> CreateManche([FromBody] MancheDto mdto)
