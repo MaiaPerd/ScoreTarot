@@ -97,16 +97,16 @@ namespace TestsAPI.Test_API_rest
             var joueurDto = actionResultOK.Value as JoueurDto;
 
             Assert.IsNotNull(joueurDto);
-            Assert.AreEqual(j.Nom, joueurDto.Nom);
+            Assert.AreEqual(j.Pseudo, joueurDto.Pseudo);
         }
 
         [TestMethod]
         public async Task TestUpdate()
         {
-            Joueur j = new Joueur(1, "nom", 45);
-            await dmAPI.AddJoueur(j);
-
-            var actionResult = new JoueurController(_logger, _mapper, dmAPI).UpdateJoueur(j.toDTO(),j.Id);
+            Joueur j1 = new Joueur(1,"nom", 45);
+            await dmAPI.AddJoueur(j1);
+            Joueur j = new Joueur(1, "nom", 4);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).UpdateJoueur(j.toDTO());
 
             var actionResultOK = await actionResult as OkObjectResult;
 
@@ -115,7 +115,8 @@ namespace TestsAPI.Test_API_rest
             var joueurDto = actionResultOK.Value as JoueurDto;
 
             Assert.IsNotNull(joueurDto);
-            Assert.AreNotEqual(j.Nom, joueurDto.Nom);
+            Assert.AreEqual(j1.Pseudo, joueurDto.Pseudo);
+            Assert.AreNotEqual(j1.Age, joueurDto.Age);
         }
 
         [TestMethod]

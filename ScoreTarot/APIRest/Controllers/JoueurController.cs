@@ -63,13 +63,13 @@ namespace APIRest.Controllers
             }
 
             [HttpPost("{id}")]
-            public async Task<ActionResult> UpdateJoueur([FromBody] JoueurDto jdto, int i)
+            public async Task<ActionResult> UpdateJoueur([FromBody] JoueurDto jdto)
             {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("UpdateJoueur: Request is invalid! -> ModelState invalid");
                 }
-                Joueur leJoueur = await dataManager.GetJoueurById(i);
+                Joueur leJoueur = await dataManager.GetJoueurById(jdto.Id);
                 if (leJoueur == null)
                 {
                     _logger.LogInformation("UpdateJoueur: Request invalid, le joueur donn� est null");

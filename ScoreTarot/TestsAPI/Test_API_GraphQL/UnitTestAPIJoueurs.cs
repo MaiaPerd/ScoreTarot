@@ -83,7 +83,7 @@ namespace TestsAPI.Test_API_GraphQL
             Assert.AreEqual(task.Pseudo, task2.Pseudo);
             Assert.AreEqual(task.Nom, task2.Nom);
             Assert.AreEqual(task.Prenom, task2.Prenom);
-            Assert.AreNotEqual(task.Age, task2.Age);
+            Assert.AreNotEqual(joueurDto.Age, task2.Age);
 
             task2.Id = 15;
 

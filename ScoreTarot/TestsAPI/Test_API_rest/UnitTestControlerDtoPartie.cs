@@ -47,7 +47,15 @@ namespace TestsAPI.Test_API_rest
         public async Task TestGetPartie()
         {
             Partie p = new StubPartie().ChargerPartie3J();
+            await dmAPI.AddJoueur(p.Joueurs[0]);
+            await dmAPI.AddJoueur(p.Joueurs[1]);
+            await dmAPI.AddJoueur(p.Joueurs[2]);
+            foreach(Manche m in p.Manches)
+            {
+                await dmAPI.AddManche(m);
+            }
             await dmAPI.AddPartie(p);
+
             var actionResult = new PartieController(_logger, _mapper, dmAPI).GetLesParties();
 
             var actionResultOK = await actionResult as OkObjectResult;
@@ -58,11 +66,19 @@ namespace TestsAPI.Test_API_rest
             Assert.AreEqual(p.Joueurs.First().Id, partieDto.JoueursId.First());
         }
         [TestMethod]
-        public async Task TestGetPartieByid()
+        public async Task TestGetPartieById()
         {
             Partie p = new StubPartie().ChargerPartie3J();
+            await dmAPI.AddJoueur(p.Joueurs[0]);
+            await dmAPI.AddJoueur(p.Joueurs[1]);
+            await dmAPI.AddJoueur(p.Joueurs[2]);
+            foreach (Manche m in p.Manches)
+            {
+                await dmAPI.AddManche(m);
+            }
             await dmAPI.AddPartie(p);
-            var actionResult = new PartieController(_logger, _mapper, dmAPI).GetPartieById(0);
+
+            var actionResult = new PartieController(_logger, _mapper, dmAPI).GetPartieById(1);
 
             var actionResultOK = await actionResult as OkObjectResult;
 

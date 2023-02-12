@@ -78,20 +78,16 @@ namespace APIRest.Controllers
         public async Task<ActionResult> GetLesParties()
         {
             var data = await dataManager.GetParties();
-            var list = mapper.Map<List<PartieDto>>(data);
-            return Ok(data);
+            var list = mapper.Map<IEnumerable<PartieDto>>(data);
+            return Ok(list);
         }
 
         [HttpGet("byPage")]
         public async Task<IActionResult> GetPartieByPage([FromQuery] int pageNumber, int pageSize)
         {
             var data = await dataManager.GetParties();
-            var parties = new List<PartieDto>();
-            /*foreach (Partie p in data)
-            {
-                parties.Add(mapper.Map<PartieDto>(p));
-            }*/
-            parties.Skip((pageNumber - 1) * pageSize)
+            var list = mapper.Map<IEnumerable<PartieDto>>(data);
+            list.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize);
             return Ok(data);
         }
