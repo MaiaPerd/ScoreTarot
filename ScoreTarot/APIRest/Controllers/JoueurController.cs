@@ -9,9 +9,10 @@ using APIRest.DTOs;
 
 namespace APIRest.Controllers
 {
-        [ApiController]
-        [Route("[controller]")]
-        public class JoueurController : ControllerBase
+    [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
+    public class JoueurController : ControllerBase
         {
 
             private readonly ILogger<JoueurController> _logger;
