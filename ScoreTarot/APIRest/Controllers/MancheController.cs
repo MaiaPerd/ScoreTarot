@@ -50,19 +50,19 @@ namespace APIRest.Controllers
 
 
         [HttpPost("{id}")]
-        public async Task<ActionResult> UpdateManche([FromBody] MancheDto mdto, int i)
+        public async Task<ActionResult> UpdateManche([FromBody] MancheDto mdto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("UpdateManche -> Request is invalid, ModelState est invalid");
             }
-            var leJoueur = await dataManager.GetJoueurById(i);
-            if (leJoueur == null)
+            var laManche = await dataManager.GetManche(mdto.Id);
+            if (laManche == null)
             {
                 _logger.LogInformation("UpdateManche -> Request DeleteManche: la manche n'a pas �t� trouv�");
                 return NotFound();
             }
-            return Ok(mapper.Map<MancheDto>(await dataManager.UpdateManche(mapper.Map<Manche>(mdto))));
+            return Ok(mapper.Map<MancheDto>(await dataManager.UpdateManche(mapper.Map<Manche>(laManche))));
         }
         [HttpPut]
         public async Task<ActionResult> CreateManche([FromBody] MancheDto mdto)

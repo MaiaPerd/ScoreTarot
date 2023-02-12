@@ -43,7 +43,7 @@ namespace TestsAPI.Test_API_rest
             connection.Open();
 
             var options = new DbContextOptionsBuilder<SQLiteContext>()
-                .UseInMemoryDatabase(databaseName: "TestApiDataBaseREST")
+                .UseInMemoryDatabase(databaseName: "TestApiDataBaseRESTJoueur")
                 .Options;
             dmAPI = new DataManagerAPI(new SQLiteContext(options));
         }

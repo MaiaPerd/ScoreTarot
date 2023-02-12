@@ -78,7 +78,7 @@ namespace APIRest.Controllers
         public async Task<ActionResult> GetLesParties()
         {
             var data = await dataManager.GetParties();
-            var list = mapper.Map<IEnumerable<PartieDto>>(data);
+            var list = mapper.Map<List<PartieDto>>(data.ToList());
             return Ok(list);
         }
 
@@ -86,7 +86,7 @@ namespace APIRest.Controllers
         public async Task<IActionResult> GetPartieByPage([FromQuery] int pageNumber, int pageSize)
         {
             var data = await dataManager.GetParties();
-            var list = mapper.Map<IEnumerable<PartieDto>>(data);
+            var list = mapper.Map<List<PartieDto>>(data.ToList());
             list.Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize);
             return Ok(data);

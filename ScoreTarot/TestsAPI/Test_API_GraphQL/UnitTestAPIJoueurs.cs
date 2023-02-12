@@ -1,7 +1,9 @@
-﻿using APIGraphQL.Query;
+﻿using APIGraphQL.Mappers;
+using APIGraphQL.Query;
 using AutoMapper;
 using DTOs;
 using EntityFramework;
+using HotChocolate;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,6 +19,7 @@ namespace TestsAPI.Test_API_GraphQL
         private readonly IMapper _mapper;
         private readonly ILogger<Mutation> _logger;
         private readonly Mutation _mutation;
+        private readonly Query _query;
         private readonly DataManagerAPI dataManagerAPI;
 
         public UnitTestAPIJoueurs()
@@ -25,6 +28,7 @@ namespace TestsAPI.Test_API_GraphQL
             _mapper = maperconf.CreateMapper();
             _logger = new NullLogger<Mutation>();
             _mutation = new Mutation(_logger, _mapper);
+            _query = new Query(new NullLogger<Query>(), _mapper);
 
             //DataManager
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -51,6 +55,42 @@ namespace TestsAPI.Test_API_GraphQL
 
             JoueurDto joueurDto2 = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 1, URLIMG = "" };
             await _mutation.AddJoueur(joueurDto2, dataManagerAPI); // Exception
+
+        }
+
+        [TestMethod]
+        public async Task Get_Test_Joueurs_API()
+        {
+            IEnumerable<JoueurDto> task1 = await _query.GetJoueurs(dataManagerAPI);
+            Assert.AreEqual(0, task1.Count());
+
+            JoueurDto joueurDto = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 1, URLIMG = "" };
+            await _mutation.AddJoueur(joueurDto, dataManagerAPI);
+            IEnumerable<JoueurDto> task = await _query.GetJoueurs(dataManagerAPI);
+            Assert.AreEqual(1, task.Count());
+            Assert.AreEqual(joueurDto.Id, task.ElementAt(0).Id);
+            Assert.AreEqual(joueurDto.Pseudo, task.ElementAt(0).Pseudo);
+            Assert.AreEqual(joueurDto.Nom, task.ElementAt(0).Nom);
+            Assert.AreEqual(joueurDto.Prenom, task.ElementAt(0).Prenom);
+            Assert.AreEqual(joueurDto.Age, task.ElementAt(0).Age);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public async Task Get_Test_Joueurs_By_Id_API()
+        {
+            JoueurDto joueurDto = new JoueurDto { Pseudo = "albertus", Age = 56, Nom = "Patricus", Prenom = "Albert", Id = 1, URLIMG = "" };
+            await _mutation.AddJoueur(joueurDto, dataManagerAPI);
+            JoueurDto task = await _query.GetJoueurById(1, dataManagerAPI);
+            Assert.AreEqual(joueurDto.Id, task.Id);
+            Assert.AreEqual(joueurDto.Pseudo, task.Pseudo);
+            Assert.AreEqual(joueurDto.Nom, task.Nom);
+            Assert.AreEqual(joueurDto.Prenom, task.Prenom);
+            Assert.AreEqual(joueurDto.Age, task.Age);
+
+            await _query.GetJoueurById(2, dataManagerAPI); // Exception
+
 
         }
 

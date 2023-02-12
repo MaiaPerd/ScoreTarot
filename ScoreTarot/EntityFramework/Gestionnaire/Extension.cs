@@ -182,6 +182,13 @@ namespace EntityFramework
             return partieEntity;
         }
 
+        public static PartieEntity ToEntityToEntity(this PartieEntity partieE, Partie partie)
+        {
+            partieE.Joueurs = partie.Joueurs.toEntities().ToList();
+            partieE.Manches = partie.Manches.ToEntities().ToList();
+            return partieE;
+        }
+
         public static Partie ToModel(this PartieEntity partieEntity)
         {
             /*List<Joueur> joueurs = new();

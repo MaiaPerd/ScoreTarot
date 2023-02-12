@@ -39,7 +39,7 @@ namespace TestsAPI.Test_API_rest
             connection.Open();
 
             var options = new DbContextOptionsBuilder<SQLiteContext>()
-                .UseInMemoryDatabase(databaseName: "TestApiDataBaseREST")
+                .UseInMemoryDatabase(databaseName: "TestApiDataBaseRESTManche")
                 .Options;
             dmAPI = new DataManagerAPI(new SQLiteContext(options));
         }
@@ -49,48 +49,60 @@ namespace TestsAPI.Test_API_rest
         public async Task TestGetMancheById()
         {
             //insert l'objet
-            Manche m = new Manche(1,Contrat.Garde, new Joueur("nomperso", 45), 40, Bonus.DoublePoignee, 5);
-            await dmAPI.AddManche(m);
+            Joueur j = new Joueur(1, "nomperso", 45);
+            Joueur? joueur = await dmAPI.AddJoueur(j);
+            if(joueur != null)
+            {
+                Manche m = new Manche(1, Contrat.Garde, joueur, 40, Bonus.DoublePoignee, 5);
+                await dmAPI.AddManche(m);
+                var actionResult = new MancheController(_logger, _mapper, dmAPI).GetMancheById(1);
 
-            var actionResult = new MancheController(_logger, _mapper, dmAPI).GetMancheById(1);
+                var actionResultOK = await actionResult as OkObjectResult;//verrifie si reponse 200, il contient le code retour + les données
 
-            var actionResultOK = await actionResult as OkObjectResult;//verrifie si reponse 200, il contient le code retour + les données
-
-            //assert
-            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));//should().be marche pas
-            var mancheDto = actionResultOK.Value as IEnumerable<MancheDto>;
-            Assert.IsNotNull(mancheDto);
+                //assert
+                Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));//should().be marche pas
+                var mancheDto = actionResultOK.Value as MancheDto;
+                Assert.IsNotNull(mancheDto);
+                Assert.AreEqual(m.Id, mancheDto.Id);
+            }
+     
         }
 
         [TestMethod]
         public async Task TestDeleteMancheId()
         {
-            Manche m = new Manche(1, Contrat.Garde, new Joueur("nomperso", 45), 40, Bonus.DoublePoignee, 5);
+            Joueur j = new Joueur(1, "nomperso", 45);
+            await dmAPI.AddJoueur(j);
+            Manche m = new Manche(2, Contrat.Garde, j, 40, Bonus.DoublePoignee, 5);
             await dmAPI.AddManche(m);
 
-            var actionResult = new MancheController(_logger, _mapper, dmAPI).DeleteManche(1);
-
-            var actionResultOK = await actionResult as OkObjectResult;
-
-            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
-            var mancheDto = actionResultOK.Value as IEnumerable<MancheDto>;
-            Assert.IsNotNull(mancheDto);
-        }
-
-        [TestMethod]
-        public async Task TestUpdate()
-        {
-            Manche m = new Manche(1,Contrat.Garde,new Joueur("nomperso",45),40,Bonus.DoublePoignee,5);
-            await dmAPI.AddManche(m);
-
-            var actionResult = new MancheController(_logger, _mapper, dmAPI).UpdateManche(m.toDto(), m.Id);
+            var actionResult = new MancheController(_logger, _mapper, dmAPI).DeleteManche(2);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
             Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
             var mancheDto = actionResultOK.Value as MancheDto;
             Assert.IsNotNull(mancheDto);
-            Assert.AreNotEqual(m.Date, mancheDto.Date);
+            Assert.AreEqual(m.Id, mancheDto.Id); 
+        }
+
+        [TestMethod]
+        public async Task TestUpdate()
+        {
+            Joueur j = new Joueur( "nomperso", 45);
+            await dmAPI.AddJoueur(j);
+            Manche m = new Manche(3, Contrat.Garde, j, 40, Bonus.DoublePoignee, 5);
+            await dmAPI.AddManche(m);
+            m = new Manche(3, Contrat.Garde, j, 45, Bonus.DoublePoignee, 5);
+            var actionResult = new MancheController(_logger, _mapper, dmAPI).UpdateManche(m.toDto());
+
+            var actionResultOK = await actionResult as OkObjectResult;
+
+            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
+            var mancheDto = actionResultOK.Value as MancheDto;
+            Assert.IsNotNull(mancheDto);
+            Assert.AreEqual(45, mancheDto.Score);
+            Assert.AreEqual(m.Id, mancheDto.Id);
         }
     }
 }
