@@ -11,6 +11,7 @@ namespace EntityFramework
         {
             JoueurEntity joueurEntity = new JoueurEntity
             {
+                Id = joueur.Id,
                 Age = joueur.Age,
                 URLIMG = joueur.URLIMG,
                 Pseudo = joueur.Pseudo,
@@ -20,6 +21,18 @@ namespace EntityFramework
             return joueurEntity;
         }
 
+        public static JoueurEntity toEntityToEntity(this JoueurEntity joueurE, Joueur joueur)
+        {
+
+            joueurE.Age = joueur.Age;
+            joueurE.URLIMG = joueur.URLIMG;
+            joueurE.Pseudo = joueur.Pseudo;
+            joueurE.Nom = joueur.Nom;
+            joueurE.Prenom = joueur.Prenom;
+
+            return joueurE;
+        }
+
         public static IEnumerable<JoueurEntity> toEntities(this ReadOnlyCollection<Joueur> joueurs)
         {
             return joueurs.Select(joueur => joueur.toEntity());
@@ -27,7 +40,7 @@ namespace EntityFramework
 
         public static Joueur toModel(this JoueurEntity joueurEntity)
         {
-            return new Joueur(joueurEntity.Pseudo, joueurEntity.Age, joueurEntity.Nom, joueurEntity.Prenom, joueurEntity.URLIMG);
+            return new Joueur(joueurEntity.Id, joueurEntity.Pseudo, joueurEntity.Age, joueurEntity.Nom, joueurEntity.Prenom, joueurEntity.URLIMG);
         }
 
         public static IEnumerable<Joueur> toModels(this IEnumerable<JoueurEntity> joueursEntities)
@@ -124,6 +137,19 @@ namespace EntityFramework
             return mancheEntity;
         }
 
+        public static MancheEntity toEntityToEntity(this MancheEntity mancheE, Manche manche)
+        {
+            if (mancheE.JoueurAllier != null)
+                mancheE.JoueurAllier = manche.JoueurAllier.toEntity();
+            mancheE.JoueurQuiPrend = manche.JoueurQuiPrend.toEntity();
+            mancheE.NbJoueur = manche.NbJoueur;
+            mancheE.Score = manche.Score;
+            mancheE.Bonus = manche.Bonus.toEntity();
+            mancheE.Contrat = manche.Contrat.toEntity();
+            mancheE.Date = manche.Date;
+            return mancheE;
+        }
+
         public static IEnumerable<MancheEntity> ToEntities(this ReadOnlyCollection<Manche> manches)
         {
             return manches.Select(manche => manche.toEntity());
@@ -131,6 +157,10 @@ namespace EntityFramework
 
         public static Manche ToModel(this MancheEntity mancheEntity)
         {
+            if(mancheEntity.JoueurAllier == null)
+            {
+                return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModel(), mancheEntity.NbJoueur);
+            }
             return new Manche(mancheEntity.Contrat.toModel(), mancheEntity.JoueurQuiPrend.toModel(), mancheEntity.Score, mancheEntity.Bonus.toModel(), mancheEntity.NbJoueur, mancheEntity.JoueurAllier.toModel());
         }
 
@@ -150,6 +180,13 @@ namespace EntityFramework
             partieEntity.Joueurs = partie.Joueurs.toEntities().ToList();
             partieEntity.Manches = partie.Manches.ToEntities().ToList();
             return partieEntity;
+        }
+
+        public static PartieEntity ToEntityToEntity(this PartieEntity partieE, Partie partie)
+        {
+            partieE.Joueurs = partie.Joueurs.toEntities().ToList();
+            partieE.Manches = partie.Manches.ToEntities().ToList();
+            return partieE;
         }
 
         public static Partie ToModel(this PartieEntity partieEntity)

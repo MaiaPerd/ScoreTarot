@@ -13,7 +13,7 @@ namespace APIRest.MapperClass
         {//list joueur avec id
             CreateMap<JoueurEntity, JoueurDto>().ReverseMap();
             CreateMap<PartieEntity, PartieDto>()
-                .ForMember(parten => parten.ManchesId, act => act.MapFrom(source => source.Manches.Select(m=>m.Id).ToArray()))
+                .ForMember(parten => parten.ManchesId, act => act.MapFrom(source => source.Manches.Select(m => m.Id).ToArray()))
                 .ForMember(parten => parten.JoueursId, act => act.MapFrom(source => source.Joueurs.Select(j => j.Id).ToArray()))
                 .ReverseMap()
                 //.ForMember( pdto => pdto.Manches.Select(m=>m.Id), act => act.MapFrom(source => source.ManchesId.ToArray()))

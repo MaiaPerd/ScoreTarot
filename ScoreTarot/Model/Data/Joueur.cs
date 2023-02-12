@@ -122,6 +122,27 @@ namespace Model
         }
 
         /// <summary>
+        /// Constructeur du joueur avec seulement les paramètres neccesaires, pseudo et age.
+        /// </summary>
+        /// <param name="id"></param> Identifiant du joueur
+        /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique
+        /// <param name="age"></param> age du joueur
+        /// <exception cref="ArgumentNullException"></exception>
+        public Joueur(int id, string pseudo, int age)
+        {
+            if (String.IsNullOrEmpty(pseudo))
+            {
+                throw new ArgumentNullException(nameof(pseudo));
+            }
+            Id = id;
+            Pseudo = pseudo;
+            Nom = "";
+            Prenom = "";
+            Age = age;
+            URLIMG = "../image/imageParDefaut.jpeg";
+        }
+
+        /// <summary>
         /// Constructeur du joueur avec seulement les paramètres neccesaires et un avatar.
         /// </summary>
         /// <param name="pseudo"></param> identifiant du joueur, le pseudo est unique

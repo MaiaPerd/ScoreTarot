@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
-using Stub;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +12,17 @@ using APIRest.DTOs;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using EntityFramework.Entity;
-using Moq;
 using Microsoft.AspNetCore.Mvc;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using APIRest.MapperClass;
 using Microsoft.Extensions.Logging.Abstractions;
 using EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
+using DTOs;
+using JoueurDto = APIRest.DTOs.JoueurDto;
 
-namespace TestsUnitaires.Test_API_rest
+namespace TestsAPI.Test_API_rest
 {
     [TestClass]
     public class UnitTestControlerDtoJoueur
@@ -37,80 +38,100 @@ namespace TestsUnitaires.Test_API_rest
             _mapper = maperconf.CreateMapper();
             _logger = new NullLogger<JoueurController>();
             //_logger = Mock.Of<ILogger<JoueurController>>(); no mieux davoir un logger null
+
+            var connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
             var options = new DbContextOptionsBuilder<SQLiteContext>()
-                .UseInMemoryDatabase(databaseName: "TestApiDataBaseREST")
+                .UseInMemoryDatabase(databaseName: "TestApiDataBaseRESTJoueur")
                 .Options;
             dmAPI = new DataManagerAPI(new SQLiteContext(options));
         }
 
 
         [TestMethod]
-        public async Task TestGetJoueur()
+        public async Task TestGetJoueurs()
         {
             Joueur j = new Joueur("nom", 45);
-            await new DataManager().AddJoueur(j);
+            await dmAPI.AddJoueur(j);
             var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetLesJoueurs();
 
-            var actionResultOK = actionResult as OkObjectResult;
+            var actionResultOK = await actionResult as OkObjectResult;
 
-            actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));//should().be marche pas
+            Assert.AreEqual(actionResultOK.StatusCode,((int)HttpStatusCode.OK));//should().be marche pas
+
             var joueurDto = actionResultOK.Value as IEnumerable<JoueurDto>;
+
             Assert.IsNotNull(joueurDto);
             Assert.AreEqual(j.Nom,joueurDto.First().Nom);
         }
+
         [TestMethod]
-        public async Task TestGetJoueurByid()
+        public async Task TestGetJoueurById()
         {
-            Joueur j = new Joueur("nom", 45);
-            await new DataManager().AddJoueur(j);
-            var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetJoueurById(0);
+            Joueur j = new Joueur(1, "nom", 45);
+            await dmAPI.AddJoueur(j);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetJoueurById(1);
 
-            var actionResultOK = actionResult as OkObjectResult;
+            var actionResultOK = await actionResult as OkObjectResult;
 
-            actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));//should().be marche pas
+            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
+
             var joueurDto = actionResultOK.Value as JoueurDto;
+
             Assert.IsNotNull(joueurDto);
             Assert.AreEqual(j.Nom, joueurDto.Nom);
         }
         [TestMethod]
-        public async Task TestdeleteJoueurd()
+        public async Task TestDeleteJoueurId()
         {
-            Joueur j = new Joueur("nom", 45);
-            await new DataManager().AddJoueur(j);
+            Joueur j = new Joueur(1, "nom", 45);
+            await dmAPI.AddJoueur(j);
 
-            var actionResult = new JoueurController(_logger, _mapper, dmAPI).DeleteJoueur(0);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).DeleteJoueur(1);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
-            actionResultOK.StatusCode.Equals(((int)HttpStatusCode.NoContent));//should().be marche pas
+            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
+
+            var joueurDto = actionResultOK.Value as JoueurDto;
+
+            Assert.IsNotNull(joueurDto);
+            Assert.AreEqual(j.Pseudo, joueurDto.Pseudo);
         }
 
         [TestMethod]
         public async Task TestUpdate()
         {
-            Joueur j = new Joueur("nom", 45);
-            await new DataManager().AddJoueur(j);
-            var actionResult = new JoueurController(_logger, _mapper, dmAPI).UpdateJoueur(j.toDTO(),j.Id);
+            Joueur j1 = new Joueur(1,"nom", 45);
+            await dmAPI.AddJoueur(j1);
+            Joueur j = new Joueur(1, "nom", 4);
+            var actionResult = new JoueurController(_logger, _mapper, dmAPI).UpdateJoueur(j.toDTO());
 
             var actionResultOK = await actionResult as OkObjectResult;
 
-            actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));//should().be marche pas
+            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
+
             var joueurDto = actionResultOK.Value as JoueurDto;
+
             Assert.IsNotNull(joueurDto);
-            Assert.AreNotEqual(j.Nom, joueurDto.Nom);
+            Assert.AreEqual(j1.Pseudo, joueurDto.Pseudo);
+            Assert.AreNotEqual(j1.Age, joueurDto.Age);
         }
 
         [TestMethod]
-        public async Task TestGetJoueurBypage()
+        public async Task TestGetJoueurByPage()
         {
-            Joueur j = new Joueur("nom", 45);
-            await new DataManager().AddJoueur(j);
+            Joueur j = new Joueur(1, "nom", 45);
+            await dmAPI.AddJoueur(j);
             var actionResult = new JoueurController(_logger, _mapper, dmAPI).GetJoueurByPage(0,1);
 
             var actionResultOK = await actionResult as OkObjectResult;
 
-            actionResultOK.StatusCode.Equals(((int)HttpStatusCode.OK));//should().be marche pas
+            Assert.AreEqual(actionResultOK.StatusCode, ((int)HttpStatusCode.OK));
+
             var joueurDto = actionResultOK.Value as IEnumerable<JoueurDto>;
+
             Assert.IsNotNull(joueurDto);
             Assert.AreEqual(j.Nom, joueurDto.First().Nom);
         }

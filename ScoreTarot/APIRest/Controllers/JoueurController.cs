@@ -26,61 +26,66 @@ namespace APIRest.Controllers
                 this.dataManager = dataManager;
 
             }
+
             [HttpGet("{id}")]
-            public IActionResult GetJoueurById(int id)
+            public async Task<ActionResult> GetJoueurById(int id)
             {
-                var jdto = this.dataManager.GetJoueurById(id);
+                var jdto = await this.dataManager.GetJoueurById(id);
                 if (jdto == null)
                 {
-                    _logger.LogInformation("GetJoueurById: le joueur n'a pas été trouvé");
+                    _logger.LogInformation("GetJoueurById: le joueur n'a pas ï¿½tï¿½ trouvï¿½");
                     return NotFound();
                 }
-                //var enmap = mapper.Map<JoueurDto>(jdto);
+                var enmap = mapper.Map<JoueurDto>(jdto);
                 
-                return Ok(jdto);
+                return Ok(enmap);
             }
+
             [HttpGet]
-            public IActionResult GetLesJoueurs()
+            public async Task<ActionResult> GetLesJoueurs()
             {
-                var data = dataManager.GetJoueurs();
-                var list = new List<JoueurDto>();
-                //list = mapper.Map<List<JoueurDto>>(data);
+                var data = await dataManager.GetJoueurs();
+                var list = mapper.Map<IEnumerable<JoueurDto>>(data);
                 return Ok(list);
             }
+
             [HttpDelete("{id}")]
             public async Task<ActionResult> DeleteJoueur(int i)
             {
-                var leJoueur = dataManager.GetJoueurById(i);
+                Joueur leJoueur = await dataManager.GetJoueurById(i);
                 if (leJoueur == null)
                 {
-                    _logger.LogInformation("DeleteJoueur: Request invalidDelete Joueur: le joueur n'existe pas!");
+                    _logger.LogInformation("DeleteJoueur: Request invalidDelete Joueur: le joueur d'id : "+i+" n'existe pas!");
                     return BadRequest("le joueur n'existe pas");
                 }
-                await dataManager.RemoveJoueur(await leJoueur);
-                return StatusCode((int)HttpStatusCode.OK);
+
+                Joueur joueur = await dataManager.RemoveJoueur(leJoueur);
+                return Ok(mapper.Map<JoueurDto>(joueur));
             }
+
             [HttpPost("{id}")]
-            public async Task<ActionResult> UpdateJoueur([FromBody] JoueurDto jdto, int i)
+            public async Task<ActionResult> UpdateJoueur([FromBody] JoueurDto jdto)
             {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("UpdateJoueur: Request is invalid! -> ModelState invalid");
                 }
-                var leJoueur = dataManager.GetJoueurById(i);
+                Joueur leJoueur = await dataManager.GetJoueurById(jdto.Id);
                 if (leJoueur == null)
                 {
-                    _logger.LogInformation("UpdateJoueur: Request invalid, le joueur donné est null");
+                    _logger.LogInformation("UpdateJoueur: Request invalid, le joueur donnï¿½ est null");
                     return NotFound();
                 }
-                await dataManager.UpdateJoueur(mapper.Map<Joueur>(jdto));
-                return StatusCode((int)HttpStatusCode.OK);
+                
+                 return Ok(mapper.Map<JoueurDto>(await dataManager.UpdateJoueur(mapper.Map<Joueur>(jdto))));
             }
+
             [HttpPut]
             public async Task<ActionResult> CreateJoueur([FromBody] JoueurDto jdto)
             {
-                await dataManager.AddJoueur(mapper.Map<Joueur>(jdto));
-                return StatusCode((int)HttpStatusCode.OK);
+                return Ok(mapper.Map<JoueurDto>(await dataManager.AddJoueur(mapper.Map<Joueur>(jdto))));
             }
+
             [HttpGet("byPage")]
             public async Task<IActionResult> GetJoueurByPage([FromQuery] int pageNumber, int pageSize)
             {
@@ -92,16 +97,15 @@ namespace APIRest.Controllers
                 }
                 joueurs.Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize);
-                return Ok(data);
+                return Ok(joueurs);
             }
 
-        [HttpGet("byPseudo{pseudo}")]
-        public IActionResult GetLesJoueursByPseudo([FromBody] String pseudo)
-        {
-            var data = dataManager.GetJoueursByPseudo(pseudo);
-            var list = new List<JoueurDto>();
-            
-            return Ok(list);
+            [HttpGet("byPseudo{pseudo}")]
+            public async Task<ActionResult> GetLesJoueursByPseudo([FromBody] String pseudo)
+            {
+                var data = await dataManager.GetJoueursByPseudo(pseudo);
+                var list = mapper.Map<IEnumerable<JoueurDto>>(data);
+                return Ok(list);
+            }
         }
-    }
 }

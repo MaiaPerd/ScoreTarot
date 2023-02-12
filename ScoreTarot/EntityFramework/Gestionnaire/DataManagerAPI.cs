@@ -1,4 +1,5 @@
 ﻿using EntityFramework.Entity;
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.Interface;
 using System;
@@ -19,43 +20,50 @@ namespace EntityFramework
             this.context = context;
         }
 
-
         public async Task<Joueur?> AddJoueur(Joueur joueur)
         {
             Joueur? j = null;
-            await context.Joueurs.AddAsync(joueur.toEntity());
-            if (await context.SaveChangesAsync() == 1)
+            if (context.Joueurs.Find(joueur.Id) == null)
             {
-                j = joueur;
+                await context.Joueurs.AddAsync(joueur.toEntity());
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    j = joueur;
+                }
             }
-            
             return j;
         }
 
         public async Task<Joueur?> UpdateJoueur(Joueur joueur)
         {
             Joueur? j = null;
-   
-                context.Update(joueur.toEntity());
+            JoueurEntity? joueurEntity = context.Joueurs.Find(joueur.Id);
+            if (joueurEntity != null)
+            {
+                joueurEntity = joueurEntity.toEntityToEntity(joueur);
+                context.Joueurs.Update(joueurEntity);
                 if (await context.SaveChangesAsync() == 1)
                 {
                     j = joueur;
                 }
-            
+            }
+      
             return j;
         }
 
         public async Task<Joueur?> RemoveJoueur(Joueur joueur)
         {
             Joueur? j = null;
-     
-                context.Remove(joueur.toEntity());
-                context.Remove(context.Parties.Where(m => m.Joueurs.Contains(joueur.toEntity())));
+            JoueurEntity? joueurEntity = context.Joueurs.Find(joueur.Id);
+            if (joueurEntity != null) {
+               // context.Remove(context.Parties.Select(m => m.Joueurs.Contains(joueur.toEntity())));
+                context.Joueurs.Remove(joueurEntity);
                 if (await context.SaveChangesAsync() == 1)
                 {
                     j = joueur;
                 }
-            
+            }
+ 
             return j;
         }
 
@@ -63,8 +71,11 @@ namespace EntityFramework
         {
             List<Joueur> joueurs = new();
 
-                await Task.Run(() =>
-                    joueurs.AddRange(context.Joueurs.Select(joueur => joueur.toModel())));
+            var a = context.Joueurs.Select(joueur => joueur.toModel());
+            joueurs.AddRange(a);
+
+           //await Task.Run(() =>
+             //   joueurs.AddRange(context.Joueurs.Select(joueur => joueur.toModel())));
             
             return joueurs;
         }
@@ -82,111 +93,131 @@ namespace EntityFramework
 
         public async Task ClearJoueurs()
         {
-  
-                context.RemoveRange(context.Joueurs);
-                await context.SaveChangesAsync();
+            context.RemoveRange(context.Joueurs);
+            await context.SaveChangesAsync();
             
         }
 
         public async Task ClearManches()
         {
-
-                context.RemoveRange(context.Manches);
-                await context.SaveChangesAsync();
-            
+            context.RemoveRange(context.Manches);
+            await context.SaveChangesAsync();   
         }
 
         public async Task ClearParties()
         {
             ClearManches();
-    
-                context.RemoveRange(context.Parties);
-                await context.SaveChangesAsync();
-            
+            context.RemoveRange(context.Parties);
+            await context.SaveChangesAsync();   
         }
 
     
         public async Task<IEnumerable<Partie>> GetParties()
         {
-            List<Partie> parties = new();
-
-                context.Parties.ToList().ForEach(p =>
+            context.Parties.ToList().ForEach(p =>
+            {
+                if (p.Joueurs.Count() == 0)
                 {
-                    if (p.Joueurs.Count() == 0)
-                    {
-                        ClearParties();
-                    }
-                });
-                List<Partie> partieEntities = context.Parties.Select(p => p.ToModel()).ToList();
+                    ClearParties();
+                }
+            });
+            IEnumerable<Partie> partieEntities = context.Parties.Select(p => p.ToModel()).ToList();
+           // await Task.Run(() =>
+            //    parties.AddRange(partieEntities));
+            
+            return partieEntities;
+        }
+
+    
+        public async Task<Manche?> AddManche(Manche manche)
+        {
+            MancheEntity m = manche.toEntity();
+            await context.Manches.AddAsync(m);
+            if (await context.SaveChangesAsync() == 1)
+            {
+                return manche;
+            }
+            return null;
+        }
+
+        public async Task<Manche?> UpdateManche(Manche manche, int id)
+        {
+            Manche? m = null;
+            MancheEntity? mancheEntity = context.Manches.Find(id);
+            if (mancheEntity != null)
+            {
+                mancheEntity = mancheEntity.toEntityToEntity(manche);
+                context.Manches.Update(mancheEntity);
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    m = manche;
+                }
+            }
+
+            return m;
+        }
+
+        public async Task<Manche?> RemoveManche(int manche)
+        {
+            Manche? m = null;
+            MancheEntity? mancheEntity = context.Manches.Find(manche);
+            if (mancheEntity != null)
+            {
+                context.Manches.Remove(mancheEntity);
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    m = mancheEntity.ToModel();
+                }
+            }
+
+            return m;
+        }
+
+        public async Task<IEnumerable<Manche>> GetManches()
+        {
+            List<Manche> manches = new();
+
                 await Task.Run(() =>
-                    parties.AddRange(partieEntities));
+                    manches.AddRange(context.Manches.Select(manche => manche.ToModel())));
             
-            return parties;
+            return manches;
         }
 
-    
-        public async Task<Manche> AddManche(Manche manche)
+        public async Task<Joueur?> GetJoueurById(int id)
         {
-            bool result = false;
- 
-                await context.Manches.AddAsync(manche.toEntity());
-               result = await context.SaveChangesAsync() == 1;
-            
-            return manche;
+            JoueurEntity? joueur = context.Joueurs.Find(id);
+            if(joueur != null)
+            {
+                return joueur.toModel();
+            }
+            return null;
         }
 
-        public async Task<Manche> UpdateManche(Manche manche)
+        public async Task<Manche?> GetManche(int id)
         {
-            bool result = false;
-    
-                context.Update(manche.toEntity());
-                result = await context.SaveChangesAsync() == 1;
-            
-            return manche;
+            MancheEntity? manche = context.Manches.Find(id);
+            if (manche != null)
+            {
+                return manche.ToModel();
+            }
+            return null;
         }
 
-        public async Task<Manche> RemoveManche(Manche manche)
+        public async Task<Partie?> GetPartieById(int id)
         {
-            bool result = false;
-      
-                context.Remove(manche.toEntity());
-                result = await context.SaveChangesAsync() == 1;
-            
-            return manche;
-        }
-
-        public async Task<Joueur> GetJoueurById(int id)
-        {
-            Joueur joueur;
-     
-                joueur = context.Joueurs.Where(joueur => joueur.Id.Equals(id)).First().toModel();
-            
-            return joueur;
-        }
-
-        public async Task<Manche> GetManche(int id)
-        {
-            Manche manche;
-       
-                manche = context.Manches.Where(m => m.Id.Equals(id)).First().ToModel();
-            
-            return manche;
-        }
-
-        public async Task<Partie> GetPartieById(int id)
-        {
-            Partie partie;
-        
-                var query //= context.Parties.Join(context.Joueurs).Join(context.Manches).ToList();
-                    = (from c in context.Parties
-                       where c.Id == id
-                       from jp in c.Joueurs
-                       join j in context.Joueurs on jp.Id equals j.Id
-                       from mp in c.Manches
-                       join m in context.Manches on mp.Id equals m.Id
-                       select c).First();
+            Partie? partie = null;
+            var query //= context.Parties.Join(context.Joueurs).Join(context.Manches).ToList();
+                = (from c in context.Parties
+                    where c.Id == id
+                    from jp in c.Joueurs
+                    join j in context.Joueurs on jp.Id equals j.Id
+                    from mp in c.Manches
+                    join m in context.Manches on mp.Id equals m.Id
+                    select c).First();
+            if(query != null)
+            {
                 partie = query.ToModel();
-            
+            }
             return partie;
         }
 
@@ -194,35 +225,50 @@ namespace EntityFramework
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> RemovePartie(Partie partie)
-        {
-            bool result = false;
-            using (var context = new SQLiteContext())
+        public async Task<Partie?> RemovePartie(Partie partie)
+        { 
+            Partie? p = null;
+            PartieEntity? partieEntity = context.Parties.Find(partie.Id);
+            if (partieEntity != null)
             {
-                context.Remove(partie.ToEntity());
-                result = await context.SaveChangesAsync() == 1;
+                context.Parties.Remove(partieEntity);
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    p = partie;
+                }
             }
-            return result;
+
+            return p;
         }
-        public async Task<bool> UpdatePartie(Partie partie)
+        public async Task<Partie?> UpdatePartie(Partie partie)
         {
-            bool result = false;
-            using (var context = new SQLiteContext())
+            Partie? p = null;
+            PartieEntity? partieEntity = context.Parties.Find(partie.Id);
+            if (partieEntity != null)
             {
-                context.Update(partie.ToEntity());
-                result = await context.SaveChangesAsync() == 1;
+                partieEntity = partieEntity.ToEntityToEntity(partie);
+                context.Parties.Update(partieEntity);
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    p = partie;
+                }
             }
-            return result;
+
+            return p;
         }
-        public async Task<bool> AddPartie(Partie partie)
+        public async Task<Partie?> AddPartie(Partie partie)
         {
-            bool result = false;
-            using (var context = new SQLiteContext())
+            Partie result = null;
+            if (context.Parties.Find(partie.Id) == null)
             {
                 await context.Parties.AddAsync(partie.ToEntity());
-                result = await context.SaveChangesAsync() == 1;
+                if (await context.SaveChangesAsync() == 1)
+                {
+                    result = partie;
+                }
             }
-            return result;
+            
+            return partie;
         }
     }
 }
