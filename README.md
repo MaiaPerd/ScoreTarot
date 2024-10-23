@@ -21,7 +21,7 @@ Le projet utilise **.NET6**, je vous conseille de le lancé sur **Visual Studio 
 
 # Installation
 
-Cloné le dépôt du projet: ```git clone https://codefirst.iut.uca.fr/git/cecile.bonal/ScoreTarot.git``` ou directement dans **Visual Studio 2022**.
+Cloné le dépôt du projet: ```git clone https://github.com/MaiaPerd/ScoreTarot.git``` ou directement dans **Visual Studio 2022**.
 
 ## Lancement:
 
@@ -31,8 +31,8 @@ Cloné le dépôt du projet: ```git clone https://codefirst.iut.uca.fr/git/cecil
 # Architecture de la solution
 
 Les projets:
-- APIRest: [**plus d'information**](https://github.com/MaiaPerd/ScoreTarot/wiki/API-Rest)
-- APIGraphQL: [**plus d'information**](https://github.com/MaiaPerd/ScoreTarot/wiki/API-GraphQL)
+- APIRest
+- APIGraphQL
 - AppliConsole: Projet de l'application console de ScoreTarot.
 - DTOs: reprends les classes du model avec les données que l'ont utilisera dans les différentes APIs.
 - EntityFramework: projet qui créer et définie notre base de donnée.
